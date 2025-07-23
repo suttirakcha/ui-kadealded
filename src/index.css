@@ -121,3 +121,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+.text-input {
+  @apply shadow-none outline-0 !ring-0 !ring-offset-0 border-0 border-b rounded-none !p-0 text-black;
+}
+
+.custom-label {
+  @apply font-medium absolute peer-focus:top-0 peer-focus:text-black peer-focus:text-sm peer-placeholder-shown:top-5 peer-placeholder-shown:text-base peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-black transition-all duration-200;
+}
