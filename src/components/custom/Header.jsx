@@ -1,10 +1,10 @@
 import { Link } from "react-router"
+import RegisterDialog from "../dialogs/RegisterDialog"
 
 function Header() {
   return (
     <>
       <div className="flex items-center justify-center bg-[#003f66] text-white px-2 py-2 h-13 gap-15">
-
         <div className="flex gap-7">
           <Link to="/" className="hover:text-[#e59b2b] text-">Home</Link>
           <Link to="/about" className="hover:text-[#e59b2b]">About Us</Link>
@@ -18,9 +18,9 @@ function Header() {
         <div className="flex items-center gap-7">
           <Link to="/contact" className="hover:text-[#e59b2b]">Contact Us</Link>
           <Link to="/login" className="hover:text-[#e59b2b]">Login</Link>
-          <Link to="/register" className="hover:text-[#e59b2b]" >Register</Link>
+          {/* <Link to="/register" className="hover:text-[#e59b2b]" >Register</Link> */}
+          <RegisterDialog />
         </div>
-
       </div>
     </>
   )
