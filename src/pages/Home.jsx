@@ -1,8 +1,11 @@
+import Footer from '@/components/custom/Footer'
 import React from 'react'
 
 function Home() {
   return (
-    <div>Home</div>
+    <div>
+      <Footer />
+    </div>
   )
 }
 
