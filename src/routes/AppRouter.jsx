@@ -6,6 +6,7 @@ const Home = lazy(()=> import("../pages/Home"));
 const Login = lazy(()=> import("../pages/auth/Login"))
 const Register = lazy(()=> import("../pages/auth/Register"))
 const NotFound = lazy(()=> import("../pages/NotFound"))
+const ProfileUser = lazy(() => import("../pages/ProfileUser"))
 
 function AppRouter() {
     const guestRouter = createBrowserRouter([
@@ -18,6 +19,9 @@ function AppRouter() {
         },
         {
             path: "*", element: <NotFound />
+        },
+        {
+            path:"ProfileUser", element:<ProfileUser />
         }
     ])
 
