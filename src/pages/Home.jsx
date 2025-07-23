@@ -1,3 +1,4 @@
+import Footer from '@/components/custom/Footer'
 import { HorizontalCarousel, VerticalCarousel } from '@/components/custom/HeroCarousel'
 import { CardDeal } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -37,6 +38,7 @@ function Home() {
         </CardDeal>
 
        </div>
+      <Footer />
     </div>
   )
 }
