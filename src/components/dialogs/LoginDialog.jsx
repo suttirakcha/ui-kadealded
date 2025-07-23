@@ -11,9 +11,8 @@ import {
 } from "@/components/ui/dialog";
 import { useForm } from "react-hook-form";
 import CustomInput from "../custom/CustomInput";
-import { useState } from "react";
 
-function RegisterDialog() {
+function LoginDialog() {
   const { register, handleSubmit } = useForm();
 
   // TODO: fetch register post from api
@@ -27,36 +26,30 @@ function RegisterDialog() {
 
   return (
     <Dialog>
-      <DialogTrigger>Register</DialogTrigger>
+      <DialogTrigger>Login</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold">
-            Register to Kadealded
+            Login to Kadealded
           </DialogTitle>
           <DialogDescription>
-            {/* Mockup register, will integrate with backend later */}
+            {/* Mockup login, will integrate with backend later */}
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="flex flex-col gap-4"
             >
-              <CustomInput {...register("username")} label="Username" />
               <CustomInput {...register("email")} label="Email" />
               <CustomInput {...register("password")} label="Password" />
-              <CustomInput {...register("confirm_password")} label="Confirm password" />
 
               <Button type="submit" className="w-full bg-[#003F66] h-12 text-base">
-                Register
+                Login
               </Button>
             </form>
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter>
-          <h2>Already have an account?</h2>
-          Sign in
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
 }
 
-export default RegisterDialog;
+export default LoginDialog;
