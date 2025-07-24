@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from '../components/custom/Header'
 import { Outlet } from 'react-router'
+import Footer from '@/components/custom/Footer'
 
 function MainLayout() {
     return (
@@ -9,6 +10,7 @@ function MainLayout() {
             <main className='mt-13'>
             <Outlet />
             </main>
+            <Footer />
         </>
     )
 }
