@@ -4,7 +4,7 @@ import RegisterDialog from "../dialogs/RegisterDialog"
 function Header() {
   return (
     <>
-      <div className="flex items-center justify-center bg-[#003f66] text-white px-2 py-2 h-13 gap-15">
+      <div className="flex items-center justify-center bg-[#003f66] text-white px-2 py-2 h-13 gap-15 fixed top-0 inset-x-0 z-2">
         <div className="flex gap-7">
           <Link to="/" className="hover:text-[#e59b2b] text-">Home</Link>
           <Link to="/about" className="hover:text-[#e59b2b]">About Us</Link>
