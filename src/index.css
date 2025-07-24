@@ -133,3 +133,8 @@
 .carousel-content {
   transition: transform 0.5s ease-in-out;
 }
+
+a.active{
+  color:#e59b2b ;
+}
+
