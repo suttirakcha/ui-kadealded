@@ -6,7 +6,9 @@ function MainLayout() {
     return (
         <>
             <Header />
+            <main className='mt-13'>
             <Outlet />
+            </main>
         </>
     )
 }

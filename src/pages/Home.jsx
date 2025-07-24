@@ -1,4 +1,4 @@
-import { HorizontalCarousel, VerticalCarousel } from '@/components/custom/HeroCarousel'
+import { HorizontalCarousel,VerticalCarousel } from '@/components/custom/HeroCarousel'
 import { CardDeal } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import React from 'react'
@@ -22,21 +22,52 @@ function Home() {
         </div>
       </section>
 
-       <div className='bg-[#B51A00] mx-auto max-w-[1200px] w-full h-full rounded-2xl p-20 flex gap-3 mb-20'>
-        <CardDeal className="overflow-hidden transform transition-transform duration-300 hover:scale-105">
+       <div className='bg-[#B51A00] mx-auto max-w-[1200px] w-full h-full rounded-2xl p-20 flex gap-3 relative'>
+        <button className='bg-[#F42B2B] absolute -left-8 -top-5 text-white p-2 mx-2 rounded-xl px-8 text-2xl font-bold hover:bg-red-700'>Hot deal</button>
+        <CardDeal className="bg-[#F4F4F4] overflow-hidden transform transition-transform duration-300 hover:scale-105">
           <img src="/src/assets/mock1.png" alt="promotion" className='w-full h-full object-cover'/>
         </CardDeal>
-        <CardDeal className="overflow-hidden transform transition-transform duration-300 hover:scale-105">
+        <CardDeal className="bg-[#F4F4F4] overflow-hidden transform transition-transform duration-300 hover:scale-105">
           <img src="/src/assets/mock2.png" alt="promotion" className='w-full h-full object-cover'/>
         </CardDeal>
-        <CardDeal className="overflow-hidden transform transition-transform duration-300 hover:scale-105">
+        <CardDeal className="bg-[#F4F4F4] overflow-hidden transform transition-transform duration-300 hover:scale-105">
           <img src="/src/assets/mock3.png" alt="promotion" className='w-full h-full object-cover'/>
         </CardDeal>
-        <CardDeal className="overflow-hidden transform transition-transform duration-300 hover:scale-105">
+        <CardDeal className="bg-[#F4F4F4] overflow-hidden transform transition-transform duration-300 hover:scale-105">
           <img src="/src/assets/mock4.png" alt="promotion" className='w-full h-full object-cover'/>
         </CardDeal>
-
        </div>
+
+        <div className='mx-auto max-w-[1200px] w-full h-full rounded-2xl px-20 py-10 flex gap-3'>
+        <CardDeal className=" bg-[#F4F4F4] overflow-hidden transform transition-transform duration-300 hover:scale-105">
+          <img src="/src/assets/mock1.png" alt="promotion" className='w-full h-full object-cover'/>
+        </CardDeal>
+        <CardDeal className="bg-[#F4F4F4] overflow-hidden transform transition-transform duration-300 hover:scale-105">
+          <img src="/src/assets/mock2.png" alt="promotion" className='w-full h-full object-cover'/>
+        </CardDeal>
+        <CardDeal className="bg-[#F4F4F4] overflow-hidden transform transition-transform duration-300 hover:scale-105">
+          <img src="/src/assets/mock3.png" alt="promotion" className='w-full h-full object-cover'/>
+        </CardDeal>
+        <CardDeal className="bg-[#F4F4F4] overflow-hidden transform transition-transform duration-300 hover:scale-105">
+          <img src="/src/assets/mock4.png" alt="promotion" className='w-full h-full object-cover'/>
+        </CardDeal>
+       </div>
+
+       <div className='mx-auto max-w-[1200px] w-full h-full rounded-2xl px-20 py-10 flex gap-3'>
+        <CardDeal className="bg-[#F4F4F4] overflow-hidden transform transition-transform duration-300 hover:scale-105">
+          <img src="/src/assets/mock1.png" alt="promotion" className='w-full h-full object-cover'/>
+        </CardDeal>
+        <CardDeal className="bg-[#F4F4F4] overflow-hidden transform transition-transform duration-300 hover:scale-105">
+          <img src="/src/assets/mock2.png" alt="promotion" className='w-full h-full object-cover'/>
+        </CardDeal>
+        <CardDeal className="bg-[#F4F4F4] overflow-hidden transform transition-transform duration-300 hover:scale-105">
+          <img src="/src/assets/mock3.png" alt="promotion" className='w-full h-full object-cover'/>
+        </CardDeal>
+        <CardDeal className="bg-[#F4F4F4] overflow-hidden transform transition-transform duration-300 hover:scale-105">
+          <img src="/src/assets/mock4.png" alt="promotion" className='w-full h-full object-cover'/>
+        </CardDeal>
+       </div>
+
     </div>
   )
 }
