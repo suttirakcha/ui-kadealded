@@ -1,5 +1,6 @@
 import { createBrowserRouter,RouterProvider } from "react-router"
 import { lazy } from "react"
+import DealPage from "@/pages/DealPage";
 
 const MainLayout = lazy(() => import("../layouts/MainLayout"));
 const Home = lazy(()=> import("../pages/Home"));
@@ -19,7 +20,8 @@ function AppRouter() {
                 { path: "register", element: <Register /> },
                 { path: "about", element: <About />},
                 { path: "coupon", element: <Coupons/>},
-                { path: "contact", element: <Contacts />}
+                { path: "contact", element: <Contacts />},
+                { path: "deal/:id", element: <DealPage />}
             ]
         },
         {
