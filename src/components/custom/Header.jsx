@@ -1,5 +1,6 @@
 import { NavLink,Link } from "react-router"
 import RegisterDialog from "../dialogs/RegisterDialog"
+import LoginDialog from "../dialogs/LoginDialog"
 
 function Header() {
   return (
@@ -17,8 +18,11 @@ function Header() {
 
         <div className="flex items-center">
           <NavLink to="/contact" className="hover:text-[#e59b2b] hover:bg-white p-3.5">Contact Us</NavLink>
-          <NavLink to="/login" className="hover:text-[#e59b2b] hover:bg-white p-3.5 mr-3">Login</NavLink>
+
+          {/* Will remove these links */}
+          {/* <Link to="/login" className="hover:text-[#e59b2b]">Login</Link> */}
           {/* <Link to="/register" className="hover:text-[#e59b2b]" >Register</Link> */}
+          <LoginDialog />
           <RegisterDialog />
         </div>
       </div>
