@@ -11,48 +11,77 @@ import {
 } from "@/components/ui/dialog";
 import { useForm } from "react-hook-form";
 import CustomInput from "../custom/CustomInput";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
+import { registerSchema } from "@/schemas/registerSchema";
 
-function RegisterDialog() {
-  const { register, handleSubmit } = useForm();
+function RegisterDialog({ open, setOpen, onSwitchRegister }) {
+  const { register, handleSubmit, formState, reset } = useForm({
+    resolver: yupResolver(registerSchema),
+  });
+  const { errors, isSubmitting } = formState;
 
   // TODO: fetch register post from api
   const onSubmit = (data) => {
     try {
       console.log(data);
+      reset()
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <Dialog>
-      <DialogTrigger>Register</DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <a className="navbar-link">Register</a>
+      </DialogTrigger>
+      <DialogContent className="p-10">
+        <DialogHeader className="gap-4">
           <DialogTitle className="text-2xl font-bold">
             Register to Kadealded
           </DialogTitle>
           <DialogDescription>
-            {/* Mockup register, will integrate with backend later */}
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="flex flex-col gap-4"
+              className="flex flex-col gap-2"
             >
-              <CustomInput {...register("username")} label="Username" />
-              <CustomInput {...register("email")} label="Email" />
-              <CustomInput {...register("password")} label="Password" />
-              <CustomInput {...register("confirm_password")} label="Confirm password" />
+              <CustomInput
+                {...register("name")}
+                label="Name"
+                error={errors.name?.message}
+              />
+              <CustomInput
+                {...register("email")}
+                label="Email"
+                error={errors.email?.message}
+              />
+              <CustomInput
+                {...register("password")}
+                label="Password"
+                error={errors.password?.message}
+                type="password"
+              />
+              <CustomInput
+                {...register("confirmPassword")}
+                label="Confirm password"
+                error={errors.confirmPassword?.message}
+                type="password"
+              />
 
-              <Button type="submit" className="w-full bg-[#003F66] h-12 text-base">
+              <Button
+                disabled={isSubmitting}
+                type="submit"
+                className="w-full bg-[#003F66] h-12 text-base mt-4"
+              >
                 Register
               </Button>
             </form>
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter>
+        <DialogFooter className="!justify-center">
           <h2>Already have an account?</h2>
-          Sign in
+          <button onClick={onSwitchRegister} className="text-[#003F66] cursor-pointer">Sign in</button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
