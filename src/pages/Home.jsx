@@ -3,14 +3,10 @@ import { CardDeal } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router'
-import { items } from '../data/items'
+import { HotDeal, items, items2 } from '../data/items'
 
 function Home() {
   const navigate = useNavigate()
-
-  useEffect(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    }, [])
 
   const handleClick = (id) => {
     navigate(`/deal/${id}`)
@@ -35,7 +31,7 @@ function Home() {
 
       <div className='bg-[#B51A00] mx-auto max-w-[1200px] w-full h-full rounded-2xl p-20 flex gap-3 relative'>
         <button className='bg-[#F42B2B] absolute -left-8 -top-5 text-white p-2 mx-2 rounded-xl px-8 text-2xl font-bold hover:bg-red-700'>Hot deal</button>
-        {items.map(item => (
+        {HotDeal.map(item => (
           <CardDeal
             key={item.id}
             onClick={() => handleClick(item.id)}
@@ -58,7 +54,7 @@ function Home() {
       </div>
 
       <div className='mx-auto max-w-[1200px] w-full h-full rounded-2xl px-20 py-10 flex gap-3'>
-        {items.map(item => (
+        {items2.map(item => (
           <CardDeal
             key={item.id}
             onClick={() => handleClick(item.id)}
