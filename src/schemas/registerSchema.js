@@ -1,8 +1,8 @@
-import { object, string } from "yup";
+import { object, ref, string } from "yup";
 
-// Mockup register, will integrate with backend later
 export const registerSchema = object({
-  username: string(),
-  email: string(),
-  password: string()
+  name: string().required("Name is required"),
+  email: string().email("Invalid email").required("Email is required"),
+  password: string().min(6).required("Password is required"),
+  confirmPassword : string().oneOf([ref("password"), null], "Password does not match").required("Confirm password is required")
 })

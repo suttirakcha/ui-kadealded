@@ -127,7 +127,7 @@
 }
 
 .custom-label {
-  @apply font-medium absolute peer-focus:top-0 peer-focus:text-black peer-focus:text-sm peer-placeholder-shown:top-5 peer-placeholder-shown:text-base peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-black transition-all duration-200;
+  @apply font-medium absolute peer-focus:-top-4 peer-focus:text-black peer-focus:text-sm peer-placeholder-shown:top-1 peer-placeholder-shown:text-base peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-black transition-all duration-200 -z-1;
 }
 
 .carousel-content {
@@ -135,6 +135,10 @@
 }
 
 a.active{
-  color:#e59b2b ;
+  color:#e59b2b;
 }
 
+.navbar-link {
+  /* @apply hover:text-[#e59b2b] hover:bg-white p-3.5 cursor-pointer; */
+  @apply text-shadow-[1px_1px_0_black] h-full flex items-center hover:text-[#E59B2B] py-3.5 active:text-shadow-none cursor-pointer;
+}
