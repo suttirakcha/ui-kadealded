@@ -8,10 +8,6 @@ import { items } from '../data/items'
 function Home() {
   const navigate = useNavigate()
 
-  useEffect(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    }, [])
-
   const handleClick = (id) => {
     navigate(`/deal/${id}`)
   }
