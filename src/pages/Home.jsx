@@ -67,6 +67,7 @@ function Home() {
           <img src="/src/assets/mock4.png" alt="promotion" className='w-full h-full object-cover'/>
         </CardDeal>
        </div>
+    
 
     </div>
   )

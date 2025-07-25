@@ -25,7 +25,7 @@ function CardDeal({
     <div
       data-slot="card"
       className={cn(
-        "bg-card text-card-foreground flex flex-col rounded-[30px] w-full shadow-sm pb-20",
+        "bg-card text-card-foreground  flex flex-col rounded-[30px] w-full shadow-sm",
         className
       )}
       {...props} />
