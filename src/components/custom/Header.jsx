@@ -8,7 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import CategorySheet from "../sheets/CategorySheet";
 
 function Header() {
-  let user;
+  const [user, setUser] = useState("hey");
   const location = useLocation();
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -51,16 +51,25 @@ function Header() {
             Contact Us
             {/* <div className="bg-white group-hover:h-1 w-full absolute bottom-0 transform-all duration-100"></div> */}
           </NavLink>
-          <LoginDialog
-            open={isLoginOpen}
-            setOpen={setIsLoginOpen}
-            onSwitchLogin={handleOpenRegister}
-          />
-          <RegisterDialog
-            open={isRegisterOpen}
-            setOpen={setIsRegisterOpen}
-            onSwitchRegister={handleOpenLogin}
-          />
+          {user ? (
+            <a className="navbar-link" onClick={() => setUser(null)}>
+              {/* TODO: Will do the logout feature after user is dynamically fetched */}
+              Logout
+            </a>
+          ) : (
+            <>
+              <LoginDialog
+                open={isLoginOpen}
+                setOpen={setIsLoginOpen}
+                onSwitchLogin={handleOpenRegister}
+              />
+              <RegisterDialog
+                open={isRegisterOpen}
+                setOpen={setIsRegisterOpen}
+                onSwitchRegister={handleOpenLogin}
+              />
+            </>
+          )}
         </div>
       </div>
       {user && (
