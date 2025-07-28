@@ -13,9 +13,9 @@ function Home() {
   }
   return (
     <div>
-      <section className="grid grid-cols bg-yellow-200 h-[320px]">
-        <div className="max-w-[1280px] mx-auto w-full p-8 grid max-lg grid-cols-2 gap-12 items-center">
-          <h1 className="text-5xl leading-15 font-bold">
+      <section className="flex items-center bg-gray-800 h-[400px]">
+        <div className="max-w-[500px] mx-auto w-full text-center flex flex-col p-8 gap-12 items-center">
+          <h1 className="text-5xl leading-15 font-bold text-white">
             Let's explore our promotions here!
           </h1>
           <Input placeholder="Search our promotions" className="bg-white" />
