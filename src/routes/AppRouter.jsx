@@ -1,10 +1,9 @@
 import { createBrowserRouter,RouterProvider } from "react-router"
 import { lazy } from "react"
+import DealPage from "@/pages/DealPage";
 
 const MainLayout = lazy(() => import("../layouts/MainLayout"));
 const Home = lazy(()=> import("../pages/Home"));
-const Login = lazy(()=> import("../pages/auth/Login"))
-const Register = lazy(()=> import("../pages/auth/Register"))
 const NotFound = lazy(()=> import("../pages/NotFound"))
 const About = lazy(()=> import("../pages/About"))
 const Coupons = lazy(()=> import("../pages/Coupons"))
@@ -15,11 +14,10 @@ function AppRouter() {
         {
             path: "/", element: <MainLayout />, children: [
                 { index: true, element: <Home /> },
-                { path: "login", element: <Login /> },
-                { path: "register", element: <Register /> },
                 { path: "about", element: <About />},
                 { path: "coupon", element: <Coupons/>},
-                { path: "contact", element: <Contacts />}
+                { path: "contact", element: <Contacts />},
+                { path: "deal/:id", element: <DealPage />}
             ]
         },
         {

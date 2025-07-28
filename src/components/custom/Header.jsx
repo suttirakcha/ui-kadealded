@@ -1,29 +1,87 @@
-import { Link } from "react-router"
-import RegisterDialog from "../dialogs/RegisterDialog"
+import { NavLink, Link, useLocation } from "react-router";
+import RegisterDialog from "../dialogs/RegisterDialog";
+import LoginDialog from "../dialogs/LoginDialog";
+import logoImg from "../../assets/kaDEALded_logo-removebg-preview.png";
+import { useState } from "react";
+import { Hamburger, Menu } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import CategorySheet from "../sheets/CategorySheet";
 
 function Header() {
+  const [user, setUser] = useState("hey");
+  const location = useLocation();
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+
+  const handleOpenRegister = () => {
+    setIsLoginOpen(false);
+    setIsRegisterOpen(true);
+  };
+
+  const handleOpenLogin = () => {
+    setIsRegisterOpen(false);
+    setIsLoginOpen(true);
+  };
+
   return (
-    <>
-      <div className="flex items-center justify-center bg-[#003f66] text-white px-2 py-2 h-13 gap-15 fixed top-0 inset-x-0 z-2">
-        <div className="flex gap-7">
-          <Link to="/" className="hover:text-[#e59b2b] text-">Home</Link>
-          <Link to="/about" className="hover:text-[#e59b2b]">About Us</Link>
-          <Link to="/coupon" className="hover:text-[#e59b2b]">Coupons</Link>
+    <div className="grid grid-cols-5 items-center justify-center bg-[#003f66] fixed top-0 inset-x-0 z-2 text-white px-8">
+      <CategorySheet />
+      <div className="col-span-3 flex h-full items-center justify-center gap-6">
+        <div className="flex h-full gap-3.5">
+          <NavLink to="/" className="navbar-link group relative">
+            Home
+            {/* <div className="bg-white group-hover:h-1 w-full absolute bottom-0 transform-all duration-100"></div> */}
+          </NavLink>
+          <NavLink to="/about" className="navbar-link group relative">
+            About Us
+            {/* <div className="bg-white group-hover:h-1 w-full absolute bottom-0 transform-all duration-100"></div> */}
+          </NavLink>
+          <NavLink to="/coupon" className="navbar-link group relative">
+            Coupons
+            {/* <div className="bg-white group-hover:h-1 w-full absolute bottom-0 transform-all duration-100"></div> */}
+          </NavLink>
         </div>
 
-         <div className="flex gap-4">
-          <Link to="/" className="w-9 text-2xl" >Logo</Link>
-        </div>
+        <Link to="/" className="h-20 w-20">
+          <img src={logoImg} alt="kadealded-logo" />
+        </Link>
 
-        <div className="flex items-center gap-7">
-          <Link to="/contact" className="hover:text-[#e59b2b]">Contact Us</Link>
-          <Link to="/login" className="hover:text-[#e59b2b]">Login</Link>
-          {/* <Link to="/register" className="hover:text-[#e59b2b]" >Register</Link> */}
-          <RegisterDialog />
+        <div className="flex items-center h-full gap-3.5">
+          <NavLink to="/contact" className="navbar-link group relative">
+            Contact Us
+            {/* <div className="bg-white group-hover:h-1 w-full absolute bottom-0 transform-all duration-100"></div> */}
+          </NavLink>
+          {user ? (
+            <a className="navbar-link" onClick={() => setUser(null)}>
+              {/* TODO: Will do the logout feature after user is dynamically fetched */}
+              Logout
+            </a>
+          ) : (
+            <>
+              <LoginDialog
+                open={isLoginOpen}
+                setOpen={setIsLoginOpen}
+                onSwitchLogin={handleOpenRegister}
+              />
+              <RegisterDialog
+                open={isRegisterOpen}
+                setOpen={setIsRegisterOpen}
+                onSwitchRegister={handleOpenLogin}
+              />
+            </>
+          )}
         </div>
       </div>
-    </>
-  )
+      {user && (
+        <div className="flex justify-end">
+          <Avatar className="h-10 w-10">
+            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+        </div>
+      )}
+    </div>
+  );
 }
 
-export default Header
+export default Header;

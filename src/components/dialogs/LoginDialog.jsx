@@ -12,12 +12,11 @@ import {
 import { useForm } from "react-hook-form";
 import CustomInput from "../custom/CustomInput";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
-import { registerSchema } from "@/schemas/registerSchema";
+import { loginSchema } from "@/schemas/loginSchema";
 
-function RegisterDialog({ open, setOpen, onSwitchRegister }) {
+function LoginDialog({ open, setOpen, onSwitchLogin }) {
   const { register, handleSubmit, formState, reset } = useForm({
-    resolver: yupResolver(registerSchema),
+    resolver: yupResolver(loginSchema),
   });
   const { errors, isSubmitting } = formState;
 
@@ -25,7 +24,7 @@ function RegisterDialog({ open, setOpen, onSwitchRegister }) {
   const onSubmit = (data) => {
     try {
       console.log(data);
-      reset()
+      reset();
     } catch (error) {
       console.log(error);
     }
@@ -34,23 +33,18 @@ function RegisterDialog({ open, setOpen, onSwitchRegister }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <a className="navbar-link">Register</a>
+        <a className="navbar-link">Login</a>
       </DialogTrigger>
       <DialogContent className="p-10">
         <DialogHeader className="gap-4">
           <DialogTitle className="text-2xl font-bold">
-            Register to Kadealded
+            Login to Kadealded
           </DialogTitle>
           <DialogDescription>
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="flex flex-col gap-2"
             >
-              <CustomInput
-                {...register("name")}
-                label="Name"
-                error={errors.name?.message}
-              />
               <CustomInput
                 {...register("email")}
                 label="Email"
@@ -62,30 +56,24 @@ function RegisterDialog({ open, setOpen, onSwitchRegister }) {
                 error={errors.password?.message}
                 type="password"
               />
-              <CustomInput
-                {...register("confirmPassword")}
-                label="Confirm password"
-                error={errors.confirmPassword?.message}
-                type="password"
-              />
 
               <Button
                 disabled={isSubmitting}
                 type="submit"
                 className="w-full bg-[#003F66] h-12 text-base mt-4"
               >
-                Register
+                Login
               </Button>
             </form>
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="!justify-center">
-          <h2>Already have an account?</h2>
-          <button onClick={onSwitchRegister} className="text-[#003F66] cursor-pointer">Sign in</button>
+          <h2>Don't have an account?</h2>
+          <button onClick={onSwitchLogin} className="text-[#003F66] cursor-pointer">Register</button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
   );
 }
 
-export default RegisterDialog;
+export default LoginDialog;
