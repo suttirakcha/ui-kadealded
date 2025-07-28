@@ -1,6 +1,5 @@
 import { createBrowserRouter,RouterProvider } from "react-router"
 import { lazy } from "react"
-import DealPage from "@/pages/DealPage";
 
 const MainLayout = lazy(() => import("../layouts/MainLayout"));
 const Home = lazy(()=> import("../pages/Home"));
@@ -8,7 +7,10 @@ const NotFound = lazy(()=> import("../pages/NotFound"))
 const About = lazy(()=> import("../pages/About"))
 const Coupons = lazy(()=> import("../pages/Coupons"))
 const Contacts = lazy(()=> import("../pages/Contacts"))
-const AdminPage = lazy(()=> import("../pages/AdminPage"))
+const DealPage = lazy(()=> import("../pages/DealPage"))
+const AdminDeals = lazy(()=> import("../pages/admin/AdminDeals"))
+const AdminAmount = lazy(()=> import("../pages/admin/AdminAmount"))
+const AdminTopDeals = lazy(()=> import("../pages/admin/AdminTopDeals"))
 
 function AppRouter() {
     const guestRouter = createBrowserRouter([
@@ -19,7 +21,9 @@ function AppRouter() {
                 { path: "coupon", element: <Coupons/>},
                 { path: "contact", element: <Contacts />},
                 { path: "deal/:id", element: <DealPage />},
-                { path: "admin", element: <AdminPage />},
+                { path: "admin-deal", element: <AdminDeals />},                
+                { path: "admin-amount", element: <AdminAmount />},
+                { path: "admin-top-deals", element: <AdminTopDeals />},
             ]
         },
         {
