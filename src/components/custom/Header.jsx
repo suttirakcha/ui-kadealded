@@ -2,13 +2,14 @@ import { NavLink, Link, useLocation } from "react-router";
 import RegisterDialog from "../dialogs/RegisterDialog";
 import LoginDialog from "../dialogs/LoginDialog";
 import logoImg from "../../assets/kaDEALded_logo-removebg-preview.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Hamburger, Menu } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import CategorySheet from "../sheets/CategorySheet";
+import useAuthStore from "@/stores/useAuthStore";
 
 function Header() {
-  const [user, setUser] = useState("hey");
+  const { user, logout } = useAuthStore();
   const location = useLocation();
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -52,7 +53,7 @@ function Header() {
             {/* <div className="bg-white group-hover:h-1 w-full absolute bottom-0 transform-all duration-100"></div> */}
           </NavLink>
           {user ? (
-            <a className="navbar-link" onClick={() => setUser(null)}>
+            <a className="navbar-link" onClick={logout}>
               {/* TODO: Will do the logout feature after user is dynamically fetched */}
               Logout
             </a>

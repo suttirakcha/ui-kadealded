@@ -12,7 +12,6 @@ import {
 import { useForm } from "react-hook-form";
 import CustomInput from "../custom/CustomInput";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
 import { registerSchema } from "@/schemas/registerSchema";
 
 function RegisterDialog({ open, setOpen, onSwitchRegister }) {
