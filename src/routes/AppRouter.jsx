@@ -8,6 +8,7 @@ const NotFound = lazy(()=> import("../pages/NotFound"))
 const About = lazy(()=> import("../pages/About"))
 const Coupons = lazy(()=> import("../pages/Coupons"))
 const Contacts = lazy(()=> import("../pages/Contacts"))
+const AdminPage = lazy(()=> import("../pages/AdminPage"))
 
 function AppRouter() {
     const guestRouter = createBrowserRouter([
@@ -17,7 +18,8 @@ function AppRouter() {
                 { path: "about", element: <About />},
                 { path: "coupon", element: <Coupons/>},
                 { path: "contact", element: <Contacts />},
-                { path: "deal/:id", element: <DealPage />}
+                { path: "deal/:id", element: <DealPage />},
+                { path: "admin", element: <AdminPage />},
             ]
         },
         {
