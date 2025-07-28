@@ -20,7 +20,7 @@ function Footer() {
     "Privacy Policy",
   ];
   return (
-    <section className="bg-[#004066] w-full">
+    <footer className="bg-[#004066] w-full">
       <div className="grid grid-cols-5 max-w-[1200px] w-full p-8 items-center mx-auto">
         {/* section2 */}
         <div className="text-white flex flex-col items-start">
@@ -58,7 +58,7 @@ function Footer() {
           ))}
         </div>
       </div>
-    </section>
+    </footer>
   );
 }
 export default Footer;
