@@ -12,6 +12,7 @@ const DealPage = lazy(()=> import("../pages/DealPage"))
 const AdminDeals = lazy(()=> import("../pages/admin/AdminDeals"))
 const AdminAmount = lazy(()=> import("../pages/admin/AdminAmount"))
 const AdminTopDeals = lazy(()=> import("../pages/admin/AdminTopDeals"))
+const SearchDeal = lazy(()=> import("../pages/SearchDeal"))
 
 function AppRouter() {
     const guestRouter = createBrowserRouter([
@@ -26,6 +27,7 @@ function AppRouter() {
                 { path: "admin-deal", element: <AdminDeals />},                
                 { path: "admin-amount", element: <AdminAmount />},
                 { path: "admin-top-deals", element: <AdminTopDeals />},
+                { path: "searchDeal", element: <SearchDeal />},
             ]
         },
         {
