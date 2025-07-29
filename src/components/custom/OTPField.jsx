@@ -19,7 +19,7 @@ function OTPField() {
     >
       <InputOTPGroup>
         {[...Array(otpLength)].map((_, index) => (
-          <InputOTPSlot key={index} index={index} />
+          <InputOTPSlot key={index} index={index} className="w-12 h-12"/>
         ))}
       </InputOTPGroup>
     </InputOTP>
