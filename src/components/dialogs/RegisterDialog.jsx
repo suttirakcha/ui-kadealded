@@ -15,22 +15,34 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "@/schemas/registerSchema";
 import { useState } from "react";
 import OTPPage from "@/pages/OTPPage";
+import useAuthStore from "@/stores/useAuthStore";
+import { toast } from "sonner";
+import { DatePicker } from "../custom/DatePicker";
+import { useEffect } from "react";
 
 function RegisterDialog({ open, setOpen, onSwitchRegister }) {
   const [registeredData, setRegisteredData] = useState(null);
-  const { register, handleSubmit, formState, reset } = useForm({
+  const registerUser = useAuthStore((state) => state.register);
+  const { control, register, handleSubmit, formState, reset } = useForm({
     resolver: yupResolver(registerSchema),
   });
   const { errors, isSubmitting } = formState;
 
-  // TODO: fetch register post from api
-  const onSubmit = (data) => {
+  useEffect(() => {
+    if (!open) reset();
+  }, [open])
+
+  const onSubmit = async (data) => {
     try {
       setRegisteredData(data);
       // console.log(data);
       reset();
+      // const res = await registerUser(registeredData);
+      // toast.success(res.data.message);
+      // setOpen(false);
     } catch (error) {
       console.log(error);
+      toast.error(error.response?.data.message || error.message);
     }
   };
 
@@ -70,6 +82,11 @@ function RegisterDialog({ open, setOpen, onSwitchRegister }) {
                 label="Confirm password"
                 error={errors.confirmPassword?.message}
                 type="password"
+              />
+              <DatePicker 
+                name="birth_date"
+                className="!pt-4 h-14"
+                control={control}
               />
 
               <Button

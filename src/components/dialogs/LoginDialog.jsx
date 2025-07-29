@@ -13,20 +13,30 @@ import { useForm } from "react-hook-form";
 import CustomInput from "../custom/CustomInput";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "@/schemas/loginSchema";
+import { toast } from "sonner";
+import useAuthStore from "@/stores/useAuthStore";
+import { useEffect } from "react";
 
 function LoginDialog({ open, setOpen, onSwitchLogin }) {
+  const { login } = useAuthStore();
   const { register, handleSubmit, formState, reset } = useForm({
     resolver: yupResolver(loginSchema),
   });
   const { errors, isSubmitting } = formState;
 
-  // TODO: fetch register post from api
-  const onSubmit = (data) => {
+  useEffect(() => {
+    if (!open) reset();
+  }, [open]);
+
+  const onSubmit = async (data) => {
     try {
-      console.log(data);
+      const res = await login(data);
+      toast.success(res.data.message);
       reset();
+      setOpen(false);
     } catch (error) {
       console.log(error);
+      toast.error(error.response?.data.message || error.message);
     }
   };
 
@@ -69,7 +79,12 @@ function LoginDialog({ open, setOpen, onSwitchLogin }) {
         </DialogHeader>
         <DialogFooter className="!justify-center">
           <h2>Don't have an account?</h2>
-          <button onClick={onSwitchLogin} className="text-[#003F66] cursor-pointer">Register</button>
+          <button
+            onClick={onSwitchLogin}
+            className="text-[#003F66] cursor-pointer"
+          >
+            Register
+          </button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
