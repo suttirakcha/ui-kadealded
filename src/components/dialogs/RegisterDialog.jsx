@@ -13,12 +13,15 @@ import { useForm } from "react-hook-form";
 import CustomInput from "../custom/CustomInput";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "@/schemas/registerSchema";
+import { useState } from "react";
+import OTPPage from "@/pages/OTPPage";
 import useAuthStore from "@/stores/useAuthStore";
 import { toast } from "sonner";
 import { DatePicker } from "../custom/DatePicker";
 import { useEffect } from "react";
 
 function RegisterDialog({ open, setOpen, onSwitchRegister }) {
+  const [registeredData, setRegisteredData] = useState(null);
   const registerUser = useAuthStore((state) => state.register);
   const { control, register, handleSubmit, formState, reset } = useForm({
     resolver: yupResolver(registerSchema),
@@ -31,11 +34,12 @@ function RegisterDialog({ open, setOpen, onSwitchRegister }) {
 
   const onSubmit = async (data) => {
     try {
-      const res = await registerUser(data);
+      setRegisteredData(data);
       // console.log(data);
-      toast.success(res.data.message);
       reset();
-      setOpen(false);
+      // const res = await registerUser(registeredData);
+      // toast.success(res.data.message);
+      // setOpen(false);
     } catch (error) {
       console.log(error);
       toast.error(error.response?.data.message || error.message);
@@ -53,7 +57,7 @@ function RegisterDialog({ open, setOpen, onSwitchRegister }) {
             Register to Kadealded
           </DialogTitle>
           <DialogDescription>
-            <form
+            {registeredData ? <OTPPage email={registeredData?.email || ""} onGoBack={() => setRegisteredData(null)} /> :  <form
               onSubmit={handleSubmit(onSubmit)}
               className="flex flex-col gap-2"
             >
@@ -92,7 +96,8 @@ function RegisterDialog({ open, setOpen, onSwitchRegister }) {
               >
                 Register
               </Button>
-            </form>
+            </form>}
+           
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="!justify-center">

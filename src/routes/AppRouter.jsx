@@ -7,6 +7,7 @@ const NotFound = lazy(()=> import("../pages/NotFound"))
 const About = lazy(()=> import("../pages/About"))
 const Coupons = lazy(()=> import("../pages/Coupons"))
 const Contacts = lazy(()=> import("../pages/Contacts"))
+const OTPPage = lazy(()=> import("../pages/OTPPage"))
 const DealPage = lazy(()=> import("../pages/DealPage"))
 const AdminDeals = lazy(()=> import("../pages/admin/AdminDeals"))
 const AdminAmount = lazy(()=> import("../pages/admin/AdminAmount"))
@@ -21,6 +22,7 @@ function AppRouter() {
                 { path: "coupon", element: <Coupons/>},
                 { path: "contact", element: <Contacts />},
                 { path: "deal/:id", element: <DealPage />},
+                { path: "confirmEmail", element: <OTPPage />}
                 { path: "admin-deal", element: <AdminDeals />},                
                 { path: "admin-amount", element: <AdminAmount />},
                 { path: "admin-top-deals", element: <AdminTopDeals />},
