@@ -12,22 +12,33 @@ import {
 import { useForm } from "react-hook-form";
 import CustomInput from "../custom/CustomInput";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
 import { registerSchema } from "@/schemas/registerSchema";
+import useAuthStore from "@/stores/useAuthStore";
+import { toast } from "sonner";
+import { DatePicker } from "../custom/DatePicker";
+import { useEffect } from "react";
 
 function RegisterDialog({ open, setOpen, onSwitchRegister }) {
-  const { register, handleSubmit, formState, reset } = useForm({
+  const registerUser = useAuthStore((state) => state.register);
+  const { control, register, handleSubmit, formState, reset } = useForm({
     resolver: yupResolver(registerSchema),
   });
   const { errors, isSubmitting } = formState;
 
-  // TODO: fetch register post from api
-  const onSubmit = (data) => {
+  useEffect(() => {
+    if (!open) reset();
+  }, [open])
+
+  const onSubmit = async (data) => {
     try {
-      console.log(data);
-      reset()
+      const res = await registerUser(data);
+      // console.log(data);
+      toast.success(res.data.message);
+      reset();
+      setOpen(false);
     } catch (error) {
       console.log(error);
+      toast.error(error.response?.data.message || error.message);
     }
   };
 
@@ -68,6 +79,11 @@ function RegisterDialog({ open, setOpen, onSwitchRegister }) {
                 error={errors.confirmPassword?.message}
                 type="password"
               />
+              <DatePicker 
+                name="birth_date"
+                className="!pt-4 h-14"
+                control={control}
+              />
 
               <Button
                 disabled={isSubmitting}
@@ -81,7 +97,12 @@ function RegisterDialog({ open, setOpen, onSwitchRegister }) {
         </DialogHeader>
         <DialogFooter className="!justify-center">
           <h2>Already have an account?</h2>
-          <button onClick={onSwitchRegister} className="text-[#003F66] cursor-pointer">Sign in</button>
+          <button
+            onClick={onSwitchRegister}
+            className="text-[#003F66] cursor-pointer"
+          >
+            Sign in
+          </button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -123,11 +123,11 @@
 }
 
 .text-input {
-  @apply shadow-none outline-0 !ring-0 !ring-offset-0 border-0 border-b rounded-none !p-0 text-black;
+  @apply shadow-none outline-0 !ring-0 !ring-offset-0 border-0 border-b rounded-none !p-0 text-black text-left;
 }
 
 .custom-label {
-  @apply font-medium absolute peer-focus:-top-4 peer-focus:text-black peer-focus:text-sm peer-placeholder-shown:top-1 peer-placeholder-shown:text-base peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-black transition-all duration-200 -z-1;
+  @apply font-medium absolute peer-focus:-top-4 peer-focus:text-black peer-focus:text-sm peer-placeholder-shown:top-1 peer-placeholder-shown:text-base peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-black transition-all duration-200 -z-1 left-0;
 }
 
 .carousel-content {
