@@ -10,6 +10,10 @@ const useAuthStore = create(persist((set) => ({
     set({ user: res.data.user, accessToken: res.data.token });
     return res;
   },
+  register: async (data) => {
+    const res = await authApi.post("/register", data, { withCredentials: true });
+    return res;
+  },
   logout: () => {
     set({ user: null, accessToken: null })
   }

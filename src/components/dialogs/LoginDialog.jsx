@@ -15,6 +15,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "@/schemas/loginSchema";
 import { toast } from "sonner";
 import useAuthStore from "@/stores/useAuthStore";
+import { useEffect } from "react";
 
 function LoginDialog({ open, setOpen, onSwitchLogin }) {
   const { login } = useAuthStore();
@@ -22,6 +23,10 @@ function LoginDialog({ open, setOpen, onSwitchLogin }) {
     resolver: yupResolver(loginSchema),
   });
   const { errors, isSubmitting } = formState;
+
+  useEffect(() => {
+    if (!open) reset();
+  }, [open]);
 
   const onSubmit = async (data) => {
     try {
@@ -31,7 +36,7 @@ function LoginDialog({ open, setOpen, onSwitchLogin }) {
       setOpen(false);
     } catch (error) {
       console.log(error);
-      toast.success(error.response?.data.message || error.message);
+      toast.error(error.response?.data.message || error.message);
     }
   };
 
@@ -74,7 +79,12 @@ function LoginDialog({ open, setOpen, onSwitchLogin }) {
         </DialogHeader>
         <DialogFooter className="!justify-center">
           <h2>Don't have an account?</h2>
-          <button onClick={onSwitchLogin} className="text-[#003F66] cursor-pointer">Register</button>
+          <button
+            onClick={onSwitchLogin}
+            className="text-[#003F66] cursor-pointer"
+          >
+            Register
+          </button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
