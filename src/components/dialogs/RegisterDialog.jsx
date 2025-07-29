@@ -13,8 +13,11 @@ import { useForm } from "react-hook-form";
 import CustomInput from "../custom/CustomInput";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "@/schemas/registerSchema";
+import { useState } from "react";
+import OTPPage from "@/pages/OTPPage";
 
 function RegisterDialog({ open, setOpen, onSwitchRegister }) {
+  const [registeredData, setRegisteredData] = useState(null);
   const { register, handleSubmit, formState, reset } = useForm({
     resolver: yupResolver(registerSchema),
   });
@@ -23,7 +26,8 @@ function RegisterDialog({ open, setOpen, onSwitchRegister }) {
   // TODO: fetch register post from api
   const onSubmit = (data) => {
     try {
-      console.log(data);
+      setRegisteredData(data);
+      // console.log(data);
       reset();
     } catch (error) {
       console.log(error);
@@ -41,8 +45,7 @@ function RegisterDialog({ open, setOpen, onSwitchRegister }) {
             Register to Kadealded
           </DialogTitle>
           <DialogDescription>
-            {/* <OTPField /> */}
-            <form
+            {registeredData ? <OTPPage email={registeredData?.email || ""} onGoBack={() => setRegisteredData(null)} /> :  <form
               onSubmit={handleSubmit(onSubmit)}
               className="flex flex-col gap-2"
             >
@@ -76,7 +79,8 @@ function RegisterDialog({ open, setOpen, onSwitchRegister }) {
               >
                 Register
               </Button>
-            </form>
+            </form>}
+           
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="!justify-center">
