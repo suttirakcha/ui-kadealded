@@ -22,7 +22,7 @@ function AppRouter() {
                 { path: "coupon", element: <Coupons/>},
                 { path: "contact", element: <Contacts />},
                 { path: "deal/:id", element: <DealPage />},
-                { path: "confirmEmail", element: <OTPPage />}
+                { path: "confirmEmail", element: <OTPPage />},
                 { path: "admin-deal", element: <AdminDeals />},                
                 { path: "admin-amount", element: <AdminAmount />},
                 { path: "admin-top-deals", element: <AdminTopDeals />},
