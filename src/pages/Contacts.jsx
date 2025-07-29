@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from "sonner";
 
 function Contacts() {
-   const { register, handleSubmit, formState, reset } = useForm({
+   const { register: contact , handleSubmit, formState, reset } = useForm({
     resolver: yupResolver(contactSchema),
   });
   const { errors, isSubmitting } = formState;
@@ -34,22 +34,22 @@ function Contacts() {
           <div className='flex flex-col gap-4 mt-10 mb-15'>
             <CustomInput
               label="Company Name"
-              {...register("name")} 
+              {...contact("name")} 
               error = {errors.name?.message}
               />
             <CustomInput
               label="Company Email"
-              {...register("email")} 
+              {...contact("email")} 
               error = {errors.email?.message}
               />
             <CustomInput
               label="Company Number"
-              {...register("tel_number")}
+              {...contact("tel_number")}
               error = {errors.tel_number?.message}
               />
           </div>
           <textarea
-            {...register("message")}
+            {...contact("message")}
             placeholder='Message'
             className='p-3 w-full h-50 border border-gray-200 rounded-sm resize-none' >
             </textarea>
