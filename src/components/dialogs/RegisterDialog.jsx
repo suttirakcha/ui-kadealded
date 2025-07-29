@@ -12,7 +12,6 @@ import {
 import { useForm } from "react-hook-form";
 import CustomInput from "../custom/CustomInput";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
 import { registerSchema } from "@/schemas/registerSchema";
 
 function RegisterDialog({ open, setOpen, onSwitchRegister }) {
@@ -25,7 +24,7 @@ function RegisterDialog({ open, setOpen, onSwitchRegister }) {
   const onSubmit = (data) => {
     try {
       console.log(data);
-      reset()
+      reset();
     } catch (error) {
       console.log(error);
     }
@@ -42,6 +41,7 @@ function RegisterDialog({ open, setOpen, onSwitchRegister }) {
             Register to Kadealded
           </DialogTitle>
           <DialogDescription>
+            {/* <OTPField /> */}
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="flex flex-col gap-2"
@@ -81,7 +81,12 @@ function RegisterDialog({ open, setOpen, onSwitchRegister }) {
         </DialogHeader>
         <DialogFooter className="!justify-center">
           <h2>Already have an account?</h2>
-          <button onClick={onSwitchRegister} className="text-[#003F66] cursor-pointer">Sign in</button>
+          <button
+            onClick={onSwitchRegister}
+            className="text-[#003F66] cursor-pointer"
+          >
+            Sign in
+          </button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
