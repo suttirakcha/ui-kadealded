@@ -7,7 +7,7 @@ function SearchDeal() {
       <div className="flex flex-col items-center my-10">
       <input type="text" className="shadow-md rounded-md w-1/3 py-1 border border-gray-100" />
       </div>
-      <h1 className="text-lg font-bold ml-110">
+      <h1 className="text-lg font-bold mx-auto max-w-[1200px]">
         Search results for "blah" (8 results)
       </h1>
 
