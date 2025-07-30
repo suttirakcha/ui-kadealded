@@ -57,7 +57,7 @@ function RegisterDialog({ open, setOpen, onSwitchRegister }) {
             Register to Kadealded
           </DialogTitle>
           <DialogDescription>
-            {registeredData ? <OTPPage email={registeredData?.email || ""} onGoBack={() => setRegisteredData(null)} /> :  <form
+            {registeredData ? <OTPPage email={registeredData?.email || ""} onGoBack={() => setRegisteredData(null)} /> : <form
               onSubmit={handleSubmit(onSubmit)}
               className="flex flex-col gap-2"
             >
@@ -83,7 +83,8 @@ function RegisterDialog({ open, setOpen, onSwitchRegister }) {
                 error={errors.confirmPassword?.message}
                 type="password"
               />
-              <DatePicker 
+              <DatePicker
+                label="Birth Date"
                 name="birth_date"
                 className="!pt-4 h-14"
                 control={control}
@@ -97,7 +98,7 @@ function RegisterDialog({ open, setOpen, onSwitchRegister }) {
                 Register
               </Button>
             </form>}
-           
+
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="!justify-center">

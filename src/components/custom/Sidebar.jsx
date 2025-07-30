@@ -1,11 +1,13 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { FlameIcon, Key,MemoryStick } from 'lucide-react';
+import { FlameIcon, Handshake, Key,MemoryStick, Users } from 'lucide-react';
 import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router';
 
 function Sidebar() {
     const sidebarItems = [
+        { name: "Users", icon: Users, to: "/admin-users" },
         { name: "Total Deals", icon: Key, to: "/admin-deal" },
+        { name: "Create Deals", icon: Handshake, to: "/admin-create-deal" },
         { name: "Total Amount", icon: MemoryStick, to: "/admin-amount" },
         { name: "Tops Deals", icon: FlameIcon, to: "/admin-top-deals" },
     ];

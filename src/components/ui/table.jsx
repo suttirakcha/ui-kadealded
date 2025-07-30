@@ -7,10 +7,10 @@ function Table({
   ...props
 }) {
   return (
-    <div data-slot="table-container" className="relative w-full overflow-x-auto border p-5 rounded-xl ">
+    <div data-slot="table-container" className="relative w-[1600px] overflow-x-auto border p-5 rounded-xl ">
       <table
         data-slot="table"
-        className={cn("w-full  caption-bottom text-sm", className)}
+        className={cn("w-full caption-bottom text-sm", className)}
         {...props} />
     </div>
   );
