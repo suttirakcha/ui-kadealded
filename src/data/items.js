@@ -29,19 +29,19 @@ export const items = [
   {
     id: 5,
     title: "Oven Deal",
-    description: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...",
+    description: "เพิ่มพลังให้เขียนโค้ดได้ดีขึ้น",
     imgSrc: "/src/assets/mock5.jpg"
   },
   {
     id: 6,
-    title: "Electronics Deal",
-    description: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...",
+    title: "โปรหิวข้าว",
+    description: "เมื่อใดก็ตามที่หิวข้าว ให้นึกถึงอัลฟ่า",
     imgSrc: "/src/assets/mock6.jpg"
   },
   {
     id: 7,
     title: "Happy Chinese New Year Deal",
-    description: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...",
+    description: "หิวเมื่อไรก็แวะมา อัลฟ่าอีเลเว่น",
     imgSrc: "/src/assets/mock7.jpg"
   },
   {
