@@ -19,7 +19,7 @@ function AdminUsers() {
           <TableHeader>
             <TableRow>
               <TableHead className="w-[100px]"></TableHead>
-              <TableHead className="w-[100px] text-right">Username</TableHead>
+              <TableHead className="w-[100px] text-right">Name</TableHead>
               <TableHead className="text-right">Email</TableHead>
               <TableHead className="text-right">Phonenumber</TableHead>
               <TableHead className="text-right">Birth_Date</TableHead>
