@@ -16,6 +16,7 @@ const AdminUsers = lazy(()=> import("../pages/admin/AdminUsers"))
 const AdminDeals = lazy(()=> import("../pages/admin/AdminDeals"))
 const AdminAmount = lazy(()=> import("../pages/admin/AdminAmount"))
 const AdminTopDeals = lazy(()=> import("../pages/admin/AdminTopDeals"))
+const AdminStats = lazy(()=> import("../pages/admin/AdminStats"))
 const SearchDeal = lazy(()=> import("../pages/SearchDeal"))
 
 function AppRouter() {
@@ -33,6 +34,8 @@ function AppRouter() {
                 { path: "admin-deal", element: <AdminDeals />},                
                 { path: "admin-amount", element: <AdminAmount />},
                 { path: "admin-top-deals", element: <AdminTopDeals />},
+                // { path: "admin-create-deal", element: <AdminCreateDeal />},
+                { path: "admin-stats", element: <AdminStats />},
                 { path: "admin-create-deal", element: <AdminCreateDeal />},
                 { path: "admin-create-seller", element: <AdminCreateSeller />},
                 { path: "searchDeal", element: <SearchDeal />},
