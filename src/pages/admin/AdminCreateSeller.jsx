@@ -25,10 +25,7 @@ function AdminCreateSeller() {
         }
     };
     return (
-        <div className='flex'>
-            <Sidebar />
-            <div className="p-6">
-                <div className="flex flex-col justify-between mb-4">
+        <div className="flex flex-col justify-between mb-4">
                     <h2 className="text-xl font-bold">CreateDeal</h2>
                     <form onSubmit={handleSubmit(onSubmit)} className='relative'>
                         <div className='mx-auto p-10 w-200'>
@@ -53,8 +50,6 @@ function AdminCreateSeller() {
                         </div>
                     </form>
                 </div>
-            </div>
-        </div>
     )
 }
 export default AdminCreateSeller
