@@ -3,35 +3,19 @@ import { Button } from "../ui/button";
 import { useEffect } from "react";
 
 function LoginWithGoogleBtn() {
-  const loginWithGoogle = useAuthStore((state) => state.loginWithGoogle);
+  // const loginWithGoogle = useAuthStore((state) => state.loginWithGoogle);
 
-  useEffect(() => {
-  const interval = setInterval(() => {
-    if (window.google) {
-      // ✅ It's available — safe to use
-      window.google.accounts.id.initialize({
-        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-        callback: handleCredentialResponse,
-      });
+  const redirectToGoogle = () => {
+    const redirectUri = encodeURIComponent("http://localhost:5173/callback");
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    const scope = encodeURIComponent("openid email profile");
 
-      window.google.accounts.id.renderButton(
-        document.getElementById('google-button'),
-        { theme: 'outline', size: 'large' }
-      );
+    const url = `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&access_type=offline&prompt=consent`;
 
-      clearInterval(interval); // Stop checking
-    }
-  }, 100);
-
-  return () => clearInterval(interval);
-  }, []);
-
-  const handleCredentialResponse = (response) => {
-    const idToken = response.credential;
-    loginWithGoogle(idToken);
+    window.location.href = url;
   };
 
-  return <div id="google-button"></div>;
+  return <Button onClick={redirectToGoogle}>Login with Google</Button>;
 }
 
 export default LoginWithGoogleBtn;

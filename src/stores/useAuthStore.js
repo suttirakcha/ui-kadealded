@@ -15,18 +15,9 @@ const useAuthStore = create(
         set({ user: res.data.user, accessToken: res.data.token });
         return res;
       },
-      loginWithGoogle: async (idToken) => {
-        const res = await authApi.post("/auth/google", { idToken });
-        set({ user: res.data.user, accessToken: res.data.token });
-
-        axios.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${res.data.token}`;
-        return res;
-      },
-      loginWithGoogleCode: async (code) => {
+      loginWithGoogle: async (code) => {
         try {
-          const res = await axios.post("/auth/google/callback", { code });
+          const res = await authApi.post("/auth/google", { code });
           const { token, user } = res.data;
 
           set({ user, token });

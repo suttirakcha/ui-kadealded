@@ -1,5 +1,6 @@
-import { createBrowserRouter, RouterProvider } from "react-router"
+import { createBrowserRouter, Route, RouterProvider, Routes } from "react-router"
 import { lazy } from "react"
+import { BrowserRouter } from "react-router-dom";
 
 const MainLayout = lazy(() => import("../layouts/MainLayout"));
 const Home = lazy(() => import("../pages/Home"));
@@ -17,6 +18,7 @@ const AdminSellers = lazy(() => import("../pages/admin/AdminSellers"))
 const AdminAmount = lazy(() => import("../pages/admin/AdminAmount"))
 const AdminTopDeals = lazy(() => import("../pages/admin/AdminTopDeals"))
 const SearchDeal = lazy(() => import("../pages/SearchDeal"))
+const CallbackPage = lazy(() => import("../pages/CallbackPage"));
 
 function AppRouter() {
     const guestRouter = createBrowserRouter([
@@ -37,6 +39,9 @@ function AppRouter() {
                 { path: "admin-create-seller", element: <AdminCreateSeller /> },
                 { path: "searchDeal", element: <SearchDeal /> },
             ]
+        },
+        { 
+            path: "callback", element: <CallbackPage /> 
         },
         {
             path: "*", element: <NotFound />
