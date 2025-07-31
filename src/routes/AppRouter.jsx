@@ -1,6 +1,8 @@
 import { createBrowserRouter,RouterProvider } from "react-router"
 import { lazy } from "react"
 import AdminCreateDeal from "@/pages/admin/AdminCreateDeal";
+import AdminCreateSeller from "@/pages/admin/AdminCreateSeller";
+import AdminSellers from "@/pages/admin/AdminSellers";
 
 const MainLayout = lazy(() => import("../layouts/MainLayout"));
 const Home = lazy(()=> import("../pages/Home"));
@@ -26,10 +28,12 @@ function AppRouter() {
                 { path: "deal/:id", element: <DealPage />},
                 { path: "confirmEmail", element: <OTPPage />},
                 { path: "admin-users", element: <AdminUsers />},   
+                { path: "admin-sellers", element: <AdminSellers />},   
                 { path: "admin-deal", element: <AdminDeals />},                
                 { path: "admin-amount", element: <AdminAmount />},
                 { path: "admin-top-deals", element: <AdminTopDeals />},
                 { path: "admin-create-deal", element: <AdminCreateDeal />},
+                { path: "admin-create-seller", element: <AdminCreateSeller />},
             ]
         },
         {

@@ -35,8 +35,8 @@ function AdminDeals() {
                 <TableCell className="text-right">-</TableCell>
                 <TableCell className="text-right">$250.00</TableCell>
                 <TableCell className="text-right">50</TableCell>
-                <TableCell className="text-right"><button className='text-white bg-green-500 px-2 rounded'>Status</button></TableCell>
-                <TableCell className="text-right"><button className='text-white bg-blue-600 px-2 rounded'>Edit</button></TableCell>
+                <TableCell className="text-right"><button className='text-white bg-green-500 px-5 py-1 rounded'>Status</button></TableCell>
+                <TableCell className="text-right"><button className='text-white bg-blue-500 hover:bg-blue-700 active:bg-blue-900 px-5 py-1 rounded'>Edit</button></TableCell>
               </TableRow>
             ))}
           </TableBody>
