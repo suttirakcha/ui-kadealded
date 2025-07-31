@@ -14,9 +14,9 @@ const useSellerStore = create((set) => ({
         console.log(res.data)
         set({ sellers: res.data.sellers });
     },
-
+ 
     createSeller: async (data) => {
-        const token = useAuthStore.getState().accessToken();
+        const token = useAuthStore.getState().accessToken;
         const res = await adminApi.post("/sellers", data, {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -29,28 +29,28 @@ const useSellerStore = create((set) => ({
     },
 
     updateSeller: async (id, data) => {
-    const token = useAuthStore.getState().accessToken;
-    const res = await adminApi.put(`/sellers/${id}`, data, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    set((state) => ({
-      sellers: state.sellers.map((seller) =>
-        seller.id === id ? res.data.sellers : seller
-      )
-    }));
-    return res;
-  },
+        const token = useAuthStore.getState().accessToken;
+        const res = await adminApi.put(`/sellers/${id}`, data, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        set((state) => ({
+            sellers: state.sellers.map((seller) =>
+                seller.id === id ? res.data.sellers : seller
+            )
+        }));
+        return res;
+    },
 
-  deleteSeller: async (id) => {
-    const token = useAuthStore.getState().accessToken;
-    const res = await adminApi.delete(`/sellers/${id}`, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    set((state) => ({
-      sellers: state.sellers.filter((seller) => seller.id !== id)
-    }));
-    return res;
-  }
+    deleteSeller: async (id) => {
+        const token = useAuthStore.getState().accessToken;
+        const res = await adminApi.delete(`/sellers/${id}`, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        set((state) => ({
+            sellers: state.sellers.filter((seller) => seller.id !== id)
+        }));
+        return res;
+    }
 }))
 
 export default useSellerStore;

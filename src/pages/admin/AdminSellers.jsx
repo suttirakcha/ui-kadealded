@@ -36,7 +36,6 @@ function AdminSellers() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px]">Image</TableHead>
               <TableHead className="text-right">Company</TableHead>
               <TableHead className="text-right">Email</TableHead>
               <TableHead className="text-right">Phone</TableHead>
@@ -47,13 +46,6 @@ function AdminSellers() {
           <TableBody>
            {sellers.length > 0 ? <>{sellers.map((seller) => (
               <TableRow key={seller?.id}>
-                <TableCell>
-                  <img
-                    src={"/default.jpg"}
-                    alt="profile"
-                    className="w-full h-full object-cover rounded-2xl"
-                  />
-                </TableCell>
                 <TableCell className="text-right">{seller?.name}</TableCell>
                 <TableCell className="text-right">{seller?.email}</TableCell>
                 <TableCell className="text-right">{seller?.tel_number}</TableCell>
