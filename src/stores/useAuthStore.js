@@ -1,4 +1,5 @@
 import { authApi } from "@/api/routesApi";
+import axios from "axios";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -8,6 +9,13 @@ const useAuthStore = create(persist((set) => ({
   login: async (data) => {
     const res = await authApi.post("/login", data, { withCredentials: true });
     set({ user: res.data.user, accessToken: res.data.token });
+    return res;
+  },
+  loginWithGoogle: async (idToken) => {
+    const res = await authApi.post("/auth/google", { idToken });
+    set({ user: res.data.user, accessToken: res.data.token });
+
+    axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
     return res;
   },
   register: async (data) => {

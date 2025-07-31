@@ -24,6 +24,13 @@ function Header() {
     setIsLoginOpen(true);
   };
 
+  const userName = {
+    firstName: user?.name ? user?.name.split(" ")[0] : (user?.firstName || "John"),
+    lastName: user?.name ? user?.name.split(" ")[1] : (user?.lastName || "Doe")
+  }
+
+  console.log(userName);
+
   return (
     <div className="grid grid-cols-5 items-center justify-center bg-[#003f66] fixed top-0 inset-x-0 z-2 text-white px-8">
       <CategorySheet />
@@ -73,11 +80,11 @@ function Header() {
           )}
         </div>
       </div>
-      {user && (
+      {(user && userName) && (
         <div className="flex justify-end">
           <Avatar className="h-10 w-10">
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarImage src={user?.picture ?? "https://github.com/shadcn.png"} />
+            <AvatarFallback>{userName.firstName[0]}{userName.lastName[0]}</AvatarFallback>
           </Avatar>
         </div>
       )}
