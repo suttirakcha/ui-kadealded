@@ -1,13 +1,14 @@
 import { useForm } from 'react-hook-form';
 import Sidebar from '../../components/custom/Sidebar'
 import { yupResolver } from '@hookform/resolvers/yup';
-import { adminApi } from '@/api/routesApi';
 import CustomInput from '@/components/custom/CustomInput'
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { sellerSchema } from '@/schemas/sellerSchema';
+import useSellerStore from '@/stores/userSellerStore';
 
 function AdminCreateSeller() {
+    const { createSeller } = useSellerStore();
     const { register: seller, handleSubmit, formState, reset } = useForm({
         resolver: yupResolver(sellerSchema),
     });
@@ -15,10 +16,9 @@ function AdminCreateSeller() {
 
     const onSubmit = async (data) => {
         try {
-            const res = await adminApi.post("/sellers", data);
-            console.log(res);
+            const res = await createSeller(data);
             toast.success(res.data.message);
-            // reset();
+            reset();
         } catch (error) {
             console.log(error);
             toast.error(error.response?.data.message || error.message);
