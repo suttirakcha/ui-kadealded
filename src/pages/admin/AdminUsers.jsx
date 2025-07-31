@@ -11,10 +11,8 @@ import { AllDeal } from '../../data/items'
 
 function AdminUsers() {
   return (
-    <div className='flex'>
-      <Sidebar />
-      <div className="p-6 h-full">
-        <h2 className="text-xl font-bold mb-3 p-5">Users</h2>
+    <>
+    <h2 className="text-xl font-bold mb-3 p-5">Users</h2>
         <Table>
           <TableHeader>
             <TableRow>
@@ -43,9 +41,7 @@ function AdminUsers() {
             ))}
           </TableBody>
         </Table>
-
-      </div>
-    </div>
+    </>
   )
 }
 

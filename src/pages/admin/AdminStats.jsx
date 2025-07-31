@@ -5,9 +5,7 @@ import Sidebar from "@/components/custom/Sidebar";
 
 function AdminStats() {
   return (
-    <div className="flex">
-      <Sidebar />
-      <div className="max-w-[1200px] mx-auto">
+      <div className="max-w-[1200px] mx-auto w-full">
       <h1 className="w-full font-bold text-3xl py-5">Statistics</h1>
       <div className="grid grid-cols-2 gap-13">
         <LineChartComp />
@@ -15,7 +13,6 @@ function AdminStats() {
         <DonutActiveComp />
         <BarGraphComp />
       </div>
-    </div>
     </div>
   );
 }

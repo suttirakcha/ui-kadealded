@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form';
-import Sidebar from '../../components/custom/Sidebar'
 import { yupResolver } from '@hookform/resolvers/yup';
 import { adminApi } from '@/api/routesApi';
 import { dealSchema } from '@/schemas/dealSchema';
@@ -31,10 +30,7 @@ function AdminCreateDeal() {
         }
     };
     return (
-        <div className='flex'>
-            <Sidebar />
-            <div className="p-6">
-                <div className="flex flex-col justify-between mb-4">
+        <div className="flex flex-col justify-between mb-4">
                     <h2 className="text-xl font-bold">CreateDeal</h2>
                     <form onSubmit={handleSubmit(onSubmit)} className='relative'>
                         <div className='mx-auto p-10 w-200'>
@@ -90,8 +86,6 @@ function AdminCreateDeal() {
                         </div>
                     </form>
                 </div>
-            </div>
-        </div>
     )
 }
 export default AdminCreateDeal

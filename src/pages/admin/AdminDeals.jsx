@@ -11,10 +11,8 @@ import { AllDeal } from '../../data/items'
 
 function AdminDeals() {
   return (
-    <div className='flex'>
-      <Sidebar />
-      <div className="p-6 h-full">
-        <h2 className="text-xl font-bold mb-3 p-5">Total Deals</h2>
+    <>
+<h2 className="text-xl font-bold mb-3 p-5">Total Deals</h2>
         <Table>
           <TableHeader>
             <TableRow>
@@ -41,9 +39,7 @@ function AdminDeals() {
             ))}
           </TableBody>
         </Table>
-
-      </div>
-    </div>
+    </>
   )
 }
 
