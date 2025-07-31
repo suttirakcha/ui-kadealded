@@ -1,12 +1,13 @@
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
-function CustomInput({ label, placeholder = " ", error, ...props }) {
+function CustomInput({ label, placeholder = " ", className, error, ...props }) {
   return (
     <label className="pt-4">
       <div className="relative mb-1">
         <Input
           {...props}
-          className="text-input peer"
+          className={cn("text-input peer", className)}
           placeholder={placeholder}
         />
         <span className="custom-label">{label}</span>

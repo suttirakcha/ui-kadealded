@@ -11,7 +11,7 @@ import {
 import { Controller } from "react-hook-form";
 import { cn } from "@/lib/utils";
 
-export function DatePicker({ name, control, className }) {
+export function DatePicker({ label, name, control, className }) {
   return (
     <Controller
       name={name}
@@ -21,7 +21,7 @@ export function DatePicker({ name, control, className }) {
         return (
           <Popover>
             <PopoverTrigger asChild>
-              <Button
+              <Button 
                 variant="ghost"
                 data-empty={!value}
                 className={cn(
@@ -30,7 +30,7 @@ export function DatePicker({ name, control, className }) {
                 )}
               >
                 <CalendarIcon />
-                {value ? format(value, "dd/MM/yyyy") : <span>Birth Date</span>}
+                {value ? format(value, "dd/MM/yyyy") : <span>{label}</span>}
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0">
