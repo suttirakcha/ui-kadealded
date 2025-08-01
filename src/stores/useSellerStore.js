@@ -11,7 +11,6 @@ const useSellerStore = create((set) => ({
         const res = await adminApi.get("/sellers", {
             headers: { Authorization: `Bearer ${token}` }
         });
-        console.log(res.data)
         set({ sellers: res.data.sellers });
     },
  

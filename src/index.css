@@ -142,3 +142,13 @@ a.active{
   /* @apply hover:text-[#e59b2b] hover:bg-white p-3.5 cursor-pointer; */
   @apply text-shadow-[1px_1px_0_black] h-full flex items-center hover:text-[#E59B2B] py-3.5 active:text-shadow-none cursor-pointer;
 }
+
+.google-login-btn {
+  background: linear-gradient(90deg, #A9BFFF 0%, #FF8386 75%, #EEE14D 100%);
+  @apply h-12 text-base cursor-pointer;
+}
+
+.google-login-btn svg {
+  width:32px;
+  height:32px;
+}
