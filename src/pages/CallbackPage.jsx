@@ -9,11 +9,14 @@ function CallbackPage(){
   const loginWithGoogle = useAuthStore((state) => state.loginWithGoogle);
 
   useEffect(() => {
-    if (code) {
-      loginWithGoogle(code).then(() => {
+    const run = async () => {
+      if (code) {
+        await loginWithGoogle(code);
         navigate('/');
-      });
+      }
     }
+
+    run();
   }, [code]);
 
   return <p>Logging in...</p>;

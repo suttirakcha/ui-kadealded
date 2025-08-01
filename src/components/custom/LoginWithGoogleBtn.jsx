@@ -1,10 +1,9 @@
 import useAuthStore from "@/stores/useAuthStore";
 import { Button } from "../ui/button";
 import { useEffect } from "react";
+import GoogleIcon from "../icons/GoogleIcon";
 
 function LoginWithGoogleBtn() {
-  // const loginWithGoogle = useAuthStore((state) => state.loginWithGoogle);
-
   const redirectToGoogle = () => {
     const redirectUri = encodeURIComponent("http://localhost:5173/callback");
     const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
@@ -15,7 +14,12 @@ function LoginWithGoogleBtn() {
     window.location.href = url;
   };
 
-  return <Button onClick={redirectToGoogle}>Login with Google</Button>;
+  return (
+    <Button onClick={redirectToGoogle} className="google-login-btn">
+      <GoogleIcon />
+      Login with Google
+    </Button>
+  );
 }
 
 export default LoginWithGoogleBtn;
