@@ -145,5 +145,10 @@ a.active{
 
 .google-login-btn {
   background: linear-gradient(90deg, #A9BFFF 0%, #FF8386 75%, #EEE14D 100%);
-  @apply h-12 text-base;
+  @apply h-12 text-base cursor-pointer;
+}
+
+.google-login-btn svg {
+  width:32px;
+  height:32px;
 }
