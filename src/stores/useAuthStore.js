@@ -16,15 +16,12 @@ const useAuthStore = create(
         return res;
       },
       loginWithGoogle: async (code) => {
-        try {
-          const res = await authApi.post("/auth/google", { code });
-          const { token, user } = res.data;
+        const res = await authApi.post("/auth/google", { code });
+        const { token, user } = res.data;
 
-          set({ user, token });
-          axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-        } catch (err) {
-          console.error("OAuth callback failed:", err);
-        }
+        set({ user, token });
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        return res;
       },
       register: async (data) => {
         const res = await authApi.post("/register", data, {

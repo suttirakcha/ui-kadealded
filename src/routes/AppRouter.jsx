@@ -1,6 +1,5 @@
 import { createBrowserRouter, Route, RouterProvider, Routes } from "react-router"
 import { lazy } from "react"
-import { BrowserRouter } from "react-router-dom";
 
 const MainLayout = lazy(() => import("../layouts/MainLayout"));
 const Home = lazy(() => import("../pages/Home"));
