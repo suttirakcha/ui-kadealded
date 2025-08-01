@@ -34,9 +34,15 @@ function AdminCategory() {
   }, []);
 
   const handleDelete = async (id) => {
-    const confirmDelete = window.confirm("คุณต้องการลบ Category นี้หรือไม่?");
-    if (!confirmDelete) return;
-    await deleteCategory(id);
+    try {
+      const confirmDelete = confirm("คุณต้องการลบ Category นี้หรือไม่?");
+      if (!confirmDelete) return;
+      await deleteCategory(id);
+      toast.success("Delete Complete")
+    } catch (error) {
+      console.log(error);
+      toast.error("This Category is already used on another deal");
+    }
   };
 
   const onSubmit = async (data) => {
