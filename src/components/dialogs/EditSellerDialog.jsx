@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import useSellerStore from "@/stores/userSellerStore";
+import useSellerStore from "@/stores/useSellerStore";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { toast } from "sonner";
@@ -22,13 +22,12 @@ function EditSellerDialog({ open, onOpenChange, seller }) {
     }
   });
 
-  // เมื่อ seller เปลี่ยน ให้ reset form
   useEffect(() => {
     if (seller) {
       reset({
-        name: seller.name || "",
-        email: seller.email || "",
-        tel_number: seller.tel_number || "",
+        name: seller?.name || "",
+        email: seller?.email || "",
+        tel_number: seller?.tel_number || "",
       });
     }
   }, [seller, reset]);

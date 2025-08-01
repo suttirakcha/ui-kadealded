@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { FlameIcon, GemIcon, HandCoinsIcon, Handshake, Key, MemoryStick, Users, ChartPie, Home, HomeIcon } from 'lucide-react';
+import { FlameIcon, GemIcon, HandCoinsIcon, Handshake, Key, MemoryStick, Users, ChartPie, Home, HomeIcon, ChartBarStacked } from 'lucide-react';
 import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router';
 
@@ -10,6 +10,7 @@ function Sidebar() {
         { name: "Total Deals", icon: Key, to: "/admin/deal" },
         { name: "Total Amount", icon: MemoryStick, to: "/admin/amount" },
         { name: "Tops Deals", icon: FlameIcon, to: "/admin/top-deals" },
+        { name: "Categories", icon: ChartBarStacked, to: "/admin/category" },
         { name: "Create Deals", icon: Handshake, to: "/admin/create-deal" },
         { name: "Create Sellers", icon: GemIcon, to: "/admin/create-seller" },
         { name: "Statistics", icon: ChartPie, to: "/admin/stats" },
@@ -27,7 +28,7 @@ function Sidebar() {
     const location = useLocation();
 
     return (
-        <div className="text-white bg-[#033f66] border-r min-h-screen h-full p-4">
+        <div className="text-white bg-[#033f66] border-r min-h-screen h-full p-4 w-70">
             <div className='flex p-2 gap-3 mb-4'>
                 <div>
                     {user && (
