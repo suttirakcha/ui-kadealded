@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import useSellerStore from '@/stores/userSellerStore';
+import useSellerStore from '@/stores/useSellerStore';
 import EditSellerDialog from '@/components/dialogs/EditSellerDialog';
 
 function AdminSellers() {

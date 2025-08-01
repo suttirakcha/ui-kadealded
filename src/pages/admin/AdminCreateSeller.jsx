@@ -5,7 +5,7 @@ import CustomInput from '@/components/custom/CustomInput'
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { sellerSchema } from '@/schemas/sellerSchema';
-import useSellerStore from '@/stores/userSellerStore';
+import useSellerStore from '@/stores/useSellerStore';
 
 function AdminCreateSeller() {
     const { createSeller } = useSellerStore();
