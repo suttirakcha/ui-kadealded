@@ -37,20 +37,24 @@ function AdminCreateDeal() {
 
     const onSubmit = async (data) => {
         try {
-            const imgFile = new FormData();
-            imgFile.append("image", data.image);
+            const imgForm = new FormData();
+            imgForm.append("image", data.images[0]);
 
-            const result = { ...data, image: imgFile };
+            const uploadRes = await adminApi.post("/upload", imgForm);
 
-            const res = await adminApi.post("/deals", result);
-            // console.log(result);
+            const res = await adminApi.post("/deals", {
+                ...data,
+                deal_status: data.status,
+                image_url: uploadRes.data.url,
+            });
+
             toast.success(res.data.message);
-            // reset();
         } catch (error) {
-            console.log(error);
             toast.error(error.response?.data.message || error.message);
         }
     };
+
+
     return (
         <div className="flex flex-col justify-between mb-4">
             <h2 className="text-xl font-bold">CreateDeal</h2>
@@ -102,15 +106,16 @@ function AdminCreateDeal() {
                             label="Images"
                             {...deal("images")}
                             type="file"
+                            multiple
                         />
                         {errors.images && <p className="text-sm text-red-500">{errors.images?.message}</p>}
                         <DatePicker
                             label="Start Date"
-                            name="start_date"
-                            {...deal("start_date")}
+                            name="start_at"
+                            {...deal("start_at")}
                             control={control}
                         />
-                        {errors.start_date && <p className="text-sm text-red-500">{errors.start_date?.message}</p>}
+                        {errors.start_at && <p className="text-sm text-red-500">{errors.start_at?.message}</p>}
                         <DatePicker
                             label="Deal Line Date"
                             name="deadline"
