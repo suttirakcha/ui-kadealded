@@ -11,6 +11,7 @@ import useAuthStore from "@/stores/useAuthStore";
 function Header() {
   const { user, logout } = useAuthStore();
   const location = useLocation();
+  const isAdmin = user?.role === "ADMIN" || user?.role === "SUPERADMIN";
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
 
@@ -52,6 +53,7 @@ function Header() {
             Contact Us
             {/* <div className="bg-white group-hover:h-1 w-full absolute bottom-0 transform-all duration-100"></div> */}
           </NavLink>
+          {isAdmin && <NavLink to="/admin/stats" className="navbar-link">Admin</NavLink>}
           {user ? (
             <a className="navbar-link" onClick={logout}>
               {/* TODO: Will do the logout feature after user is dynamically fetched */}
