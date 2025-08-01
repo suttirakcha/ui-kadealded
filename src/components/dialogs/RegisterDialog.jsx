@@ -19,6 +19,7 @@ import useAuthStore from "@/stores/useAuthStore";
 import { toast } from "sonner";
 import { DatePicker } from "../custom/DatePicker";
 import { useEffect } from "react";
+import LoginWithGoogleBtn from "../custom/LoginWithGoogleBtn";
 
 function RegisterDialog({ open, setOpen, onSwitchRegister }) {
   const [registeredData, setRegisteredData] = useState(null);
@@ -101,6 +102,7 @@ function RegisterDialog({ open, setOpen, onSwitchRegister }) {
 
           </DialogDescription>
         </DialogHeader>
+        <LoginWithGoogleBtn />
         <DialogFooter className="!justify-center">
           <h2>Already have an account?</h2>
           <button

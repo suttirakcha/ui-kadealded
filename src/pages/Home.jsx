@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router'
 import { HotDeal, items, items2 } from '../data/items'
 
 function Home() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleClick = (id) => {
     navigate(`/deal/${id}`)
