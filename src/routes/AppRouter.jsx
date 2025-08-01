@@ -21,6 +21,7 @@ const AdminAmount = lazy(() => import("../pages/admin/AdminAmount"));
 const AdminTopDeals = lazy(() => import("../pages/admin/AdminTopDeals"));
 const SearchDeal = lazy(() => import("../pages/SearchDeal"));
 const AdminStats = lazy(() => import("@/pages/admin/AdminStats"));
+const CallbackPage = lazy(() => import("../pages/CallbackPage"));
 
 function AppRouter() {
     const { user } = useAuthStore();
@@ -38,6 +39,9 @@ function AppRouter() {
                 { path: "confirmEmail", element: <OTPPage /> },
                 { path: "searchDeal", element: <SearchDeal /> },
             ],
+        },
+        { 
+            path: "callback", element: <CallbackPage /> 
         },
         {
             path: "/admin",
