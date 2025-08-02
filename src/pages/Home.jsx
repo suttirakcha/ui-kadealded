@@ -1,14 +1,24 @@
 import MainCarousel from "@/components/custom/MainCarousel";
 import { Input } from "@/components/ui/input";
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router";
 import { HotDeal, items, items2 } from "../data/items";
 import useDealStore from "@/stores/useDealStore";
 import CardDealList from "@/components/custom/CardDealList";
+import SearchForm from "@/components/custom/SearchForm";
 
 function Home() {
+  const location = useLocation();
   const navigate = useNavigate();
   const { deals, getAllDeals } = useDealStore();
+  const [inputValue, setInputValue] = useState("");
+  
+  const handleSearch = (e) => {
+    e.preventDefault();
+    navigate('/searchDeal', { state: { result: inputValue } });
+  }
+
+  console.log(location);
 
   useEffect(() => {
     const run = async () => {
@@ -29,7 +39,13 @@ function Home() {
           <h1 className="text-5xl leading-15 font-bold text-white">
             Let's explore our promotions here!
           </h1>
-          <Input placeholder="Search our promotions" className="bg-white" />
+          <SearchForm 
+            value={inputValue}
+            placeholder="Search our promotions"
+            onChange={(e) => setInputValue(e.target.value)}
+            onSubmit={handleSearch}
+          />
+          {/* <Input placeholder="Search our promotions" className="bg-white" /> */}
         </div>
       </section>
 
