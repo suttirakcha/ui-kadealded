@@ -6,6 +6,7 @@ import { HotDeal, items, items2 } from "../data/items";
 import useDealStore from "@/stores/useDealStore";
 import CardDealList from "@/components/custom/CardDealList";
 import SearchForm from "@/components/custom/SearchForm";
+import ChatWithAdminBox from "@/components/custom/ChatWithAdminBox";
 
 function Home() {
   const location = useLocation();
@@ -48,6 +49,8 @@ function Home() {
           {/* <Input placeholder="Search our promotions" className="bg-white" /> */}
         </div>
       </section>
+
+      <ChatWithAdminBox />
 
       <section>
         <div className="max-w-[1350px] mx-auto w-full p-8 flex justify-center gap-4">
