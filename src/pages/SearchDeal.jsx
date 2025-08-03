@@ -12,6 +12,7 @@ import { useLocation, useNavigate, useSearchParams } from "react-router";
 import useDealStore from "@/stores/useDealStore";
 import CardDealList from "@/components/custom/CardDealList";
 import SearchForm from "@/components/custom/SearchForm";
+import Loading from "@/components/icons/Loading";
 
 function SearchDeal() {
   const location = useLocation();
@@ -24,10 +25,7 @@ function SearchDeal() {
   const searchResult = searchQuery.get("result");
 
   useEffect(() => {
-    if (location.state) {
-      setSearchQuery({ result: location.state.result });
-    }
-
+    setSearchQuery({ result: location.state?.result || searchResult || "" });
     const run = async () => {
       await getAllDeals();
     };
@@ -64,8 +62,8 @@ function SearchDeal() {
       />
       <div className="flex items-center gap-4 max-w-[1200px] w-full mx-auto pt-10">
         <h1 className="text-lg font-bold">
-          Search results for {searchResult} ({filteredItems.length} result
-          {filteredItems.length === 1 ? "" : "s"})
+          Search results for {searchResult} ({filteredItems?.length} result
+          {filteredItems?.length === 1 ? "" : "s"})
         </h1>
 
         {searchResult && (
@@ -74,19 +72,24 @@ function SearchDeal() {
           </button>
         )}
       </div>
-      {filteredItems.length > 0 ? (
-        <div className="mx-auto max-w-[1200px] w-full h-full rounded-2xl py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 relative">
-          <CardDealList
-            items={filteredItems}
-            onClick={(id) => navigate(`/deal/${id}`)}
-          />
-        </div>
+      {deals ? (
+        <>
+          {filteredItems?.length > 0 ? (
+            <div className="mx-auto max-w-[1200px] w-full h-full rounded-2xl py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 relative">
+              <CardDealList
+                items={filteredItems}
+                onClick={(id) => navigate(`/deal/${id}`)}
+              />
+            </div>
+          ) : (
+            <div className="mx-auto w-full max-w-[300px] text-center text-3xl py-50">
+              Result not found
+            </div>
+          )}
+        </>
       ) : (
-        <div className="mx-auto w-full max-w-[300px] text-center text-3xl py-50">
-          Result not found
-        </div>
+        <Loading />
       )}
-
       <Pagination className="mb-10">
         <PaginationContent>
           <PaginationItem>
