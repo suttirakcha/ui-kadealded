@@ -11,6 +11,8 @@ function CallbackPage() {
   useEffect(() => {
     const run = async () => {
       const res = await loginWithGoogle(code);
+
+      console.log(res.data.token);
       if (res.data.token) {
         navigate("/");
       }
