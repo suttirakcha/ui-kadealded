@@ -18,8 +18,6 @@ function Home() {
     navigate('/searchDeal', { state: { result: inputValue } });
   }
 
-  console.log(location);
-
   useEffect(() => {
     const run = async () => {
       await getAllDeals();
