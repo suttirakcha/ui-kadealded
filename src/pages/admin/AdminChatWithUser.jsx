@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
@@ -46,28 +47,39 @@ export default function AdminChatWithUser() {
     <div>
       <h2>Admin Panel</h2>
 
-      <h4>Users:</h4>
-      <div>
-        {userList.map((user) => (
-          <button key={user} onClick={() => setSelectedUser(user)}>
-            {user}
-          </button>
-        ))}
-      </div>
+      <Card>
+        <h4>Users:</h4>
+        <div>
+          {userList.map((user) => (
+            <button key={user} onClick={() => setSelectedUser(user)}>
+              {user}
+            </button>
+          ))}
+        </div>
+      </Card>
 
       {selectedUser && (
-        <>
+        <Card>
           <h4>Chat with {selectedUser}</h4>
-          <div>
+          <div className="space-y-2 w-full">
             {chat.map((c, i) => (
-              <p
-                key={i}
-                className={cn("px-4 py-2 rounded-md bg-[#003F66] text-white", {
-                  "bg-gray-200 text-black": c.from === selectedUser,
+              <div
+                className={cn("w-full flex justify-end", {
+                  "justify-start": c.from === selectedUser,
                 })}
               >
-                {c.message}
-              </p>
+                <p
+                  key={i}
+                  className={cn(
+                    "px-4 py-2 rounded-md bg-[#003F66] text-white w-fit",
+                    {
+                      "bg-gray-200 text-black": c.from === selectedUser,
+                    }
+                  )}
+                >
+                  {c.message}
+                </p>
+              </div>
             ))}
           </div>
           <form className="flex items-center gap-4" onSubmit={sendMessage}>
@@ -78,7 +90,7 @@ export default function AdminChatWithUser() {
             />
             <Button type="submit">Send</Button>
           </form>
-        </>
+        </Card>
       )}
     </div>
   );

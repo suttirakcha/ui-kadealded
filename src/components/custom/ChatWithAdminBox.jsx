@@ -24,7 +24,6 @@ function ChatWithAdminBox() {
     return () => {
       socket.off("receive-message");
     };
-
   }, []);
 
   const sendMessage = (e) => {
@@ -41,23 +40,34 @@ function ChatWithAdminBox() {
           <h2 className="p-4 w-full text-center font-bold text-xl">
             Chat with Admin
           </h2>
-          <div className="p-4">
+          <div className="p-4 space-y-2">
             {chat.map((c, i) => (
-              <p
-                key={i}
-                className={cn("px-4 py-2 rounded-md bg-[#003F66] text-white", "w-fit", {
-                  "bg-gray-200 text-black": c.from === "admin",
+              <div
+                className={cn("w-full flex justify-end", {
+                  "justify-start": c.from === "admin",
                 })}
               >
-                {c.message}
-              </p>
+                <p
+                  key={i}
+                  className={cn(
+                    "px-4 py-2 rounded-md bg-[#003F66] text-white",
+                    "w-fit",
+                    {
+                      "bg-gray-200 text-black": c.from === "admin",
+                    }
+                  )}
+                >
+                  {c.message}
+                </p>
+              </div>
             ))}
           </div>
-          <form
-            className="flex items-center gap-4 p-4"
-            onSubmit={sendMessage}
-          >
-            <Input placeholder="Type message here..." value={message} onChange={e => setMessage(e.target.value)} />
+          <form className="flex items-center gap-4 p-4" onSubmit={sendMessage}>
+            <Input
+              placeholder="Type message here..."
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
             <Button type="submit">Send</Button>
           </form>
         </div>
