@@ -18,8 +18,6 @@ function Home() {
     navigate('/searchDeal', { state: { result: inputValue } });
   }
 
-  console.log(location);
-
   useEffect(() => {
     const run = async () => {
       await getAllDeals();
@@ -45,7 +43,6 @@ function Home() {
             onChange={(e) => setInputValue(e.target.value)}
             onSubmit={handleSearch}
           />
-          {/* <Input placeholder="Search our promotions" className="bg-white" /> */}
         </div>
       </section>
 
