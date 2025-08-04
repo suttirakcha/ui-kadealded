@@ -19,6 +19,7 @@ const AdminCategory = lazy(() => import("../pages/admin/AdminCategory"));
 const AdminSellers = lazy(() => import("../pages/admin/AdminSellers"));
 const AdminAmount = lazy(() => import("../pages/admin/AdminAmount"));
 const AdminTopDeals = lazy(() => import("../pages/admin/AdminTopDeals"));
+const AdminChatWithUser = lazy(() => import("../pages/admin/AdminChatWithUser"));
 const SearchDeal = lazy(() => import("../pages/SearchDeal"));
 const AdminStats = lazy(() => import("@/pages/admin/AdminStats"));
 const CallbackPage = lazy(() => import("../pages/CallbackPage"));
@@ -56,6 +57,7 @@ function AppRouter() {
                 { path: "create-seller", element: <AdminCreateSeller /> },
                 { path: "category", element: <AdminCategory /> },
                 { path: "stats", element: <AdminStats /> },
+                { path: "chat", element: <AdminChatWithUser /> }
             ],
         },
         {
