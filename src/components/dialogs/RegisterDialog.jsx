@@ -59,14 +59,14 @@ function RegisterDialog({ open, setOpen, onSwitchRegister }) {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={!registeredData && setOpen}>
       <DialogTrigger asChild>
         <a className="navbar-link">Register</a>
       </DialogTrigger>
       <DialogContent className="p-10">
         <DialogHeader className="gap-4">
           <DialogTitle className="text-2xl font-bold">
-            Register to Kadealded
+            {registeredData ? "Enter the OTP" : "Register to Kadealded"}
           </DialogTitle>
           <DialogDescription>
             {registeredData ? (
@@ -134,16 +134,20 @@ function RegisterDialog({ open, setOpen, onSwitchRegister }) {
             )}
           </DialogDescription>
         </DialogHeader>
-        <LoginWithGoogleBtn />
-        <DialogFooter className="!justify-center">
-          <h2>Already have an account?</h2>
-          <button
-            onClick={onSwitchRegister}
-            className="text-[#003F66] cursor-pointer"
-          >
-            Sign in
-          </button>
-        </DialogFooter>
+        {!registeredData && (
+          <>
+            <LoginWithGoogleBtn />
+            <DialogFooter className="!justify-center">
+              <h2>Already have an account?</h2>
+              <button
+                onClick={onSwitchRegister}
+                className="text-[#003F66] cursor-pointer"
+              >
+                Sign in
+              </button>
+            </DialogFooter>
+          </>
+        )}
       </DialogContent>
     </Dialog>
   );
