@@ -1,32 +1,47 @@
+import useCategoryStore from "@/stores/useCategoryStore";
 import { Instagram, Linkedin, Youtube } from "lucide-react";
+import { useEffect } from "react";
 import { Link } from "react-router";
 
 function Footer() {
-  const categories = [
-    "Food",
-    "Beverages",
-    "Sports",
-    "Category 1",
-    "Category 2",
-    "Category 3",
-    "Category 4",
-  ];
-  const others = [
-    "About Us",
-    "Contact Us",
-    "Partners",
-    "Careers",
-    "Terms and Conditions",
-    "Privacy Policy",
-  ];
+  const { categories, fetchAllCategories } = useCategoryStore();
+
+  useEffect(() => {
+    const run = async () => {
+      await fetchAllCategories()
+    }
+
+    run()
+  }, [])
+
+  // console.log(categories);
+  // const categories = [
+  //   "Food",
+  //   "Beverages",
+  //   "Sports",
+  //   "Category 1",
+  //   "Category 2",
+  //   "Category 3",
+  //   "Category 4",
+  // ];
+
+  const footerLinks = [
+    { text: "About us", href: "/about" },
+    { text: "Contact us", href: "/contact" },
+    { text: "Partners", href: "" },
+    { text: "Careers", href: "" },
+    { text: "Terms and Conditions", href: "" },
+    { text: "Privacy Policy", href: "" }
+  ]
+
   return (
     <footer className="bg-[#004066] w-full">
       <div className="grid grid-cols-5 max-w-[1200px] w-full p-8 items-center mx-auto">
         {/* section2 */}
         <div className="text-white flex flex-col items-start">
-          {categories.map((category, index) => (
+          {categories?.map((category, index) => (
             <Link key={index} to="#">
-              {category}
+              {category.name}
             </Link>
           ))}
         </div>
@@ -51,9 +66,9 @@ function Footer() {
 
         {/* section3 */}
         <div className="text-white flex flex-col items-end">
-          {others.map((other, index) => (
-            <Link key={index} to="#">
-              {other}
+          {footerLinks.map((link, index) => (
+            <Link key={index} to={link.href}>
+              {link.text}
             </Link>
           ))}
         </div>
