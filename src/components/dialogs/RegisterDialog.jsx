@@ -20,98 +20,134 @@ import { toast } from "sonner";
 import { DatePicker } from "../custom/DatePicker";
 import { useEffect } from "react";
 import LoginWithGoogleBtn from "../custom/LoginWithGoogleBtn";
+import axios from "axios";
 
 function RegisterDialog({ open, setOpen, onSwitchRegister }) {
   const [registeredData, setRegisteredData] = useState(null);
-  const registerUser = useAuthStore((state) => state.register);
+  //const registerUser = useAuthStore((state) => state.register);
   const { control, register, handleSubmit, formState, reset } = useForm({
     resolver: yupResolver(registerSchema),
   });
   const { errors, isSubmitting } = formState;
 
   useEffect(() => {
-    if (!open) reset();
-  }, [open])
+    if (!open) {
+      reset();
+      setRegisteredData(null); //Clear OTP view when dialog closes
+    }
+  }, [open, reset]);
 
   const onSubmit = async (data) => {
     try {
+      const response = await axios.post("/otp/send", {
+        email: data.email,
+        otp_type: "VERIFY_EMAIL",
+      });
+
+      toast.success(response.data.messsage || "OTP sent to your email.");
+
       setRegisteredData(data);
-      // console.log(data);
-      reset();
-      // const res = await registerUser(registeredData);
-      // toast.success(res.data.message);
-      // setOpen(false);
     } catch (error) {
       console.log(error);
       toast.error(error.response?.data.message || error.message);
     }
   };
 
+  const handleRegistrationComplete = () => {
+    setOpen(false);
+    setRegisteredData(null);
+  };
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={!registeredData && setOpen}>
       <DialogTrigger asChild>
         <a className="navbar-link">Register</a>
       </DialogTrigger>
       <DialogContent className="p-10">
         <DialogHeader className="gap-4">
           <DialogTitle className="text-2xl font-bold">
-            Register to Kadealded
+            {registeredData ? "Enter the OTP" : "Register to Kadealded"}
           </DialogTitle>
           <DialogDescription>
-            {registeredData ? <OTPPage email={registeredData?.email || ""} onGoBack={() => setRegisteredData(null)} /> : <form
-              onSubmit={handleSubmit(onSubmit)}
-              className="flex flex-col gap-2"
-            >
-              <CustomInput
-                {...register("name")}
-                label="Name"
-                error={errors.name?.message}
+            {registeredData ? (
+              <OTPPage
+                email={registeredData?.email || ""}
+                registeredData={registeredData}
+                onGoBack={() => setRegisteredData(null)}
+                onRegistrationComplete={handleRegistrationComplete}
+                onResendSuccess={() =>
+                  toast.success("New OTP sent to your email.")
+                }
               />
-              <CustomInput
-                {...register("email")}
-                label="Email"
-                error={errors.email?.message}
-              />
-              <CustomInput
-                {...register("password")}
-                label="Password"
-                error={errors.password?.message}
-                type="password"
-              />
-              <CustomInput
-                {...register("confirmPassword")}
-                label="Confirm password"
-                error={errors.confirmPassword?.message}
-                type="password"
-              />
-              <DatePicker
-                label="Birth Date"
-                name="birth_date"
-                className="!pt-4 h-14"
-                control={control}
-              />
-
-              <Button
-                disabled={isSubmitting}
-                type="submit"
-                className="w-full bg-[#003F66] h-12 text-base mt-4"
+            ) : (
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="flex flex-col gap-2"
               >
-                Register
-              </Button>
-            </form>}
+                <CustomInput
+                  {...register("name")}
+                  label="Name"
+                  error={errors.name?.message}
+                />
+                <CustomInput
+                  {...register("last_name")}
+                  label="Lastname"
+                  error={errors.name?.message}
+                />
+                <CustomInput
+                  {...register("email")}
+                  label="Email"
+                  error={errors.email?.message}
+                />
+                <CustomInput
+                  {...register("tel_number")}
+                  label="Phone Number"
+                  error={errors.email?.message}
+                />
+                <CustomInput
+                  {...register("password")}
+                  label="Password"
+                  error={errors.password?.message}
+                  type="password"
+                />
+                <CustomInput
+                  {...register("confirmPassword")}
+                  label="Confirm password"
+                  error={errors.confirmPassword?.message}
+                  type="password"
+                />
+                <DatePicker
+                  label="Birth Date"
+                  name="birth_date"
+                  className="!pt-4 h-14"
+                  control={control}
+                />
 
+                <Button
+                  disabled={isSubmitting}
+                  type="submit"
+                  className="w-full bg-[#003F66] h-12 text-base mt-4"
+                >
+                  Register
+                </Button>
+              </form>
+            )}
           </DialogDescription>
         </DialogHeader>
-        <LoginWithGoogleBtn />
-        <DialogFooter className="!justify-center">
-          <h2>Already have an account?</h2>
-          <button
-            onClick={onSwitchRegister}
-            className="text-[#003F66] cursor-pointer"
-          >
-            Sign in
-          </button>
-        </DialogFooter>
+        {!registeredData && (
+          <>
+            <LoginWithGoogleBtn />
+            <DialogFooter className="!justify-center">
+              <h2>Already have an account?</h2>
+              <button
+                onClick={onSwitchRegister}
+                className="text-[#003F66] cursor-pointer"
+              >
+                Sign in
+              </button>
+            </DialogFooter>
+          </>
+        )}
       </DialogContent>
     </Dialog>
   );

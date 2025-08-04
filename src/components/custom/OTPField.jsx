@@ -7,15 +7,15 @@ import {
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { useState } from "react";
 
-function OTPField() {
+function OTPField({ value, onChange }) {
   const otpLength = 6;
-  const [otpValue, setOTPValue] = useState("");
+  // const [otpValue, setOTPValue] = useState("");
   return (
     <InputOTP
       maxLength={otpLength}
       pattern={REGEXP_ONLY_DIGITS}
-      value={otpValue}
-      onChange={(value) => setOTPValue(value)}
+      value={value}
+      onChange={onChange}
     >
       <InputOTPGroup>
         {[...Array(otpLength)].map((_, index) => (
