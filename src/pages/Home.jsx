@@ -43,7 +43,6 @@ function Home() {
             onChange={(e) => setInputValue(e.target.value)}
             onSubmit={handleSearch}
           />
-          {/* <Input placeholder="Search our promotions" className="bg-white" /> */}
         </div>
       </section>
 
