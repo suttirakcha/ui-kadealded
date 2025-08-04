@@ -29,7 +29,8 @@ const useAuthStore = create(
         });
         return res;
       },
-      logout: () => {
+      logout: async () => {
+        await authApi.post("/logout");
         set({ user: null, accessToken: null });
       },
     }),
