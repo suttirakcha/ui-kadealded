@@ -1,4 +1,3 @@
-import Sidebar from '../../components/custom/Sidebar'
 import {
   Table,
   TableBody,
@@ -6,42 +5,87 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { AllDeal } from '../../data/items'
+} from "@/components/ui/table";
+import { AllDeal } from "../../data/items";
+import useDealStore from "@/stores/useDealStore";
+import { useEffect } from "react";
+import Loading from "@/components/icons/Loading";
+import { useNavigate } from "react-router";
 
 function AdminDeals() {
+  const navigate = useNavigate();
+  const { deals, getAllDeals } = useDealStore();
+
+  useEffect(() => {
+    const run = async () => {
+      await getAllDeals();
+    };
+
+    run();
+  }, []);
+
   return (
     <>
-<h2 className="text-xl font-bold mb-3 p-5">Total Deals</h2>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[100px]">Deals</TableHead>
-              <TableHead className="w-[100px] text-left">Name</TableHead>
-              <TableHead className="text-right">Total Users</TableHead>
-              <TableHead className="text-right">Total Joined</TableHead>
-              <TableHead className="text-right">Total Coins</TableHead>
-              <TableHead className="text-right">Status</TableHead>
-              <TableHead className="text-right">Edit</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {AllDeal.map((deal) => (
-              <TableRow key={deal.id}>
-                <TableCell><img src={deal.imgSrc} alt="promotion" className='w-full h-full object-cover' /></TableCell>
-                <TableCell className="text-left">{deal.title}</TableCell>
-                <TableCell className="text-right">-</TableCell>
-                <TableCell className="text-right">$250.00</TableCell>
-                <TableCell className="text-right">50</TableCell>
-                <TableCell className="text-right"><button className='text-white bg-green-500 px-5 py-1 rounded'>Status</button></TableCell>
-                <TableCell className="text-right"><button className='text-white bg-blue-500 hover:bg-blue-700 active:bg-blue-900 px-5 py-1 rounded'>Edit</button></TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+      <h2 className="text-xl font-bold mb-3 p-5">Total Deals</h2>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[100px]">Image</TableHead>
+            <TableHead className="w-[100px] text-left">Title</TableHead>
+            <TableHead className="text-right">Description</TableHead>
+            <TableHead className="text-right">Max Participants</TableHead>
+            <TableHead className="text-right">Total Coins</TableHead>
+            <TableHead className="text-right">Status</TableHead>
+            <TableHead className="text-right">Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {deals ? (
+            <>
+              {deals.length > 0 ? (
+                <>
+                  {deals?.map((deal) => (
+                    <TableRow key={deal.id}>
+                      <TableCell>
+                        <img
+                          src={deal?.images[0]?.image_url}
+                          alt="promotion"
+                          className="w-full h-full object-cover rounded-md"
+                        />
+                      </TableCell>
+                      <TableCell className="text-left" onClick={() => navigate(`/admin/deal/${deal.id}`)}>{deal.title}</TableCell>
+                      <TableCell className="text-right">{deal.description}</TableCell>
+                      <TableCell className="text-right">
+                        {deal.max_participants}
+                      </TableCell>
+                      <TableCell className="text-right">50</TableCell>
+                      <TableCell className="text-right">
+                        {deal.deal_status}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="justify-end flex items-center gap-2">
+                          <button className="text-white bg-green-500 px-5 py-1 rounded">
+                            Status
+                          </button>
+                          <button className="text-white bg-blue-500 hover:bg-blue-700 active:bg-blue-900 px-5 py-1 rounded">
+                            Edit
+                          </button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </>
+              ) : (
+                <p>No deals found</p>
+              )}
+            </>
+          ) : (
+            <Loading />
+          )}
+        </TableBody>
+      </Table>
     </>
-  )
+  );
 }
 
-export default AdminDeals
-
+export default AdminDeals;
