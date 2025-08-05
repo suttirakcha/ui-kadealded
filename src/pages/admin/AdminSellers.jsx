@@ -48,7 +48,7 @@ function AdminSellers() {
                 <TableCell className="text-right">{seller?.email}</TableCell>
                 <TableCell className="text-right">{seller?.tel_number}</TableCell>
                 <TableCell className="text-right">
-                  {new Date(seller?.created_at).toLocaleDateString()}
+                  {new Date(seller?.created_at).toLocaleDateString('en-GB')}
                 </TableCell>
                 <TableCell className="text-center">
                   <button

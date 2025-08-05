@@ -4,40 +4,48 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { toast } from "sonner";
-import useCategoryStore from "@/stores/useCategoryStore";
+import useUserStore from "@/stores/useUserStore";
+import { DatePicker } from "../custom/DatePicker";
 
-function EditCategoryDialog({ open, onOpenChange, category }) {
-    const { updateCategory, fetchAllCategories } = useCategoryStore();
+function EditUserDialog({ open, onOpenChange, user }) {
+    const { updateUserById, fetchAllUsers } = useUserStore();
 
     const {
+        control,
         register,
         handleSubmit,
         reset,
         formState: { isSubmitting }
     } = useForm({
         defaultValues: {
-            name: category?.name || "",
-            notes: category?.notes || "",
+            name: user?.name || "",
+            last_name: user?.last_name || "",
+            email: user?.email || "",
+            tel_number: user?.tel_number || "",
+            birth_date: user?.birth_date || ""
         }
     });
 
     useEffect(() => {
-        if (category) {
+        if (user) {
             reset({
-                name: category?.name || "",
-                notes: category?.notes || "",
+                name: user?.name || "",
+                last_name: user?.last_name || "",
+                email: user?.email || "",
+                tel_number: user?.tel_number || "",
+                birth_date: user?.birth_date || ""
             });
         }
-    }, [category, reset]);
+    }, [user, reset]);
 
     const onSubmit = async (data) => {
         try {
-            const res = await updateCategory(category?.id, data);
+            const res = await updateUserById(user?.id, data);
             toast.success(res.data.message);
-            await fetchAllCategories();
+            await fetchAllUsers();
             onOpenChange(false)
         } catch (error) {
-            console.error("Failed to update category:", error);
+            console.error("Failed to update user:", error);
             toast.error(res.data.message);
         }
     };
@@ -46,7 +54,7 @@ function EditCategoryDialog({ open, onOpenChange, category }) {
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Edit Category</DialogTitle>
+                    <DialogTitle>Edit User</DialogTitle>
                 </DialogHeader>
 
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -54,13 +62,24 @@ function EditCategoryDialog({ open, onOpenChange, category }) {
                         {...register("name")}
                         placeholder="Name"
                     />
-                    <textarea
-                        placeholder="Notes"
-                        {...register("notes")} 
-                        className="w-full resize-none border p-2 rounded"
-                        >
-                    </textarea>
-
+                    <Input
+                        {...register("last_name")}
+                        placeholder="Lastname"
+                    />
+                    <Input
+                        {...register("email")}
+                        placeholder="Email"
+                    />
+                    <Input
+                        {...register("tel_number")}
+                        placeholder="Phonenumber"
+                    />
+                    <DatePicker
+                        label="Birth Date"
+                        name="birth_date"
+                        className="!pt-4 h-14"
+                        control={control}
+                    />
                     <DialogFooter className="pt-4">
                         <Button type="submit" disabled={isSubmitting}>
                             {isSubmitting ? "Saving..." : "Save"}
@@ -75,4 +94,4 @@ function EditCategoryDialog({ open, onOpenChange, category }) {
     );
 }
 
-export default EditCategoryDialog;
+export default EditUserDialog;

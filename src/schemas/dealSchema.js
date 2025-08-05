@@ -8,5 +8,5 @@ export const dealSchema = object({
   description:string().optional(),
   start_at: date().required("Start Date required"),
   deadline: date().required("Deadline Date required"),
-  images: string().required("Image required")
+  images: string().optional()
 })

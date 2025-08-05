@@ -12,8 +12,9 @@ const useCategoryStore = create((set) => ({
             headers: { Authorization: `Bearer ${token}` }
         });
         set({ categories: res.data.categories });
+        return res;
     },
- 
+
     createCategory: async (data) => {
         const token = useAuthStore.getState().accessToken;
         const res = await adminApi.post("/categories", data, {
