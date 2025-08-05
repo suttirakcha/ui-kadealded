@@ -12,6 +12,7 @@ const useSellerStore = create((set) => ({
             headers: { Authorization: `Bearer ${token}` }
         });
         set({ sellers: res.data.sellers });
+        return res;
     },
  
     createSeller: async (data) => {

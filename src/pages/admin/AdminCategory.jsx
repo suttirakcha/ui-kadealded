@@ -73,7 +73,7 @@ function AdminCategory() {
               <TableCell className="text-right">{category?.name}</TableCell>
               <TableCell className="text-right">{category?.notes}</TableCell>
               <TableCell className="text-right">
-                {new Date(category?.created_at).toLocaleDateString()}
+                {new Date(category?.created_at).toLocaleDateString('en-GB')}
               </TableCell>
               <TableCell className="text-center">
                 <button

@@ -40,6 +40,7 @@ function EditSellerDialog({ open, onOpenChange, seller }) {
       onOpenChange(false)
     } catch (error) {
       console.error("Failed to update seller:", error);
+      toast.error(res.data.message);
     }
   };
 

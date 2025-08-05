@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import useCategoryStore from '@/stores/useCategoryStore';
 import { useEffect } from 'react';
 import useSellerStore from '@/stores/useSellerStore';
+import useAuthStore from '@/stores/useAuthStore';
 
 function AdminCreateDeal() {
     const { control, register: deal, handleSubmit, formState, reset } = useForm({
@@ -23,6 +24,7 @@ function AdminCreateDeal() {
         { label: "Cancelled", value: "CANCELLED" },
     ];
 
+    const { user } = useAuthStore();
     const { categories, fetchAllCategories } = useCategoryStore();
     const { sellers, fetchAllSellers } = useSellerStore();
     const { errors, isSubmitting } = formState;
@@ -38,17 +40,29 @@ function AdminCreateDeal() {
     const onSubmit = async (data) => {
         try {
             const imgForm = new FormData();
-            imgForm.append("image", data.images[0]);
+            for (let i = 0; i < data.image.length; i++) {
+                imgForm.append("image", data.image[i]);
+            }
 
-            const uploadRes = await adminApi.post("/upload", imgForm);
-
-            const res = await adminApi.post("/deals", {
-                ...data,
-                deal_status: data.status,
-                image_url: uploadRes.data.url,
+            const uploadRes = await adminApi.post("/deals", imgForm, {
+                headers: { "Content-Type": "multipart/form-data" },
             });
 
+            const payload = {
+                title: data.title,
+                description: data.description,
+                start_at: data.start_at,
+                deadline: data.deadline,
+                deal_status: data.status,
+                images: uploadRes.data.url,
+                seller_name: data.seller,
+                category_name: data.category,
+                creator_name: user?.name || "Admin",
+            };
+
+            const res = await adminApi.post("/deals", payload);
             toast.success(res.data.message);
+            reset();
         } catch (error) {
             toast.error(error.response?.data.message || error.message);
         }
@@ -109,6 +123,7 @@ function AdminCreateDeal() {
                             multiple
                         />
                         {errors.images && <p className="text-sm text-red-500">{errors.images?.message}</p>}
+
                         <DatePicker
                             label="Start Date"
                             name="start_at"
@@ -117,7 +132,7 @@ function AdminCreateDeal() {
                         />
                         {errors.start_at && <p className="text-sm text-red-500">{errors.start_at?.message}</p>}
                         <DatePicker
-                            label="Deal Line Date"
+                            label="Dealline Date"
                             name="deadline"
                             {...deal("deadline")}
                             control={control}
