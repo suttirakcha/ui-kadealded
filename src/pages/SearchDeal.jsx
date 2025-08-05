@@ -13,8 +13,11 @@ import useDealStore from "@/stores/useDealStore";
 import CardDealList from "@/components/custom/CardDealList";
 import SearchForm from "@/components/custom/SearchForm";
 import Loading from "@/components/icons/Loading";
+import { cn } from "@/lib/utils";
 
 function SearchDeal() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [dealsPerPage] = useState(4);
   const location = useLocation();
   const { deals, getAllDeals } = useDealStore();
   const navigate = useNavigate();
@@ -33,13 +36,18 @@ function SearchDeal() {
     run();
   }, []);
 
-  const filteredItems = searchResult
-    ? deals?.filter(
-        (item) =>
-          item.title.toLowerCase().includes(searchResult.toLowerCase()) ||
-          item.description.toLowerCase().includes(searchResult.toLowerCase())
-      )
-    : deals;
+  const indexOfLastDeals = currentPage * dealsPerPage;
+  const indexOfFirstDeals = indexOfLastDeals - dealsPerPage;
+
+  const filteredItems = (
+    searchResult
+      ? deals?.filter(
+          (item) =>
+            item.title.toLowerCase().includes(searchResult.toLowerCase()) ||
+            item.description.toLowerCase().includes(searchResult.toLowerCase())
+        )
+      : deals
+  ).slice(indexOfFirstDeals, indexOfLastDeals);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -51,6 +59,8 @@ function SearchDeal() {
     setSearchQuery({});
     setInputValue("");
   };
+
+  const totalPages = Math.ceil(deals?.length / dealsPerPage);
 
   return (
     <div className="p-6">
@@ -93,16 +103,28 @@ function SearchDeal() {
       <Pagination className="mb-10">
         <PaginationContent>
           <PaginationItem>
-            <PaginationPrevious href="#" />
+            <PaginationPrevious
+              className="cursor-pointer"
+              onClick={() =>
+                setCurrentPage((prev) => (currentPage === 1 ? 1 : prev - 1))
+              }
+            />
+          </PaginationItem>
+          <PaginationItem className="space-x-2">
+            {Array.from({ length: totalPages || 1 }).map((_, index) => (
+              <PaginationLink
+                onClick={() => setCurrentPage(index + 1)}
+                className={cn("cursor-pointer", {"bg-gray-100": currentPage === index + 1 })}
+              >
+                {index + 1}
+              </PaginationLink>
+            ))}
           </PaginationItem>
           <PaginationItem>
-            <PaginationLink href="#">1</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext href="#" />
+            <PaginationNext
+              onClick={() => setCurrentPage((prev) => prev + (currentPage === totalPages ? 0 : 1))}
+              className="cursor-pointer"
+            />
           </PaginationItem>
         </PaginationContent>
       </Pagination>
