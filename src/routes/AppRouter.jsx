@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router";
 import { lazy } from "react";
 import useAuthStore from "@/stores/useAuthStore";
+import ProfileUserLayout from "@/layouts/ProfileUserLayout";
 
 const MainLayout = lazy(() => import("../layouts/MainLayout"));
 const AdminLayout = lazy(() => import("../layouts/AdminLayout"));
@@ -39,6 +40,9 @@ function AppRouter() {
                 { path: "deal/:id", element: <DealPage /> },
                 { path: "confirmEmail", element: <OTPPage /> },
                 { path: "searchDeal", element: <SearchDeal /> },
+                { path: "profile" , element: <ProfileUserLayout />,
+                    children:[]
+                }
             ],
         },
         { 
