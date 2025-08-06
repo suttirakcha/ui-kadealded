@@ -14,17 +14,10 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
+import useDealStore from "@/stores/useDealStore"
+import { useEffect } from "react"
 
 export const description = "A linear line chart"
-
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-]
 
 const chartConfig = {
   desktop: {
@@ -33,12 +26,41 @@ const chartConfig = {
   },
 }
 
-export function LineChartComp() {
+export function LineChartComp({ data }) {
+  const { deals, getAllDeals } = useDealStore();
+  const currentYear = new Date().getFullYear();
+  const previousYear = currentYear - 1;
+
+  useEffect(() => {
+    const run = async () => {
+      await getAllDeals();
+    }
+
+    run();
+  }, []);
+
+  const chartData = [
+    { month: "January", total_deals: 186 },
+    { month: "February", total_deals: 305 },
+    { month: "March", total_deals: 237 },
+    { month: "April", total_deals: 73 },
+    { month: "May", total_deals: 209 },
+    { month: "June", total_deals: 214 },
+  ]
+
+  // console.log(deals);
+
+  const dealsOnEachMonth = deals.filter(deal => new Date(deal.created_at).getMonth() === 6)
+  const totalDeals = deals.map(deal => ({ month: new Date(deal.created_at).getMonth(), total_deals: dealsOnEachMonth.length }))
+ 
+  console.log(totalDeals);
+  // console.log(deals.filter(deal => new Date(deal.created_at).getMonth() === 6));
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>Line Chart - Linear</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardDescription>{previousYear} - {currentYear}</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>

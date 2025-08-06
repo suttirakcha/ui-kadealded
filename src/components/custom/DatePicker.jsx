@@ -62,63 +62,72 @@ export function DatePicker({ label, name, control, className }) {
         const { value, onChange } = field;
 
         return (
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant="ghost"
-                data-empty={!value}
-                className={cn(
-                  "data-[empty=true]:text-muted-foreground !bg-white justify-start text-input",
-                  className
-                )}
-              >
-                <CalendarIcon />
-                {value ? format(value, "dd MMMM yyyy") : <span>{label}</span>}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0">
-              <div className="flex items-center gap-2 p-2">
-                <Select
-                  onValueChange={handleChangeMonth}
-                  value={months[getMonth(date)]}
-                >
-                  <SelectTrigger className="w-[140px]">
-                    <SelectValue placeholder="Month" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {months.map((month) => (
-                      <SelectItem key={month} value={month}>
-                        {month}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Select
-                  onValueChange={handleChangeYear}
-                  value={getYear(date)}
-                >
-                  <SelectTrigger className="w-[100px]">
-                    <SelectValue placeholder="Year" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {years.map((year) => (
-                      <SelectItem key={year} value={year}>
-                        {year}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <Calendar
-                mode="single"
-                className="w-full"
-                selected={value}
-                onSelect={onChange}
-                month={date}
-                onMonthChange={setDate}
-              />
-            </PopoverContent>
-          </Popover>
+          <label className="pt-4">
+            <div className="relative mb-1">
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    data-empty={!value}
+                    className={cn(
+                      "data-[empty=true]:text-muted-foreground !bg-white justify-start text-input w-full peer",
+                      className
+                    )}
+                  >
+                    <CalendarIcon />
+                    {value ? (
+                      format(value, "dd MMMM yyyy")
+                    ) : (
+                      <span>{label}</span>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <div className="flex items-center gap-2 p-2">
+                    <Select
+                      onValueChange={handleChangeMonth}
+                      value={months[getMonth(date)]}
+                    >
+                      <SelectTrigger className="w-[140px]">
+                        <SelectValue placeholder="Month" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {months.map((month) => (
+                          <SelectItem key={month} value={month}>
+                            {month}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <Select
+                      onValueChange={handleChangeYear}
+                      value={getYear(date)}
+                    >
+                      <SelectTrigger className="w-[100px]">
+                        <SelectValue placeholder="Year" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {years.map((year) => (
+                          <SelectItem key={year} value={year}>
+                            {year}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <Calendar
+                    mode="single"
+                    className="w-full"
+                    selected={value}
+                    onSelect={onChange}
+                    month={date}
+                    onMonthChange={setDate}
+                  />
+                </PopoverContent>
+              </Popover>
+              <span className={cn("custom-label -top-3", {"hidden": value === ""})}>{label}</span>
+            </div>
+          </label>
         );
       }}
     />

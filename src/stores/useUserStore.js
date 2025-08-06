@@ -8,7 +8,8 @@ const useUserStore = create((set) => ({
   error: null,
 
   fetchAllUsers: async () => {
-    const token = useAuthStore.getState().accessToken;
+    // const token = useAuthStore.getState().accessToken;
+    const token = localStorage.getItem("accessToken");
     set({ loading: true, error: null });
     try {
       const res = await adminApi.get("/users", {
@@ -23,7 +24,8 @@ const useUserStore = create((set) => ({
   },
 
   updateUserById: async (id, data) => {
-    const token = useAuthStore.getState().accessToken;
+    // const token = useAuthStore.getState().accessToken;
+    const token = localStorage.getItem("accessToken");
     set({ loading: true, error: null });
     try {
       const res = await adminApi.put(`/users/${id}`, data, {

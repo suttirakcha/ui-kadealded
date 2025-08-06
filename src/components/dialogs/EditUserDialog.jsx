@@ -46,7 +46,7 @@ function EditUserDialog({ open, onOpenChange, user }) {
             onOpenChange(false)
         } catch (error) {
             console.error("Failed to update user:", error);
-            toast.error(res.data.message);
+            toast.error(error.response.data.message || error.message);
         }
     };
 

@@ -7,12 +7,12 @@ const useAuthStore = create(
   persist(
     (set) => ({
       user: null,
-      accessToken: null,
       login: async (data) => {
         const res = await authApi.post("/login", data, {
           withCredentials: true,
         });
-        set({ user: res.data.user, accessToken: res.data.token });
+        localStorage.setItem("accessToken", res.data.token);
+        set({ user: res.data.user });
         return res;
       },
       loginWithGoogle: async (code) => {
@@ -30,8 +30,9 @@ const useAuthStore = create(
         return res;
       },
       logout: async () => {
+        localStorage.removeItem("accessToken");
         await authApi.post("/logout");
-        set({ user: null, accessToken: null });
+        set({ user: null });
       },
     }),
     {
