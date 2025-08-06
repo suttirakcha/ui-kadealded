@@ -12,43 +12,17 @@ import { DatePicker } from "@/components/custom/DatePicker";
 import AdminDealForm from "@/components/AdminDealForm";
 
 function AdminSingleDeal() {
-  const { categories, fetchAllCategories } = useCategoryStore();
-  const { sellers, fetchAllSellers } = useSellerStore();
   const { id } = useParams();
   const {
     currentDeal: deal,
     getDealById,
-    getAllDeals,
     clearCurrentDeal,
   } = useDealStore();
-
-  // const {
-  //   control,
-  //   register,
-  //   handleSubmit,
-  //   reset,
-  //   formState: { isSubmitting },
-  // } = useForm({
-  //   defaultValues: {
-  //     title: "",
-  //     deal_status: "",
-  //     start_at: "",
-  //     deadline: "",
-  //     category: "",
-  //     seller: "",
-  //     description: "",
-  //     category_id: "",
-  //     seller_id: "",
-  //   },
-  // });
 
   useEffect(() => {
     const run = async () => {
       if (!id) return;
-      getAllDeals();
       await getDealById(id);
-      fetchAllCategories();
-      fetchAllSellers();
     };
 
     run();

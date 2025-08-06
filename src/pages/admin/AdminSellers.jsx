@@ -14,9 +14,10 @@ import { format } from "date-fns";
 import { Link } from "react-router";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
+import Loading from "@/components/icons/Loading";
 
 function AdminSellers() {
-  const { sellers, fetchAllSellers, deleteSeller } = useSellerStore();
+  const { sellers, fetchAllSellers, deleteSeller, isLoading, isSubmitting } = useSellerStore();
   const [selectedSeller, setSelectedSeller] = useState(null);
 
   useEffect(() => {
@@ -31,6 +32,10 @@ function AdminSellers() {
     if (!confirmDelete) return;
     await deleteSeller(id);
   };
+
+  if (isLoading){
+    return <Loading />
+  }
 
   return (
     <div className="space-y-8">
@@ -56,7 +61,7 @@ function AdminSellers() {
         <TableBody>
           {sellers.length > 0 ? (
             <>
-              {sellers.map((seller) => (
+              {sellers?.map((seller) => (
                 <TableRow key={seller?.id}>
                   <TableCell className="text-left">{seller?.name}</TableCell>
                   <TableCell className="text-left">{seller?.email}</TableCell>
@@ -64,7 +69,7 @@ function AdminSellers() {
                     {seller?.tel_number}
                   </TableCell>
                   <TableCell className="text-left">
-                    {format(new Date(seller?.created_at), "dd MMMM yyyy")}
+                    {seller?.created_at ? format(new Date(seller?.created_at), "dd MMMM yyyy") : ""}
                     {/* {new Date(seller?.created_at).toLocaleDateString("en-GB")} */}
                   </TableCell>
                   <TableCell className="text-center">
@@ -99,6 +104,7 @@ function AdminSellers() {
           open={selectedSeller}
           onOpenChange={setSelectedSeller}
           seller={selectedSeller}
+          isSubmitting={isSubmitting}
         />
       )}
     </div>

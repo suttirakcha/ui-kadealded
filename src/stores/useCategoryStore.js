@@ -7,7 +7,8 @@ const useCategoryStore = create((set) => ({
     category: null,
 
     fetchAllCategories: async () => {
-        const token = useAuthStore.getState().accessToken;
+        // const token = useAuthStore.getState().accessToken;
+        const token = localStorage.getItem("accessToken");
         const res = await adminApi.get("/categories", {
             headers: { Authorization: `Bearer ${token}` }
         });
@@ -16,7 +17,8 @@ const useCategoryStore = create((set) => ({
     },
 
     createCategory: async (data) => {
-        const token = useAuthStore.getState().accessToken;
+        // const token = useAuthStore.getState().accessToken;
+        const token = localStorage.getItem("accessToken");
         const res = await adminApi.post("/categories", data, {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -29,7 +31,8 @@ const useCategoryStore = create((set) => ({
     },
 
     updateCategory: async (id, data) => {
-        const token = useAuthStore.getState().accessToken;
+        // const token = useAuthStore.getState().accessToken;
+        const token = localStorage.getItem("accessToken");
         const res = await adminApi.put(`/categories/${id}`, data, {
             headers: { Authorization: `Bearer ${token}` }
         });
@@ -42,7 +45,8 @@ const useCategoryStore = create((set) => ({
     },
 
     deleteCategory: async (id) => {
-        const token = useAuthStore.getState().accessToken;
+        // const token = useAuthStore.getState().accessToken;
+        const token = localStorage.getItem("accessToken");
         const res = await adminApi.delete(`/categories/${id}`, {
             headers: { Authorization: `Bearer ${token}` }
         });

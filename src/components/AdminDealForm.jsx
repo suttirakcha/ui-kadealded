@@ -12,6 +12,14 @@ import useSellerStore from "@/stores/useSellerStore";
 import useAuthStore from "@/stores/useAuthStore";
 import { useNavigate } from "react-router";
 import useDealStore from "@/stores/useDealStore";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import CustomSelectDropdown from "./custom/CustomSelectDropdown";
 
 function AdminDealForm({ deal }) {
   const navigate = useNavigate();
@@ -19,8 +27,7 @@ function AdminDealForm({ deal }) {
   const { categories, fetchAllCategories } = useCategoryStore();
   const { sellers, fetchAllSellers } = useSellerStore();
 
-  const { updateDealById, clearCurrentDeal } =
-    useDealStore();
+  const { updateDealById, clearCurrentDeal, getAllDeals } = useDealStore();
 
   const {
     control,
@@ -34,11 +41,11 @@ function AdminDealForm({ deal }) {
       description: deal?.description || "",
       start_at: deal?.start_at || "",
       deadline: deal?.deadline || "",
+      seller: deal?.seller?.name || "",
       category: deal?.category?.name || "",
       deal_status: deal?.deal_status || "",
       // images: uploadRes.data.url,
       max_participants: deal?.max_participants || "",
-      seller: deal?.seller?.name || "",
       creator_name: user?.name || "Admin",
     },
     resolver: yupResolver(dealSchema),
@@ -83,17 +90,18 @@ function AdminDealForm({ deal }) {
         deal_status: data.deal_status,
         // images: uploadRes.data.url,
         max_participants: data.max_participants,
-        seller_name: data.seller?.name,
-        category_name: data.category?.name,
-        creator_name: user?.name || "Admin",
+        seller_id: data.seller_id,
+        category_id: data.category_id,
+        creator: user?.id,
       };
 
       const res = await (deal
         ? updateDealById(deal.id, payload)
         : adminApi.post("/deals", payload));
       toast.success(res.data.message);
+      reset(data);
       navigate("/admin/deal");
-      reset();
+      // await getAllDeals();
     } catch (error) {
       toast.error(error.response?.data.message || error.message);
     }
@@ -108,30 +116,52 @@ function AdminDealForm({ deal }) {
             {...setDeal("title")}
             error={errors.title?.message}
           />
-          <label className="font-medium peer-focus:-top-4 peer-focus:text-black peer-focus:text-sm peer-placeholder-shown:top-1 peer-placeholder-shown:text-base peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-black transition-all duration-200 -z-1 left-0">
-            Category
+          <CustomInput
+            label="Description"
+            type="textarea"
+            {...setDeal("description")}
+            error={errors.description?.message}
+          />
+          {/* <CustomSelectDropdown
+            label="Category"
+            initialValue="-- Select category --"
+            error={errors.category_name?.message}
+            options={categories}
+            control={control}
+            {...setDeal("category_name")}
+          />
+          <p>{errors.category_name?.message}</p> */}
+          <label className="pt-4">
+            <div className="relative">
+              <select
+                className="text-input peer h-10 w-full"
+                {...setDeal("category_id")}
+              >
+                {/* <option value="" disabled selected>
+                  -- Select Category --
+                </option> */}
+                {categories?.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+              <span className="custom-label">Category</span>
+            </div>
+            {errors.category_id && (
+              <p className="text-sm text-red-500">
+                {errors.category_id.message}
+              </p>
+            )}
           </label>
-          <select className="border rounded p-2" {...setDeal("category")}>
-            <option value="" disabled selected>
-              -- Select Category --
-            </option>
-            {categories.map((category) => (
-              <option key={category.id} value={category.name}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-          {errors.category && (
-            <p className="text-sm text-red-500">{errors.category.message}</p>
-          )}
 
           <label className="font-medium peer-focus:-top-4 peer-focus:text-black peer-focus:text-sm peer-placeholder-shown:top-1 peer-placeholder-shown:text-base peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-black transition-all duration-200 -z-1 left-0">
             Status
           </label>
           <select className="border rounded p-2" {...setDeal("deal_status")}>
-            <option value="" disabled selected>
+            {/* <option value="" disabled selected>
               -- Select Status --
-            </option>
+            </option> */}
             {dealStatusOptions.map((status) => (
               <option key={status.value} value={status.value}>
                 {status.label}
@@ -145,18 +175,18 @@ function AdminDealForm({ deal }) {
           <label className="font-medium peer-focus:-top-4 peer-focus:text-black peer-focus:text-sm peer-placeholder-shown:top-1 peer-placeholder-shown:text-base peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-black transition-all duration-200 -z-1 left-0">
             Seller
           </label>
-          <select className="border rounded p-2" {...setDeal("seller")}>
-            <option value="" disabled selected>
+          <select className="border rounded p-2" {...setDeal("seller_id")}>
+            {/* <option value="" disabled selected>
               -- Select Seller --
-            </option>
+            </option> */}
             {sellers.map((seller) => (
-              <option key={seller.id} value={seller.name}>
+              <option key={seller.id} value={seller.id}>
                 {seller.name}
               </option>
             ))}
           </select>
-          {errors.seller && (
-            <p className="text-sm text-red-500">{errors.seller.message}</p>
+          {errors.seller_id && (
+            <p className="text-sm text-red-500">{errors.seller_id.message}</p>
           )}
 
           <CustomInput
@@ -195,22 +225,18 @@ function AdminDealForm({ deal }) {
             <p className="text-sm text-red-500">{errors.deadline?.message}</p>
           )}
         </div>
-        <textarea
-          {...setDeal("description")}
-          placeholder="Description"
-          className="p-3 w-full h-50 border border-gray-200 rounded-sm resize-none"
-        ></textarea>
-        {errors.description && (
-          <p className="text-sm text-red-500 mb-10">
-            {errors.description?.message}
-          </p>
-        )}
         <Button
           variant="default"
           className="px-10 py-2 mt-5"
           disabled={isSubmitting}
         >
-          {isSubmitting ? (deal ? "Updating..." : "Creating...") : (deal ? "Update" : "Create")}
+          {isSubmitting
+            ? deal
+              ? "Updating..."
+              : "Creating..."
+            : deal
+            ? "Update"
+            : "Create"}
         </Button>
       </div>
     </form>
