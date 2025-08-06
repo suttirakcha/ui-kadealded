@@ -7,6 +7,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
+import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card"
 
 const chartData = [
   { month: "January", approved: 186, rejected: 80 },
@@ -19,17 +20,22 @@ const chartData = [
 
 const chartConfig = {
   approved: {
-    label: "Desktop",
+    label: "Approved",
     color: "#2a9d8f",
   },
   rejected: {
-    label: "Mobile",
+    label: "Rejected",
     color: "#e76e50",
   },
 }
 
 export function BarGraphComp() {
   return (
+    <Card>
+      <CardHeader>
+        <CardTitle className='mt-3'>Number of Approved and Rejected Deal</CardTitle>
+        <CardDescription>January - June 2025</CardDescription>
+      </CardHeader>
     <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
       <BarChart accessibilityLayer data={chartData}>
         <CartesianGrid vertical={false} />
@@ -46,5 +52,6 @@ export function BarGraphComp() {
         <Bar dataKey="rejected" fill="var(--color-rejected)" radius={4} />
       </BarChart>
     </ChartContainer>
+    </Card>
   )
 }
