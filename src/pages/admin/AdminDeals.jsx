@@ -12,6 +12,7 @@ import Loading from "@/components/icons/Loading";
 import { Link, useNavigate } from "react-router";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
+import { format } from "date-fns";
 
 function AdminDeals() {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ function AdminDeals() {
             <TableHead className="w-[100px]">Image</TableHead>
             <TableHead className="w-[100px] text-left">Title</TableHead>
             <TableHead className="text-right">Max Participants</TableHead>
-            <TableHead className="text-right">Start At</TableHead>
+            <TableHead className="text-right">Start at</TableHead>
             <TableHead className="text-right">Deadline</TableHead>
             <TableHead className="text-right">Total Coins</TableHead>
             <TableHead className="text-right">Status</TableHead>
@@ -72,10 +73,12 @@ function AdminDeals() {
                         {deal.max_participants}
                       </TableCell>
                       <TableCell className="text-right">
-                        {new Date(deal?.start_at).toLocaleDateString("en-GB")}
+                        {format(new Date(deal?.start_at), "dd MMMM yyyy")}
+                        {/* {new Date(deal?.start_at).toLocaleDateString("en-GB")} */}
                       </TableCell>
                       <TableCell className="text-right">
-                        {new Date(deal?.deadline).toLocaleDateString("en-GB")}
+                        {format(new Date(deal?.deadline), "dd MMMM yyyy")}
+                        {/* {new Date(deal?.deadline).toLocaleDateString("en-GB")} */}
                       </TableCell>
                       <TableCell className="text-right">50</TableCell>
                       <TableCell className="text-right">

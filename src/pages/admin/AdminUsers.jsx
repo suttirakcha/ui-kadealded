@@ -34,7 +34,7 @@ function AdminUsers() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px] max-2xl:hidden"></TableHead>
+              <TableHead className="w-[100px]"></TableHead>
               <TableHead className="w-[160px] text-left">Name</TableHead>
               <TableHead className="w-[160px] text-left">Last name</TableHead>
               <TableHead className="w-[200px] text-right">Email</TableHead>
@@ -55,7 +55,7 @@ function AdminUsers() {
                 )
                 .map((user) => (
                   <TableRow key={user.id}>
-                    <TableCell className="max-2xl:hidden">
+                    <TableCell>
                       <img
                         src={user.profile_image || "/default-profile.png"}
                         className="w-15 h-15 object-cover rounded-2xl"
