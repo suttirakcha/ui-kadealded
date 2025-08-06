@@ -2,6 +2,7 @@ import { adminApi } from "@/api/routesApi";
 import { BarGraphComp } from "@/components/charts/BarGraphComp";
 import { DonutActiveComp } from "@/components/charts/DonutActiveComp";
 import { LineChartComp } from "@/components/charts/LineChartComp";
+import Loading from "@/components/icons/Loading";
 import axios from "axios";
 import { BookUser, Handshake, Users } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -58,9 +59,10 @@ function AdminStats() {
 
   if (loading) {
     return (
-      <div className="max-w-[1200px] mx-auto w-full text-center py-10">
-        <h1 className="font-bold text-3xl">Loading Statistics ...</h1>
-      </div>
+      // <div className="max-w-[1200px] mx-auto w-full text-center py-10">
+      //   <h1 className="font-bold text-3xl">Loading Statistics ...</h1>
+      // </div>
+      <Loading />
     )
   }
 
@@ -74,8 +76,8 @@ function AdminStats() {
   }
 
   return (
-    <div className="max-w-[1200px] mx-auto w-full ">
-      <h1 className="w-full font-bold text-3xl py-5">Statistics</h1>
+    <div className="space-y-8">
+      <h1 className="font-bold text-3xl">Statistics</h1>
 
       {/* Display simple counts as cards or text */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">

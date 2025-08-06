@@ -48,7 +48,7 @@ function EditSellerDialog({ open, onOpenChange, seller, isSubmitting }) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Edit Seller</DialogTitle>
+          <DialogTitle>Edit seller: {seller?.name || ""}</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
