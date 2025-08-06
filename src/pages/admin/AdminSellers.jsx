@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import Sidebar from '../../components/custom/Sidebar';
+import { useEffect, useState } from "react";
+import Sidebar from "../../components/custom/Sidebar";
 import {
   Table,
   TableBody,
@@ -8,17 +8,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import useSellerStore from '@/stores/useSellerStore';
-import EditSellerDialog from '@/components/dialogs/EditSellerDialog';
+import useSellerStore from "@/stores/useSellerStore";
+import EditSellerDialog from "@/components/dialogs/EditSellerDialog";
+import { format } from "date-fns";
+import { Link } from "react-router";
+import { Button } from "@/components/ui/button";
+import { PlusCircle } from "lucide-react";
+import Loading from "@/components/icons/Loading";
 
 function AdminSellers() {
-  const { sellers, fetchAllSellers, deleteSeller } = useSellerStore();
+  const { sellers, fetchAllSellers, deleteSeller, isLoading, isSubmitting } = useSellerStore();
   const [selectedSeller, setSelectedSeller] = useState(null);
 
   useEffect(() => {
     const run = async () => {
-       await fetchAllSellers();
-    }
+      await fetchAllSellers();
+    };
     run();
   }, []);
 
@@ -28,55 +33,81 @@ function AdminSellers() {
     await deleteSeller(id);
   };
 
-  return (
-    <>
-    <h2 className="text-xl font-bold mb-3 p-5">Sellers</h2>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="text-right">Company</TableHead>
-              <TableHead className="text-right">Email</TableHead>
-              <TableHead className="text-right">Phone</TableHead>
-              <TableHead className="text-right">Created At</TableHead>
-              <TableHead className="text-center">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-           {sellers.length > 0 ? <>{sellers.map((seller) => (
-              <TableRow key={seller?.id}>
-                <TableCell className="text-right">{seller?.name}</TableCell>
-                <TableCell className="text-right">{seller?.email}</TableCell>
-                <TableCell className="text-right">{seller?.tel_number}</TableCell>
-                <TableCell className="text-right">
-                  {new Date(seller?.created_at).toLocaleDateString('en-GB')}
-                </TableCell>
-                <TableCell className="text-center">
-                  <button
-                    className='text-white bg-blue-500 hover:bg-blue-700 px-5 py-1 rounded'
-                    onClick={() => setSelectedSeller(seller)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className='text-white bg-red-500 hover:bg-red-700 px-5 py-1 rounded ml-5'
-                    onClick={() => handleDelete(seller.id)}
-                  >
-                    Delete
-                  </button>
-                </TableCell>
-              </TableRow>
-            ))}</> : "No Sellers" }
-          </TableBody>
-        </Table>
+  if (isLoading){
+    return <Loading />
+  }
 
-        {selectedSeller && (
-          <EditSellerDialog
-            open={selectedSeller}
-            onOpenChange={setSelectedSeller}
-            seller={selectedSeller}
-          />
-        )}
-    </>
+  return (
+    <div className="space-y-8">
+      <div className="flex items-center gap-6">
+        <h2 className="text-3xl font-bold">Sellers</h2>
+        <Link to="/admin/create-seller">
+          <Button className="flex items-center gap-2 text-base">
+            <PlusCircle className="h-6 w-6"/>
+            Create seller
+          </Button>
+        </Link>
+      </div>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="text-left">Company</TableHead>
+            <TableHead className="text-left">Email</TableHead>
+            <TableHead className="text-left">Phone</TableHead>
+            <TableHead className="text-left">Created at</TableHead>
+            <TableHead className="text-center">Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {sellers.length > 0 ? (
+            <>
+              {sellers?.map((seller) => (
+                <TableRow key={seller?.id}>
+                  <TableCell className="text-left">{seller?.name}</TableCell>
+                  <TableCell className="text-left">{seller?.email}</TableCell>
+                  <TableCell className="text-left">
+                    {seller?.tel_number}
+                  </TableCell>
+                  <TableCell className="text-left">
+                    {seller?.created_at ? format(new Date(seller?.created_at), "dd MMMM yyyy") : ""}
+                    {/* {new Date(seller?.created_at).toLocaleDateString("en-GB")} */}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <button
+                      className="text-white bg-blue-500 hover:bg-blue-700 px-5 py-1 rounded"
+                      onClick={() => setSelectedSeller(seller)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="text-white bg-red-500 hover:bg-red-700 px-5 py-1 rounded ml-5"
+                      onClick={() => handleDelete(seller.id)}
+                    >
+                      Delete
+                    </button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </>
+          ) : (
+            <TableRow>
+              <TableCell colSpan={6} className="text-center">
+                No Sellers
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+
+      {selectedSeller && (
+        <EditSellerDialog
+          open={selectedSeller}
+          onOpenChange={setSelectedSeller}
+          seller={selectedSeller}
+          isSubmitting={isSubmitting}
+        />
+      )}
+    </div>
   );
 }
 

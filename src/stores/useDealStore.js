@@ -1,4 +1,4 @@
-import { authApi } from "@/api/routesApi";
+import { adminApi, authApi } from "@/api/routesApi";
 import { create } from "zustand";
 
 const useDealStore = create((set) => ({
@@ -25,7 +25,7 @@ const useDealStore = create((set) => ({
   },
   updateDealById: async (id, data) => {
   try {
-    const response = await authApi.put(`/deals/${id}`, data);
+    const response = await adminApi.put(`/deals/${id}`, data);
     set({ currentDeal: response.data });
     return response;
   } catch (error) {
