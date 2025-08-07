@@ -1,32 +1,10 @@
-import useCategoryStore from "@/stores/useCategoryStore";
 import { Instagram, Linkedin, Youtube } from "lucide-react";
-import { useEffect } from "react";
 import { Link } from "react-router";
 
 function Footer() {
-  const { categories, fetchAllCategories } = useCategoryStore();
-
-  useEffect(() => {
-    const run = async () => {
-      await fetchAllCategories();
-    };
-
-    run();
-  }, []);
-
-  // console.log(categories);
-  // const categories = [
-  //   "Food",
-  //   "Beverages",
-  //   "Sports",
-  //   "Category 1",
-  //   "Category 2",
-  //   "Category 3",
-  //   "Category 4",
-  // ];
-
   const footerLinksLeft = [
     { text: "Search deal", href: "/searchDeal" },
+    { text: "Documentation", href: "" }
   ];
 
   const footerLinksRight = [
@@ -65,6 +43,8 @@ function Footer() {
             </Link>
           ))}
         </div>
+
+        {/* section4 */}
         <div className="pt-10">
           <p className="text-white mb-2">SUPPORT US AT</p>
           <span className="text-white flex gap-4">

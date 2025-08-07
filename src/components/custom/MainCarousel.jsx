@@ -55,7 +55,7 @@ function MainCarousel({
                       <img
                         src={image.image_url}
                         alt={`img-${index}`}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover rounded-md"
                       />
                     </Card>
                   </div>
@@ -71,7 +71,7 @@ function MainCarousel({
                       <img
                         src={`/src/assets/imagemock.png`}
                         alt="promotion"
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover rounded-md"
                       />
                     </Card>
                   </div>
