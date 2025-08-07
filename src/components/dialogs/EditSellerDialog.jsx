@@ -5,15 +5,16 @@ import useSellerStore from "@/stores/useSellerStore";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import CustomInput from "../custom/CustomInput";
 
-function EditSellerDialog({ open, onOpenChange, seller, isSubmitting }) {
+function EditSellerDialog({ open, onOpenChange, seller }) {
   const { updateSeller, fetchAllSellers } = useSellerStore();
 
   const {
     register,
     handleSubmit,
     reset,
-    // formState: { isSubmitting }
+    formState: { errors, isSubmitting }
   } = useForm({
     defaultValues: {
       name: seller?.name || "",
@@ -40,7 +41,7 @@ function EditSellerDialog({ open, onOpenChange, seller, isSubmitting }) {
       onOpenChange(false);
     } catch (error) {
       console.error("Failed to update seller:", error);
-      toast.error(res.data.message);
+      toast.error(error.response?.data.message || error.message);
     }
   };
 
@@ -48,22 +49,36 @@ function EditSellerDialog({ open, onOpenChange, seller, isSubmitting }) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Edit Seller</DialogTitle>
+          <DialogTitle>Edit seller: {seller?.name || ""}</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <Input
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+          <CustomInput 
+            label="Name"
+            error={errors.name?.message}
             {...register("name")}
-            placeholder="Company Name"
+            />
+          <CustomInput 
+            label="Email"
+            error={errors.email?.message}
+            {...register("email")}
           />
-          <Input
+          <CustomInput 
+            label="Phone number"
+            error={errors.tel_number?.message}
+            {...register("tel_number")}
+          />
+          {/* <Input
+            placeholder="Company Name"
+          /> */}
+          {/* <Input
             {...register("email")}
             placeholder="Email"
           />
           <Input
             {...register("tel_number")}
             placeholder="Phone Number"
-          />
+          /> */}
 
           <DialogFooter className="pt-4">
             <Button type="submit" disabled={isSubmitting}>

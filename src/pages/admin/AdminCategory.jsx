@@ -105,9 +105,9 @@ function AdminCategory() {
       )}
 
       <div className="flex flex-col justify-between mb-4">
-        <h2 className="text-3xl font-bold">Create Categories</h2>
+        <h2 className="text-3xl font-bold">Create categories</h2>
         <form onSubmit={handleSubmit(onSubmit)} className='relative'>
-          <div className='mx-auto p-10 w-200'>
+          <div className='mx-auto'>
             <div className='flex flex-col gap-4 mt-10 mb-15'>
               <CustomInput
                 label="Name"
