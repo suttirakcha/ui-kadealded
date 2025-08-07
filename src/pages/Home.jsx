@@ -2,14 +2,13 @@ import MainCarousel from "@/components/custom/MainCarousel";
 import { Input } from "@/components/ui/input";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
-import { HotDeal, items, items2 } from "../data/items";
 import useDealStore from "@/stores/useDealStore";
 import CardDealList from "@/components/custom/CardDealList";
 import SearchForm from "@/components/custom/SearchForm";
 import { ChevronRight } from "lucide-react";
+import imageMock from "../assets/imagemock.png";
 
 function Home() {
-  const location = useLocation();
   const navigate = useNavigate();
   const { deals, getAllDeals } = useDealStore();
   const [inputValue, setInputValue] = useState("");
@@ -30,6 +29,12 @@ function Home() {
   const handleClick = (id) => {
     navigate(`/deal/${id}`);
   };
+
+  const imageMocks = [
+    { image_url: imageMock },
+    { image_url: imageMock },
+    { image_url: imageMock },
+  ];
 
   return (
     <div>
@@ -53,6 +58,7 @@ function Home() {
             className="w-full max-w-[1200px] mx-auto"
             orientation="horizontal"
             cardClassName="h-[350px] w-full overflow-hidden rounded-md"
+            images={imageMocks}
           />
           <MainCarousel
             className="w-full max-w-[360px] h-[380px] mx-auto"
@@ -60,6 +66,7 @@ function Home() {
             contentClassName="h-[380px]"
             opts={{ align: "start" }}
             cardClassName="h-[350px] w-[350px] overflow-hidden rounded-md"
+            images={imageMocks}
           />
         </div>
       </section>
