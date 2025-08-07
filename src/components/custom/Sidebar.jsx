@@ -1,5 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import useAuthStore from "@/stores/useAuthStore";
+import useUserStore from "@/stores/useUserStore";
 import {
   FlameIcon,
   GemIcon,
@@ -38,7 +39,7 @@ function Sidebar() {
           {user && (
             <div>
               <Avatar className="flex h-15 w-15">
-                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarImage src={user?.profile_image ?? "https://github.com/shadcn.png"} />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
             </div>

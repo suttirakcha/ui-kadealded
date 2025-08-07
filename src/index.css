@@ -152,3 +152,16 @@ a.active{
   width:32px;
   height:32px;
 }
+
+.dropdown-item {
+  @apply flex items-center gap-2 px-4 py-2 hover:bg-gray-100 hover:text-black transition text-base;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
