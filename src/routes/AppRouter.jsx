@@ -13,6 +13,7 @@ const OTPPage = lazy(() => import("../pages/OTPPage"));
 const DealPage = lazy(() => import("../pages/DealPage"));
 const AdminUsers = lazy(() => import("../pages/admin/AdminUsers"));
 const AdminDeals = lazy(() => import("../pages/admin/AdminDeals"));
+const AdminSingleDeal = lazy(() => import("../pages/admin/AdminSingleDeal"));
 const AdminCreateDeal = lazy(() => import("../pages/admin/AdminCreateDeal"));
 const AdminCreateSeller = lazy(() => import("../pages/admin/AdminCreateSeller"));
 const AdminCategory = lazy(() => import("../pages/admin/AdminCategory"));
@@ -50,6 +51,7 @@ function AppRouter() {
                 { path: "users", element: <AdminUsers /> },
                 { path: "sellers", element: <AdminSellers /> },
                 { path: "deal", element: <AdminDeals /> },
+                { path: "deal/:id", element: <AdminSingleDeal /> },
                 { path: "amount", element: <AdminAmount /> },
                 { path: "top-deals", element: <AdminTopDeals /> },
                 { path: "create-deal", element: <AdminCreateDeal /> },

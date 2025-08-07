@@ -38,6 +38,7 @@ function EditCategoryDialog({ open, onOpenChange, category }) {
             onOpenChange(false)
         } catch (error) {
             console.error("Failed to update category:", error);
+            toast.error(res.data.message);
         }
     };
 

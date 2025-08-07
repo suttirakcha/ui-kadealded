@@ -6,14 +6,14 @@ import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
-function EditSellerDialog({ open, onOpenChange, seller }) {
+function EditSellerDialog({ open, onOpenChange, seller, isSubmitting }) {
   const { updateSeller, fetchAllSellers } = useSellerStore();
 
   const {
     register,
     handleSubmit,
     reset,
-    formState: { isSubmitting }
+    // formState: { isSubmitting }
   } = useForm({
     defaultValues: {
       name: seller?.name || "",
@@ -30,16 +30,17 @@ function EditSellerDialog({ open, onOpenChange, seller }) {
         tel_number: seller?.tel_number || "",
       });
     }
-  }, [seller, reset]);
+  }, []);
 
   const onSubmit = async (data) => {
     try {
       const res = await updateSeller(seller?.id, data);
       toast.success(res.data.message);
       await fetchAllSellers();
-      onOpenChange(false)
+      onOpenChange(false);
     } catch (error) {
       console.error("Failed to update seller:", error);
+      toast.error(res.data.message);
     }
   };
 

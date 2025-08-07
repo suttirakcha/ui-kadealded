@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/table";
 import { useEffect, useState } from 'react';
 import EditCategoryDialog from '@/components/dialogs/EditCategoryDialog';
+import { format } from 'date-fns';
 
 
 function AdminCategory() {
@@ -56,13 +57,13 @@ function AdminCategory() {
     }
   };
   return (
-    <>
-      <h2 className="text-xl font-bold mb-3 p-5">Categories</h2>
+    <div className='space-y-8'>
+      <h2 className="text-3xl font-bold">Categories</h2>
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="text-right">Name</TableHead>
-            <TableHead className="text-right">Notes</TableHead>
+            <TableHead className="text-left">Name</TableHead>
+            <TableHead className="text-left">Notes</TableHead>
             <TableHead className="text-right">Created At</TableHead>
             <TableHead className="text-center">Edit</TableHead>
           </TableRow>
@@ -70,10 +71,11 @@ function AdminCategory() {
         <TableBody>
           {categories.length > 0 ? categories.map((category) => (
             <TableRow key={category?.id}>
-              <TableCell className="text-right">{category?.name}</TableCell>
-              <TableCell className="text-right">{category?.notes}</TableCell>
+              <TableCell className="text-left">{category?.name}</TableCell>
+              <TableCell className="text-left">{category?.notes}</TableCell>
               <TableCell className="text-right">
-                {new Date(category?.created_at).toLocaleDateString()}
+                {format(new Date(category?.created_at), "dd MMMM yyyy")}
+                {/* {new Date(category?.created_at).toLocaleDateString('en-GB')} */}
               </TableCell>
               <TableCell className="text-center">
                 <button
@@ -103,7 +105,7 @@ function AdminCategory() {
       )}
 
       <div className="flex flex-col justify-between mb-4">
-        <h2 className="text-xl font-bold mb-3 p-5">Create Categories</h2>
+        <h2 className="text-3xl font-bold">Create Categories</h2>
         <form onSubmit={handleSubmit(onSubmit)} className='relative'>
           <div className='mx-auto p-10 w-200'>
             <div className='flex flex-col gap-4 mt-10 mb-15'>
@@ -122,7 +124,7 @@ function AdminCategory() {
           </div>
         </form>
       </div>
-    </>
+    </div>
   )
 }
 export default AdminCategory

@@ -1,11 +1,12 @@
 import MainCarousel from "@/components/custom/MainCarousel";
 import { Input } from "@/components/ui/input";
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { HotDeal, items, items2 } from "../data/items";
 import useDealStore from "@/stores/useDealStore";
 import CardDealList from "@/components/custom/CardDealList";
 import SearchForm from "@/components/custom/SearchForm";
+import { ChevronRight } from "lucide-react";
 
 function Home() {
   const location = useLocation();
@@ -17,8 +18,6 @@ function Home() {
     e.preventDefault();
     navigate('/searchDeal', { state: { result: inputValue } });
   }
-
-  console.log(location);
 
   useEffect(() => {
     const run = async () => {
@@ -45,7 +44,6 @@ function Home() {
             onChange={(e) => setInputValue(e.target.value)}
             onSubmit={handleSearch}
           />
-          {/* <Input placeholder="Search our promotions" className="bg-white" /> */}
         </div>
       </section>
 
@@ -66,21 +64,27 @@ function Home() {
         </div>
       </section>
 
-      <div className="bg-[#B51A00] mx-auto max-w-[1200px] w-full h-full rounded-2xl p-20 flex gap-3 relative">
+      <div className="bg-[#B51A00] mx-auto max-w-[1200px] w-full h-full rounded-2xl p-10 flex gap-3 relative">
         <button className="bg-[#F42B2B] absolute -left-8 -top-5 text-white p-2 mx-2 rounded-xl px-8 text-2xl font-bold hover:bg-red-700">
           Hot deal
         </button>
         <div className="grid grid-cols-4 gap-3">
-          <CardDealList items={deals} onClick={handleClick} />
+          <CardDealList items={deals.slice(0, 4)} onClick={handleClick} />
         </div>
       </div>
 
-      <div className="mx-auto max-w-[1200px] w-full h-full rounded-2xl px-20 py-10 grid grid-cols-4 gap-3">
-        <CardDealList items={deals} onClick={handleClick} />
-      </div>
 
-      <div className="mx-auto max-w-[1200px] w-full h-full rounded-2xl px-20 py-10 grid grid-cols-4 gap-3">
-        <CardDealList items={deals} onClick={handleClick} />
+      <div className="mx-auto max-w-[1200px] w-full h-full rounded-2xl p-10 space-y-4">
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-bold">Recommended Deals</h1>
+          <Link to="/searchDeal" className="text-[#003F66] flex items-center gap-1 font-medium">
+            See more
+            <ChevronRight className="h-5 w-5"/>
+          </Link>
+        </div>
+        <div className="grid grid-cols-4 gap-3">
+          <CardDealList items={deals?.slice(0, 4)} onClick={handleClick} />
+        </div>
       </div>
     </div>
   );
