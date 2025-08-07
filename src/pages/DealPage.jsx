@@ -50,7 +50,6 @@ function DealPage() {
   }
 
   const handleClick = (id) => {
-    // getDealById(id);
     navigate(`/deal/${id}`);
     window.scrollTo({ top: 0 });
   };
@@ -84,7 +83,6 @@ function DealPage() {
             <Progress value={joinedDealsProgress} className="h-4" />
           </div>
           <div className="mt-6 space-x-5">
-            {/* TODO: join the deal button */}
             <button
               className={cn(
                 "bg-red-500 hover:bg-red-700 text-white px-6 py-2 rounded-xl shadow-md text-lg",
