@@ -69,7 +69,7 @@ function Home() {
           Hot deal
         </button>
         <div className="grid grid-cols-4 gap-3">
-          <CardDealList items={deals} onClick={handleClick} />
+          <CardDealList items={deals.slice(0, 4)} onClick={handleClick} />
         </div>
       </div>
 
@@ -77,13 +77,13 @@ function Home() {
       <div className="mx-auto max-w-[1200px] w-full h-full rounded-2xl p-10 space-y-4">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold">Recommended Deals</h1>
-          <Link to="/searchDeal" className="text-[#003F66] flex items-center gap-1">
+          <Link to="/searchDeal" className="text-[#003F66] flex items-center gap-1 font-medium">
             See more
             <ChevronRight className="h-5 w-5"/>
           </Link>
         </div>
         <div className="grid grid-cols-4 gap-3">
-          <CardDealList items={deals} onClick={handleClick} />
+          <CardDealList items={deals?.slice(0, 4)} onClick={handleClick} />
         </div>
       </div>
     </div>
