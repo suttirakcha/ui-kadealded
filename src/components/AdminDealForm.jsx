@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import CustomSelectDropdown from "./custom/CustomSelectDropdown";
+import Loading from "./icons/Loading";
 
 function AdminDealForm({ deal }) {
   const navigate = useNavigate();
@@ -41,12 +42,13 @@ function AdminDealForm({ deal }) {
       description: deal?.description || "",
       start_at: deal?.start_at || "",
       deadline: deal?.deadline || "",
-      seller: deal?.seller?.name || "",
-      category: deal?.category?.name || "",
+      seller_id: deal?.seller_id || "",
+      category_id: deal?.category_id || "",
       deal_status: deal?.deal_status || "",
       // images: uploadRes.data.url,
       max_participants: deal?.max_participants || "",
-      creator_name: user?.name || "Admin",
+      creator: deal?.creator || "",
+      // creator: user?.name || "Admin",
     },
     resolver: yupResolver(dealSchema),
   });
@@ -122,72 +124,50 @@ function AdminDealForm({ deal }) {
             {...setDeal("description")}
             error={errors.description?.message}
           />
-          {/* <CustomSelectDropdown
+          <CustomSelectDropdown
             label="Category"
-            initialValue="-- Select category --"
             error={errors.category_name?.message}
-            options={categories}
-            control={control}
-            {...setDeal("category_name")}
-          />
-          <p>{errors.category_name?.message}</p> */}
-          <label className="pt-4">
-            <div className="relative">
-              <select
-                className="text-input peer h-10 w-full"
-                {...setDeal("category_id")}
-              >
-                {/* <option value="" disabled selected>
-                  -- Select Category --
-                </option> */}
+            options={
+              <>
                 {categories?.map((category) => (
                   <option key={category.id} value={category.id}>
                     {category.name}
                   </option>
                 ))}
-              </select>
-              <span className="custom-label">Category</span>
-            </div>
-            {errors.category_id && (
-              <p className="text-sm text-red-500">
-                {errors.category_id.message}
-              </p>
-            )}
-          </label>
+              </>
+            }
+            {...setDeal("category_id")}
+          />
 
-          <label className="font-medium peer-focus:-top-4 peer-focus:text-black peer-focus:text-sm peer-placeholder-shown:top-1 peer-placeholder-shown:text-base peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-black transition-all duration-200 -z-1 left-0">
-            Status
-          </label>
-          <select className="border rounded p-2" {...setDeal("deal_status")}>
-            {/* <option value="" disabled selected>
-              -- Select Status --
-            </option> */}
-            {dealStatusOptions.map((status) => (
-              <option key={status.value} value={status.value}>
-                {status.label}
-              </option>
-            ))}
-          </select>
-          {errors.status && (
-            <p className="text-sm text-red-500">{errors.status.message}</p>
-          )}
+          <CustomSelectDropdown
+            label="Status"
+            error={errors.status?.message}
+            options={
+              <>
+                {dealStatusOptions.map((status) => (
+                  <option key={status.value} value={status.value}>
+                    {status.label}
+                  </option>
+                ))}
+              </>
+            }
+            {...setDeal("deal_status")}
+          />
 
-          <label className="font-medium peer-focus:-top-4 peer-focus:text-black peer-focus:text-sm peer-placeholder-shown:top-1 peer-placeholder-shown:text-base peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-black transition-all duration-200 -z-1 left-0">
-            Seller
-          </label>
-          <select className="border rounded p-2" {...setDeal("seller_id")}>
-            {/* <option value="" disabled selected>
-              -- Select Seller --
-            </option> */}
-            {sellers.map((seller) => (
+          <CustomSelectDropdown
+            label="Seller"
+            error={errors.seller_id?.message}
+            options={
+              <>
+              {sellers.map((seller) => (
               <option key={seller.id} value={seller.id}>
                 {seller.name}
               </option>
             ))}
-          </select>
-          {errors.seller_id && (
-            <p className="text-sm text-red-500">{errors.seller_id.message}</p>
-          )}
+              </>
+            }
+            {...setDeal("seller_id")}
+          />
 
           <CustomInput
             type="number"

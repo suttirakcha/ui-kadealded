@@ -73,7 +73,6 @@ function EditUserDialog({ open, onOpenChange, user }) {
           <CustomInput label="Last name" {...register("last_name")} />
           <CustomInput label="Email" {...register("email")} />
           <CustomInput label="Phone number" {...register("tel_number")} />
-          {/* <Input {...register("tel_number")} placeholder="Phonenumber" /> */}
           <DatePicker label="Birth Date" name="birth_date" control={control} />
           <DialogFooter className="pt-4">
             <Button type="submit" disabled={isSubmitting}>
