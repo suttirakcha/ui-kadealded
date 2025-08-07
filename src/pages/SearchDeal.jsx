@@ -53,14 +53,16 @@ function SearchDeal() {
     e.preventDefault();
     setSearchQuery({ result: inputValue });
     setInputValue("");
+    setCurrentPage(1);
   };
 
   const clearSearch = () => {
     setSearchQuery({});
     setInputValue("");
+    setCurrentPage(1);
   };
 
-  const totalPages = Math.ceil(deals?.length / dealsPerPage);
+  const totalPages = Math.ceil((searchResult ? filteredItems?.length : deals?.length) / dealsPerPage);
 
   return (
     <div className="p-6">
