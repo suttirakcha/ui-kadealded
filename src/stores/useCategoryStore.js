@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import useAuthStore from "./useAuthStore";
-import { adminApi } from "@/api/routesApi";
+import { adminApi, authApi } from "@/api/routesApi";
 
 const useCategoryStore = create((set) => ({
     categories: [],
@@ -8,10 +8,8 @@ const useCategoryStore = create((set) => ({
 
     fetchAllCategories: async () => {
         // const token = useAuthStore.getState().accessToken;
-        const token = localStorage.getItem("accessToken");
-        const res = await adminApi.get("/categories", {
-            headers: { Authorization: `Bearer ${token}` }
-        });
+        // const token = localStorage.getItem("accessToken");
+        const res = await authApi.get("/categories");
         set({ categories: res.data.categories });
         return res;
     },
