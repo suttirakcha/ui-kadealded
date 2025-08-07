@@ -76,10 +76,12 @@ function Header() {
         </div>
       </div>
       {user && (
-        <div className="flex justify-end">
+        <div className="flex justify-end items-center gap-2">
+          <p className="font-medium text-lg text-center">{user?.name}</p>
+
           <Avatar className="h-10 w-10">
-            <AvatarImage src={user?.picture ?? "https://github.com/shadcn.png"} />
-            <AvatarFallback>{user?.name[0]}</AvatarFallback>
+            <AvatarImage src={user?.profile_image ?? "https://github.com/shadcn.png"} />
+            <AvatarFallback>{user?.name}</AvatarFallback>
           </Avatar>
         </div>
       )}

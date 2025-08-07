@@ -1,10 +1,10 @@
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router";
 import { lazy } from "react";
 import useAuthStore from "@/stores/useAuthStore";
-import ProfileUserLayout from "@/layouts/ProfileUserLayout";
 
 const MainLayout = lazy(() => import("../layouts/MainLayout"));
 const AdminLayout = lazy(() => import("../layouts/AdminLayout"));
+const ProfileUserLayout = lazy(() => import("../layouts/ProfileUserLayout"));
 const Home = lazy(() => import("../pages/Home"));
 const NotFound = lazy(() => import("../pages/NotFound"));
 const About = lazy(() => import("../pages/About"));
@@ -24,6 +24,8 @@ const AdminTopDeals = lazy(() => import("../pages/admin/AdminTopDeals"));
 const SearchDeal = lazy(() => import("../pages/SearchDeal"));
 const AdminStats = lazy(() => import("@/pages/admin/AdminStats"));
 const CallbackPage = lazy(() => import("../pages/CallbackPage"));
+const ProfileUser = lazy(() => import("../pages/ProfileUser"));
+const CoinTransaction = lazy(() => import("../pages/CoinTransaction"));
 
 function AppRouter() {
     const { user } = useAuthStore();
@@ -41,7 +43,10 @@ function AppRouter() {
                 { path: "confirmEmail", element: <OTPPage /> },
                 { path: "searchDeal", element: <SearchDeal /> },
                 { path: "profile" , element: <ProfileUserLayout />,
-                    children:[]
+                    children:[
+                        { index: true, element: <ProfileUser /> },
+                        { path: "coin-transaction", element: <CoinTransaction /> },
+                    ]
                 }
             ],
         },

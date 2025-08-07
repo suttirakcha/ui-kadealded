@@ -1,8 +1,5 @@
-import CustomInput from '@/components/custom/CustomInput';
 
-
-
-function CoinTransacTion() {
+function CoinTransaction() {
 
   return (
     <div className="flex-1 flex flex-col ml-30 justify-center items-center text-center md:text-left md:items-start">
@@ -32,4 +29,4 @@ function CoinTransacTion() {
   )
 }
 
-export default CoinTransacTion
+export default CoinTransaction
