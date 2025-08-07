@@ -34,6 +34,7 @@ const useAuthStore = create(
         await authApi.post("/logout");
         set({ user: null });
       },
+
     }),
     {
       name: "authStore",
