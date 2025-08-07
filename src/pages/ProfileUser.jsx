@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 
 function ProfileUser() {
   const { user } = useAuthStore();
-  const { fetchAllUsers } = useUserStore();
+  const { users , fetchAllUsers } = useUserStore();
   const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ function ProfileUser() {
                 className="w-full h-full object-cover"
               />
             </div>
-            <p className="mt-4 text-lg font-bold text-[#083b63]">{user?.name}</p>
+            <p className="mt-4 text-lg font-bold text-[#083b63]">{users.name}</p>
             <hr className="my-2 w-24 border-[#083b63]" />
             <p className="text-sm text-gray-600">คูปอง / ส่วนลด: {coupons.length} รายการ</p>
             <p className="text-sm text-gray-600">ดีลที่ซื้อแล้ว: {dealPurchased} ดีล</p>

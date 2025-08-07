@@ -1,5 +1,5 @@
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router";
-import { lazy } from "react";
+import { lazy, useEffect } from "react";
 import useAuthStore from "@/stores/useAuthStore";
 
 const MainLayout = lazy(() => import("../layouts/MainLayout"));
@@ -26,10 +26,19 @@ const AdminStats = lazy(() => import("@/pages/admin/AdminStats"));
 const CallbackPage = lazy(() => import("../pages/CallbackPage"));
 const ProfileUser = lazy(() => import("../pages/ProfileUser"));
 const CoinTransaction = lazy(() => import("../pages/CoinTransaction"));
+const Coin = lazy(() => import("../pages/Coin"));
 
 function AppRouter() {
     const { user } = useAuthStore();
     const isAdmin = user?.role === "ADMIN" || user?.role === "SUPERADMIN";
+
+    useEffect(() => {
+    const currentPath = window.location.pathname;
+    if (!user && currentPath.startsWith("/profile")) {
+      window.location.replace("/");
+    }
+  }, [user]);
+
     const router = createBrowserRouter([
         {
             path: "/",
@@ -42,6 +51,7 @@ function AppRouter() {
                 { path: "deal/:id", element: <DealPage /> },
                 { path: "confirmEmail", element: <OTPPage /> },
                 { path: "searchDeal", element: <SearchDeal /> },
+                { path: "coin", element: <Coin/> },
                 { path: "profile" , element: <ProfileUserLayout />,
                     children:[
                         { index: true, element: <ProfileUser /> },

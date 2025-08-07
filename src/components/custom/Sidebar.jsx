@@ -1,5 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import useAuthStore from "@/stores/useAuthStore";
+import useUserStore from "@/stores/useUserStore";
 import {
   FlameIcon,
   GemIcon,

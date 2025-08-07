@@ -34,7 +34,13 @@ const useAuthStore = create(
         await authApi.post("/logout");
         set({ user: null });
       },
-
+      updateAuthUser: (updatedUser) =>
+        set((state) => ({
+          user: {
+            ...state.user,
+            ...updatedUser,
+          },
+        })),
     }),
     {
       name: "authStore",

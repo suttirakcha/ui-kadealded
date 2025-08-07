@@ -6,9 +6,11 @@ import { useEffect } from "react";
 import { toast } from "sonner";
 import useUserStore from "@/stores/useUserStore";
 import { DatePicker } from "../custom/DatePicker";
+import useAuthStore from "@/stores/useAuthStore";
 
 function EditUserDialog({ open, onOpenChange, user }) {
     const { updateUserById, fetchAllUsers } = useUserStore();
+    const { updateAuthUser } = useAuthStore();
 
     const {
         control,
@@ -43,6 +45,7 @@ function EditUserDialog({ open, onOpenChange, user }) {
             const res = await updateUserById(user?.id, data);
             toast.success(res.data.message);
             await fetchAllUsers();
+            updateAuthUser(data);
             onOpenChange(false)
         } catch (error) {
             console.error("Failed to update user:", error);
