@@ -15,7 +15,7 @@ function AdminLayout() {
   }, [user, navigate]);
 
   return (
-    <div className="flex">
+    <div className="flex bg-gradient-to-b from-[#e0f2f1] to-white">
       <header className="lg:hidden">
         <AdminSidebarSheet />
       </header>
