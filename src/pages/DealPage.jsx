@@ -50,7 +50,6 @@ function DealPage() {
   }
 
   const handleClick = (id) => {
-    // getDealById(id);
     navigate(`/deal/${id}`);
     window.scrollTo({ top: 0 });
   };
@@ -60,9 +59,9 @@ function DealPage() {
   );
 
   return (
-    <div className="max-w-[1200px] mx-auto mt-10 p-6 bg-gray-200 rounded-2xl">
+    <div className="max-w-[1200px] mx-auto mt-10 p-10 bg-white shadow-lg rounded-2xl">
       <h1 className="text-4xl font-bold text-center mb-10">{deal.title}</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 bg-white shadow-lg rounded-xl p-8 mb-15">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 rounded-xl mb-15">
         <MainCarousel images={deal.images} />
         <div className="space-y-4">
           <p className="text-sm">{deal.category.name}</p>
@@ -84,7 +83,6 @@ function DealPage() {
             <Progress value={joinedDealsProgress} className="h-4" />
           </div>
           <div className="mt-6 space-x-5">
-            {/* TODO: join the deal button */}
             <button
               className={cn(
                 "bg-red-500 hover:bg-red-700 text-white px-6 py-2 rounded-xl shadow-md text-lg",

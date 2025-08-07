@@ -127,7 +127,7 @@
 }
 
 .custom-label {
-  @apply font-medium absolute peer-focus:-top-4 peer-focus:text-black peer-focus:text-sm peer-placeholder-shown:top-1 peer-placeholder-shown:text-base peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-black transition-all duration-200 -z-1 left-0;
+  @apply font-medium absolute peer-focus:-top-4 peer-focus:text-black peer-focus:text-sm peer-placeholder-shown:top-1 peer-placeholder-shown:text-base peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-black transition-all duration-200 z-0 left-0;
 }
 
 .carousel-content {
@@ -151,4 +151,17 @@ a.active{
 .google-login-btn svg {
   width:32px;
   height:32px;
+}
+
+.dropdown-item {
+  @apply flex items-center gap-2 px-4 py-2 hover:bg-gray-100 hover:text-black transition text-base;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
 }

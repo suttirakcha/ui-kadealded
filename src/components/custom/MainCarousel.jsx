@@ -5,6 +5,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import { cn } from "@/lib/utils";
 
 function MainCarousel({
   images,
@@ -41,37 +42,21 @@ function MainCarousel({
     <div>
       <Carousel
         setApi={setApi}
-        className={className}
+        className={cn("relative", className)}
         opts={opts}
         orientation={orientation}
       >
         <CarouselContent className={contentClassName}>
-          {images ? (
+          {images && (
             <>
               {images.map((image, index) => (
                 <CarouselItem key={index}>
-                  <div>
+                  <div className="cursor-grab active:cursor-grabbing">
                     <Card className={cardClassName}>
                       <img
                         src={image.image_url}
                         alt={`img-${index}`}
-                        className="w-full h-full object-cover"
-                      />
-                    </Card>
-                  </div>
-                </CarouselItem>
-              ))}
-            </>
-          ) : (
-            <>
-              {Array.from({ length: 5 }).map((_, index) => (
-                <CarouselItem key={index}>
-                  <div>
-                    <Card className={cardClassName}>
-                      <img
-                        src={`/src/assets/imagemock.png`}
-                        alt="promotion"
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover rounded-md"
                       />
                     </Card>
                   </div>
@@ -81,6 +66,26 @@ function MainCarousel({
           )}
         </CarouselContent>
       </Carousel>
+      {images && (
+        <div
+          className={cn(
+            "text-white text-center flex gap-1.5 relative -top-5 w-full h-full justify-center",
+            { "flex-col -right-5": orientation === "vertical" }
+          )}
+        >
+          {Array.from({ length: totalSlides }).map((_, index) => (
+            <div
+              className={cn("w-2 h-2 bg-gray-200 rounded-full opacity-50", {
+                "opacity-100": current === index,
+              })}
+              onClick={() => {
+                setCurrent(index);
+                api.scrollTo(index);
+              }}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

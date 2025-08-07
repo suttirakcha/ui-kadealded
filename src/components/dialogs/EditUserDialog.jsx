@@ -14,9 +14,11 @@ import { toast } from "sonner";
 import useUserStore from "@/stores/useUserStore";
 import { DatePicker } from "../custom/DatePicker";
 import CustomInput from "../custom/CustomInput";
+import useAuthStore from "@/stores/useAuthStore";
 
 function EditUserDialog({ open, onOpenChange, user }) {
   const { updateUserById, fetchAllUsers } = useUserStore();
+  const { updateAuthUser } = useAuthStore();
 
   const {
     control,
@@ -51,6 +53,7 @@ function EditUserDialog({ open, onOpenChange, user }) {
       const res = await updateUserById(user?.id, data);
       toast.success(res.data.message);
       await fetchAllUsers();
+      updateAuthUser(data);
       onOpenChange(false);
     } catch (error) {
       console.error("Failed to update user:", error);
@@ -71,11 +74,7 @@ function EditUserDialog({ open, onOpenChange, user }) {
           <CustomInput label="Email" {...register("email")} />
           <CustomInput label="Phone number" {...register("tel_number")} />
           {/* <Input {...register("tel_number")} placeholder="Phonenumber" /> */}
-          <DatePicker
-            label="Birth Date"
-            name="birth_date"
-            control={control}
-          />
+          <DatePicker label="Birth Date" name="birth_date" control={control} />
           <DialogFooter className="pt-4">
             <Button type="submit" disabled={isSubmitting}>
               {isSubmitting ? "Saving..." : "Save"}

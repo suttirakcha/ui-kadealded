@@ -6,22 +6,36 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import useCategoryStore from "@/stores/useCategoryStore";
 import { Menu } from "lucide-react";
+import { useEffect } from "react";
+import { Link } from "react-router";
 
 function CategorySheet() {
+  const { categories, fetchAllCategories } = useCategoryStore();
+
+  useEffect(() => {
+    const run = async () => {
+      await fetchAllCategories();
+    };
+
+    run();
+  }, []);
+
   return (
     <Sheet>
       <SheetTrigger>
-        <Menu className="cursor-pointer"/>
+        <Menu className="cursor-pointer" />
       </SheetTrigger>
       <SheetContent side="left">
-        {/* TODO: add category menus */}
-
         <SheetHeader>
-          <SheetTitle>Are you absolutely sure?</SheetTitle>
-          <SheetDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+          <SheetTitle className="text-2xl mb-4">Categories</SheetTitle>
+          <SheetDescription className="flex flex-col gap-4">
+            {categories.map((category) => (
+              <Link to="" key={category.id}>
+                {category.name}
+              </Link>
+            ))}
           </SheetDescription>
         </SheetHeader>
       </SheetContent>
