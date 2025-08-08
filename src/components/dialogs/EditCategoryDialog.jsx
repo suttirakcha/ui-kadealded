@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import useCategoryStore from "@/stores/useCategoryStore";
+import CustomInput from "../custom/CustomInput";
 
 function EditCategoryDialog({ open, onOpenChange, category }) {
   const { updateCategory, fetchAllCategories } = useCategoryStore();
@@ -20,7 +21,7 @@ function EditCategoryDialog({ open, onOpenChange, category }) {
     register,
     handleSubmit,
     reset,
-    formState: { isSubmitting },
+    formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
       name: category?.name || "",
@@ -56,13 +57,24 @@ function EditCategoryDialog({ open, onOpenChange, category }) {
           <DialogTitle>Edit category: {category.name}</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <Input {...register("name")} placeholder="Name" />
-          <textarea
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+          {/* <Input {...register("name")} placeholder="Name" /> */}
+          <CustomInput 
+            label="Name"
+            error={errors.name?.message}
+            {...register("name")}
+          />
+          <CustomInput 
+            label="Notes"
+            type="textarea"
+            error={errors.notes?.message}
+            {...register("notes")}
+          />
+          {/* <textarea
             placeholder="Notes"
             {...register("notes")}
             className="w-full resize-none border p-2 rounded"
-          ></textarea>
+          ></textarea> */}
 
           <DialogFooter className="pt-4">
             <Button type="submit" disabled={isSubmitting}>

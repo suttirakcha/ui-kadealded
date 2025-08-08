@@ -1,10 +1,10 @@
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import CustomInput from '@/components/custom/CustomInput'
-import { Button } from '@/components/ui/button';
-import { toast } from 'sonner';
-import useCategoryStore from '@/stores/useCategoryStore';
-import { categorySchema } from '@/schemas/categorySchema';
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import CustomInput from "@/components/custom/CustomInput";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import useCategoryStore from "@/stores/useCategoryStore";
+import { categorySchema } from "@/schemas/categorySchema";
 import {
   Table,
   TableBody,
@@ -13,38 +13,48 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useEffect, useState } from 'react';
-import EditCategoryDialog from '@/components/dialogs/EditCategoryDialog';
-import { format } from 'date-fns';
-
+import { useEffect, useState } from "react";
+import EditCategoryDialog from "@/components/dialogs/EditCategoryDialog";
+import { format } from "date-fns";
+import DeleteCategoryDialog from "@/components/dialogs/DeleteCategoryDialog";
+import useAuthStore from "@/stores/useAuthStore";
 
 function AdminCategory() {
-  const { createCategory, categories, fetchAllCategories, deleteCategory } = useCategoryStore();
-  const { register: category, handleSubmit, formState, reset } = useForm({
+  const { user } = useAuthStore();
+  const { createCategory, categories, fetchAllCategories } = useCategoryStore();
+  const {
+    register: category,
+    handleSubmit,
+    formState,
+    reset,
+  } = useForm({
     resolver: yupResolver(categorySchema),
   });
   const { errors, isSubmitting } = formState;
 
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategoryToUpdate, setSelectedCategoryToUpdate] =
+    useState(null);
+  const [selectedCategoryToDelete, setSelectedCategoryToDelete] =
+    useState(null);
 
   useEffect(() => {
     const run = async () => {
       await fetchAllCategories();
-    }
+    };
     run();
   }, []);
 
-  const handleDelete = async (id) => {
-    try {
-      const confirmDelete = confirm("คุณต้องการลบ Category นี้หรือไม่?");
-      if (!confirmDelete) return;
-      await deleteCategory(id);
-      toast.success("Delete Complete")
-    } catch (error) {
-      console.log(error);
-      toast.error("This Category is already used on another deal");
-    }
-  };
+  // const handleDelete = async (id) => {
+  //   try {
+  //     const confirmDelete = confirm("คุณต้องการลบ Category นี้หรือไม่?");
+  //     if (!confirmDelete) return;
+  //     await deleteCategory(id);
+  //     toast.success("Delete Complete")
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast.error("This Category is already used on another deal");
+  //   }
+  // };
 
   const onSubmit = async (data) => {
     try {
@@ -57,7 +67,7 @@ function AdminCategory() {
     }
   };
   return (
-    <div className='space-y-8'>
+    <div className="space-y-8">
       <h2 className="text-3xl font-bold">Categories</h2>
       <Table>
         <TableHeader>
@@ -69,62 +79,82 @@ function AdminCategory() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {categories.length > 0 ? categories.map((category) => (
-            <TableRow key={category?.id}>
-              <TableCell className="text-left">{category?.name}</TableCell>
-              <TableCell className="text-left">{category?.notes}</TableCell>
-              <TableCell className="text-right">
-                {format(new Date(category?.created_at), "dd MMMM yyyy")}
-                {/* {new Date(category?.created_at).toLocaleDateString('en-GB')} */}
-              </TableCell>
-              <TableCell className="text-center">
-                <button
-                  className='text-white bg-blue-500 hover:bg-blue-700 px-5 py-1 rounded'
-                  onClick={() => setSelectedCategory(category)}
-                >
-                  Edit
-                </button>
-                <button
-                  className='text-white bg-red-500 hover:bg-red-700 px-5 py-1 rounded ml-5'
-                  onClick={() => handleDelete(category.id)}
-                >
-                  Delete
-                </button>
-              </TableCell>
-            </TableRow>
-          )) : ("No Categories")}
+          {categories.length > 0
+            ? categories.map((category) => (
+                <TableRow key={category?.id}>
+                  <TableCell className="text-left">{category?.name}</TableCell>
+                  <TableCell className="text-left">{category?.notes}</TableCell>
+                  <TableCell className="text-right">
+                    {category?.created_at
+                      ? format(new Date(category?.created_at), "dd MMMM yyyy")
+                      : ""}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <button
+                      className="text-white bg-blue-500 hover:bg-blue-700 px-5 py-1 rounded"
+                      onClick={() => setSelectedCategoryToUpdate(category)}
+                    >
+                      Edit
+                    </button>
+                    {user?.role === "SUPERADMIN" && (
+                      <button
+                        className="text-white bg-red-500 hover:bg-red-700 px-5 py-1 rounded ml-5"
+                        onClick={() => setSelectedCategoryToDelete(category)}
+                      >
+                        Delete
+                      </button>
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))
+            : "No Categories"}
         </TableBody>
       </Table>
 
-      {selectedCategory && (
+      {selectedCategoryToUpdate && (
         <EditCategoryDialog
-          open={selectedCategory}
-          onOpenChange={setSelectedCategory}
-          category={selectedCategory}
+          open={selectedCategoryToUpdate}
+          onOpenChange={setSelectedCategoryToUpdate}
+          category={selectedCategoryToUpdate}
+        />
+      )}
+      {selectedCategoryToDelete && (
+        <DeleteCategoryDialog
+          open={selectedCategoryToDelete}
+          onOpenChange={setSelectedCategoryToDelete}
+          category={selectedCategoryToDelete}
         />
       )}
 
       <div className="flex flex-col justify-between mb-4">
-        <h2 className="text-3xl font-bold">Create categories</h2>
-        <form onSubmit={handleSubmit(onSubmit)} className='relative'>
-          <div className='mx-auto'>
-            <div className='flex flex-col gap-4 mt-10 mb-15'>
+        <h2 className="text-3xl font-bold">Create category</h2>
+        <form onSubmit={handleSubmit(onSubmit)} className="relative">
+          <div className="mx-auto">
+            <div className="flex flex-col gap-4 mt-10 mb-15">
               <CustomInput
                 label="Name"
                 {...category("name")}
                 error={errors.name?.message}
               />
-              <textarea
+              <CustomInput
+                label="Notes"
+                type="textarea"
+                {...category("notes")}
+                error={errors.notes?.message}
+              />
+              {/* <textarea
                 {...category("notes")}
                 placeholder='Notes'
                 className='p-3 w-full h-50 border border-gray-200 rounded-sm resize-none' >
-              </textarea>
+              </textarea> */}
             </div>
-            <Button variant="default" className="px-10 py-2 mt-5">Submit</Button>
+            <Button variant="default" className="px-10 py-2 mt-5">
+              Submit
+            </Button>
           </div>
         </form>
       </div>
     </div>
-  )
+  );
 }
-export default AdminCategory
+export default AdminCategory;

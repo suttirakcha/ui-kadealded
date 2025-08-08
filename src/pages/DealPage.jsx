@@ -15,6 +15,7 @@ function DealPage() {
   const navigate = useNavigate();
   const {
     deals,
+    isLoading,
     currentDeal: deal,
     getAllDeals,
     getDealById,

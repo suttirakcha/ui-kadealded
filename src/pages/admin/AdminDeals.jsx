@@ -16,7 +16,7 @@ import { format } from "date-fns";
 
 function AdminDeals() {
   const navigate = useNavigate();
-  const { deals, loading, getAllDeals } = useDealStore();
+  const { deals, isLoading, getAllDeals } = useDealStore();
   useEffect(() => {
     const run = async () => {
       await getAllDeals();
@@ -36,7 +36,7 @@ function AdminDeals() {
           </Button>
         </Link>
       </div>
-      {loading ? (
+      {isLoading ? (
         <Loading />
       ) : (
         <Table>
@@ -53,41 +53,39 @@ function AdminDeals() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {deals ? (
+            {deals.length > 0 ? (
               <>
-                {deals.length > 0 ? (
-                  <>
-                    {deals?.map((deal) => (
-                      <TableRow key={deal.id}>
-                        <TableCell>
-                          <img
-                            src={deal?.images[0]?.image_url}
-                            alt="promotion"
-                            className="w-full h-full object-cover rounded-md"
-                          />
-                        </TableCell>
-                        <TableCell
-                          className="text-left"
-                          onClick={() => navigate(`/admin/deal/${deal.id}`)}
-                        >
-                          {deal.title}
-                        </TableCell>
-                        <TableCell className="text-right">
-                          {deal.max_participants}
-                        </TableCell>
-                        <TableCell className="text-right">
-                          {format(new Date(deal?.start_at), "dd MMMM yyyy")}
-                          {/* {new Date(deal?.start_at).toLocaleDateString("en-GB")} */}
-                        </TableCell>
-                        <TableCell className="text-right">
-                          {format(new Date(deal?.deadline), "dd MMMM yyyy")}
-                          {/* {new Date(deal?.deadline).toLocaleDateString("en-GB")} */}
-                        </TableCell>
-                        <TableCell className="text-right">50</TableCell>
-                        <TableCell className="text-right">
-                          <div className="justify-end flex items-center gap-2">
-                            <button
-                              className={`px-2 py-1 rounded text-white font-medium
+                {deals?.map((deal) => (
+                  <TableRow key={deal.id}>
+                    <TableCell>
+                      <img
+                        src={deal?.images[0]?.image_url}
+                        alt="promotion"
+                        className="w-full h-full object-cover rounded-md"
+                      />
+                    </TableCell>
+                    <TableCell
+                      className="text-left"
+                      onClick={() => navigate(`/admin/deal/${deal.id}`)}
+                    >
+                      {deal.title}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {deal.max_participants}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {format(new Date(deal?.start_at), "dd MMMM yyyy")}
+                      {/* {new Date(deal?.start_at).toLocaleDateString("en-GB")} */}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {format(new Date(deal?.deadline), "dd MMMM yyyy")}
+                      {/* {new Date(deal?.deadline).toLocaleDateString("en-GB")} */}
+                    </TableCell>
+                    <TableCell className="text-right">50</TableCell>
+                    <TableCell className="text-right">
+                      <div className="justify-end flex items-center gap-2">
+                        <button
+                          className={`px-2 py-1 rounded text-white font-medium
                              ${
                                deal.deal_status === "EXPIRED"
                                  ? "bg-red-600"
@@ -99,32 +97,28 @@ function AdminDeals() {
                                  ? "bg-green-600"
                                  : "bg-gray-400"
                              }`}
-                            >
-                              {deal.deal_status}
-                            </button>
-                          </div>
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <button
-                            onClick={() => navigate(`/admin/deal/${deal.id}`)}
-                            className="text-white bg-blue-500 hover:bg-blue-700 active:bg-blue-900 px-5 py-1 rounded"
-                          >
-                            Edit
-                          </button>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </>
-                ) : (
-                  <TableRow>
-                    <TableCell colSpan={8} className="text-center">
-                      No Deals
+                        >
+                          {deal.deal_status}
+                        </button>
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <button
+                        onClick={() => navigate(`/admin/deal/${deal.id}`)}
+                        className="text-white bg-blue-500 hover:bg-blue-700 active:bg-blue-900 px-5 py-1 rounded"
+                      >
+                        Edit
+                      </button>
                     </TableCell>
                   </TableRow>
-                )}
+                ))}
               </>
             ) : (
-              <Loading />
+              <TableRow>
+                <TableCell colSpan={8} className="text-center">
+                  No Deals
+                </TableCell>
+              </TableRow>
             )}
           </TableBody>
         </Table>
