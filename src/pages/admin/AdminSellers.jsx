@@ -69,9 +69,8 @@ function AdminSellers() {
                       {seller?.created_at
                         ? format(new Date(seller?.created_at), "dd MMMM yyyy")
                         : ""}
-                      {/* {new Date(seller?.created_at).toLocaleDateString("en-GB")} */}
                     </TableCell>
-                    <TableCell className="text-center">
+                    <TableCell className="text-center flex gap-3 justify-center">
                       <button
                         className="text-white bg-blue-500 hover:bg-blue-700 px-5 py-1 rounded"
                         onClick={() => setSelectedSellerToUpdate(seller)}
@@ -80,7 +79,7 @@ function AdminSellers() {
                       </button>
                       {user?.role === "SUPERADMIN" && (
                         <button
-                          className="text-white bg-red-500 hover:bg-red-700 px-5 py-1 rounded ml-5"
+                          className="text-white bg-red-500 hover:bg-red-700 px-5 py-1 rounded"
                           onClick={() => setSelectedSellerToDelete(seller)}
                         >
                           Delete
