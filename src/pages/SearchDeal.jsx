@@ -62,7 +62,9 @@ function SearchDeal() {
     setCurrentPage(1);
   };
 
-  const totalPages = Math.ceil((searchResult ? filteredItems?.length : deals?.length) / dealsPerPage);
+  const totalPages = Math.ceil(
+    (searchResult ? filteredItems?.length : deals?.length) / dealsPerPage
+  );
 
   return (
     <div className="px-6 py-10">
@@ -73,10 +75,17 @@ function SearchDeal() {
         onChange={(e) => setInputValue(e.target.value)}
       />
       <div className="flex items-center gap-4 max-w-[1200px] w-full mx-auto pt-10">
-        <h1 className="text-lg font-bold">
-          Search results for {searchResult} ({filteredItems?.length} result
-          {filteredItems?.length === 1 ? "" : "s"})
-        </h1>
+        {searchResult ? (
+          <h1 className="text-lg font-bold">
+            Search results for {searchResult} ({filteredItems?.length} item
+            {filteredItems?.length === 1 ? "" : "s"})
+          </h1>
+        ) : (
+          <h1 className="text-lg font-bold">
+            All deals
+            ({deals?.length} item{deals?.length === 1 ? "" : "s"})
+          </h1>
+        )}
 
         {searchResult && (
           <button className="text-red-500 cursor-pointer" onClick={clearSearch}>
@@ -116,7 +125,9 @@ function SearchDeal() {
             {Array.from({ length: totalPages || 1 }).map((_, index) => (
               <PaginationLink
                 onClick={() => setCurrentPage(index + 1)}
-                className={cn("cursor-pointer", {"bg-gray-100": currentPage === index + 1 })}
+                className={cn("cursor-pointer", {
+                  "bg-gray-100": currentPage === index + 1,
+                })}
               >
                 {index + 1}
               </PaginationLink>
@@ -124,7 +135,11 @@ function SearchDeal() {
           </PaginationItem>
           <PaginationItem>
             <PaginationNext
-              onClick={() => setCurrentPage((prev) => prev + (currentPage === totalPages ? 0 : 1))}
+              onClick={() =>
+                setCurrentPage(
+                  (prev) => prev + (currentPage === totalPages ? 0 : 1)
+                )
+              }
               className="cursor-pointer"
             />
           </PaginationItem>
