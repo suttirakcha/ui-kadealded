@@ -21,7 +21,7 @@ const useSellerStore = create((set) => ({
  
     createSeller: async (data) => {
         // const token = useAuthStore.getState().accessToken;
-        set({ isSubmitting: true });
+        set({ isLoading: true });
         const token = localStorage.getItem("accessToken");
         const res = await adminApi.post("/sellers", data, {
             headers: {
@@ -30,13 +30,13 @@ const useSellerStore = create((set) => ({
             withCredentials: true
         });
 
-        set((state) => ({ sellers: [...state.sellers, res.data.result], isSubmitting: false }));
+        set((state) => ({ sellers: [...state.sellers, res.data.result], isLoading: false }));
         return res;
     },
 
     updateSeller: async (id, data) => {
         // const token = useAuthStore.getState().accessToken;
-        set({ isSubmitting: true });
+        set({ isLoading: true });
         const token = localStorage.getItem("accessToken");
         const res = await adminApi.put(`/sellers/${id}`, data, {
             headers: { Authorization: `Bearer ${token}` }
@@ -45,20 +45,20 @@ const useSellerStore = create((set) => ({
             sellers: state.sellers.map((seller) =>
                 seller.id === id ? res.data.sellers : seller
             ),
-            isSubmitting: false
+            isLoading: false
         }));
         return res;
     },
 
     deleteSeller: async (id) => {
         // const token = useAuthStore.getState().accessToken;
-        set({ isSubmitting: true });
+        set({ isLoading: true });
         const token = localStorage.getItem("accessToken");
         const res = await adminApi.delete(`/sellers/${id}`, {
             headers: { Authorization: `Bearer ${token}` }
         });
         set((state) => ({
-            sellers: state.sellers.filter((seller) => seller.id !== id), isSubmitting: false
+            sellers: state.sellers.filter((seller) => seller.id !== id), isLoading: false
         }));
         return res;
     }

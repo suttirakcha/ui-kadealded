@@ -31,9 +31,9 @@ const chartConfig = {
 
 export function BarGraphComp() {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className='mt-3'>Number of Approved and Rejected Deal</CardTitle>
+    <Card className="p-4">
+      <CardHeader className="px-0">
+        <CardTitle>Number of Approved and Rejected Deal</CardTitle>
         <CardDescription>January - June 2025</CardDescription>
       </CardHeader>
     <ChartContainer config={chartConfig} className="min-h-[200px] w-full">

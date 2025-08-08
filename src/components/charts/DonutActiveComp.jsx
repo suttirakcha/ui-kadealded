@@ -65,12 +65,12 @@ export function DonutActiveComp() {
   }, [])
 
   return (
-    <Card className="flex flex-col">
-      <CardHeader className="items-center pb-0">
-        <CardDescription></CardDescription>
+    <Card className="flex flex-col p-4">
+      <CardHeader className="items-center px-0">
+        {/* <CardDescription></CardDescription> */}
         <CardTitle>Number of Deals by Category</CardTitle>
       </CardHeader>
-      <CardContent className="flex-1 pb-0">
+      <CardContent className="flex-1">
         <ChartContainer
           config={chartConfig}
           className="mx-auto aspect-square max-h-[250px]"

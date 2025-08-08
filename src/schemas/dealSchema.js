@@ -1,7 +1,7 @@
 import { date, number, object, string } from "yup";
 
 export const dealSchema = object({
-  title: string().min(5,"Title need at least 5").required("Title is required"),
+  title: string().min(5,"Title must have at least 5 characters").required("Title is required"),
   category_id: string().required("Please select category"),
   deal_status:string().required("Please select status"),
   seller_id:string().required("Please select seller"),
