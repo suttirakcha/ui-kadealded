@@ -65,7 +65,7 @@ function SearchDeal() {
   const totalPages = Math.ceil((searchResult ? filteredItems?.length : deals?.length) / dealsPerPage);
 
   return (
-    <div className="p-6">
+    <div className="px-6 py-10">
       <SearchForm
         onSubmit={handleSearch}
         value={inputValue}

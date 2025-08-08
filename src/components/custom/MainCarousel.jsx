@@ -39,10 +39,10 @@ function MainCarousel({
   }, [api]);
 
   return (
-    <div>
+    <div className="relative h-full">
       <Carousel
         setApi={setApi}
-        className={cn("relative", className)}
+        className={className}
         opts={opts}
         orientation={orientation}
       >
@@ -69,13 +69,13 @@ function MainCarousel({
       {images && (
         <div
           className={cn(
-            "text-white text-center flex gap-1.5 relative -top-5 w-full h-full justify-center",
-            { "flex-col -right-5": orientation === "vertical" }
+            "text-center flex gap-1.5 absolute justify-center", { "bottom-5 w-full": orientation === "horizontal" },
+            { "flex-col right-5 h-full top-0": orientation === "vertical" }
           )}
         >
           {Array.from({ length: totalSlides }).map((_, index) => (
             <div
-              className={cn("w-2 h-2 bg-gray-200 rounded-full opacity-50", {
+              className={cn("w-2 h-2 bg-gray-200 rounded-full opacity-50 cursor-pointer", {
                 "opacity-100": current === index,
               })}
               onClick={() => {
