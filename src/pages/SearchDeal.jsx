@@ -39,15 +39,17 @@ function SearchDeal() {
   const indexOfLastDeals = currentPage * dealsPerPage;
   const indexOfFirstDeals = indexOfLastDeals - dealsPerPage;
 
-  const filteredItems = (
+  const allFilteredItems = (
     searchResult
-      ? deals?.filter(
+      ? deals.filter(
           (item) =>
             item.title.toLowerCase().includes(searchResult.toLowerCase()) ||
             item.description.toLowerCase().includes(searchResult.toLowerCase())
         )
       : deals
-  ).slice(indexOfFirstDeals, indexOfLastDeals);
+  );
+
+  const filteredItems = allFilteredItems.slice(indexOfFirstDeals, indexOfLastDeals)
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -63,7 +65,7 @@ function SearchDeal() {
   };
 
   const totalPages = Math.ceil(
-    (searchResult ? filteredItems?.length : deals?.length) / dealsPerPage
+    (searchResult ? allFilteredItems?.length : deals?.length) / dealsPerPage
   );
 
   return (
@@ -71,25 +73,25 @@ function SearchDeal() {
       <SearchForm
         onSubmit={handleSearch}
         value={inputValue}
-        placeholder="Search deals"
+        placeholder="ค้นหาดีลที่จะส่อง"
         onChange={(e) => setInputValue(e.target.value)}
       />
       <div className="flex items-center gap-4 max-w-[1200px] w-full mx-auto pt-10">
         {searchResult ? (
           <h1 className="text-lg font-bold">
-            Search results for {searchResult} ({filteredItems?.length} item
-            {filteredItems?.length === 1 ? "" : "s"})
+            ค้นหาดีลสำหรับ "{searchResult}" ({allFilteredItems?.length} ดีล)
+            {/* {filteredItems?.length === 1 ? "" : "s"} */}
           </h1>
         ) : (
           <h1 className="text-lg font-bold">
-            All deals
-            ({deals?.length} item{deals?.length === 1 ? "" : "s"})
+            ดีลทั้งหมด
+            ({deals?.length} ดีล)
           </h1>
         )}
 
         {searchResult && (
           <button className="text-red-500 cursor-pointer" onClick={clearSearch}>
-            Clear
+            ล้าง
           </button>
         )}
       </div>
@@ -103,8 +105,8 @@ function SearchDeal() {
               />
             </div>
           ) : (
-            <div className="mx-auto w-full max-w-[300px] text-center text-3xl py-50">
-              Result not found
+            <div className="mx-auto w-full text-center text-3xl py-50 font-bold text-red-500">
+              ขอโทษครับ ผมไปส่องแล้วไม่มีดีลที่คุณค้นหาครับ
             </div>
           )}
         </>

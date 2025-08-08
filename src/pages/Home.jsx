@@ -7,6 +7,7 @@ import CardDealList from "@/components/custom/CardDealList";
 import SearchForm from "@/components/custom/SearchForm";
 import { ChevronRight } from "lucide-react";
 import imageMock from "../assets/imagemock.png";
+import imageMock2 from "../assets/imagemock2.png";
 
 function Home() {
   const navigate = useNavigate();
@@ -34,6 +35,12 @@ function Home() {
     { image_url: imageMock },
     { image_url: imageMock },
     { image_url: imageMock },
+  ];
+
+  const imageMocks2 = [
+    { image_url: imageMock2 },
+    { image_url: imageMock2 },
+    { image_url: imageMock2 },
   ];
 
   return (
@@ -66,7 +73,7 @@ function Home() {
             contentClassName="h-[380px]"
             opts={{ align: "start" }}
             cardClassName="h-[350px] w-[350px] overflow-hidden rounded-md"
-            images={imageMocks}
+            images={imageMocks2}
           />
         </div>
       </section>
@@ -79,7 +86,6 @@ function Home() {
           <CardDealList items={deals.slice(0, 4)} onClick={handleClick} />
         </div>
       </div>
-
 
       <div className="mx-auto max-w-[1200px] w-full h-full rounded-2xl p-10 space-y-4">
         <div className="flex items-center justify-between">
