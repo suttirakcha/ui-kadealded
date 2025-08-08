@@ -47,7 +47,6 @@ function AdminDeals() {
               <TableHead className="text-right">Max Participants</TableHead>
               <TableHead className="text-right">Start at</TableHead>
               <TableHead className="text-right">Deadline</TableHead>
-              <TableHead className="text-right">Total Coins</TableHead>
               <TableHead className="text-right">Status</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
@@ -81,7 +80,6 @@ function AdminDeals() {
                       {format(new Date(deal?.deadline), "dd MMMM yyyy")}
                       {/* {new Date(deal?.deadline).toLocaleDateString("en-GB")} */}
                     </TableCell>
-                    <TableCell className="text-right">50</TableCell>
                     <TableCell className="text-right">
                       <div className="justify-end flex items-center gap-2">
                         <button
