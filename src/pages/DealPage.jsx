@@ -64,18 +64,18 @@ function DealPage() {
       <h1 className="text-4xl font-bold text-center mb-10">{deal.title}</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 rounded-xl mb-15">
         <MainCarousel images={deal.images} />
-        <div className="space-y-4">
-          <p className="text-sm">{deal.category.name}</p>
+        <div className="space-y-6">
           <div className="space-y-2">
-            <h2 className="text-2xl font-semibold text-gray-800">
+            <p className="font-medium text-lg">ประเภท: {deal.category.name}</p>
+            {/* <h2 className="text-2xl font-semibold text-gray-800">
               Description
-            </h2>
-            <p className="text-gray-600">{deal.description}</p>
+            </h2> */}
+            <p className="text-gray-600 text-base">{deal.description}</p>
           </div>
-          <div className="flex flex-col items-center gap-6">
-            <div className="text-center space-y-1">
-              <h2 className="text-xl font-medium">Joined deal amounts</h2>
-              <Badge className="bg-gray-200 text-[#003f66] text-2xl px-4 py-1 rounded-full">
+          <div className="flex flex-col gap-4">
+            <div className="text-center flex gap-2 items-center">
+              <h2 className="text-xl font-medium">จำนวนผู้เข้าร่วม</h2>
+              <Badge className="bg-gray-200 text-[#003f66] text-xl px-4 py-1 rounded-full">
                 {(isDealFull ? deal?.max_participants : joinedDeals?.length) ||
                   0}{" "}
                 / {deal?.max_participants}
@@ -92,7 +92,7 @@ function DealPage() {
               onClick={() => alert("📦 Deal Complete!")}
               disabled={isDealFull}
             >
-              {isDealFull ? "This deal is fully joined" : "Join deal"}
+              {isDealFull ? "จำนวนผู้เข้าร่วมเต็มแล้ว" : "เข้าร่วมดีล"}
             </button>
             <button
               className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-2 rounded-xl text-lg"

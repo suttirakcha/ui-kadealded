@@ -6,7 +6,6 @@ const useSellerStore = create((set) => ({
     sellers: [],
     seller: null,
     isLoading: false,
-    isSubmitting: false,
 
     fetchAllSellers: async () => {
         // const token = useAuthStore.getState().accessToken;

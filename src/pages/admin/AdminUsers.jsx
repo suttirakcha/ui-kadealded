@@ -58,7 +58,7 @@ function AdminUsers() {
                     <TableCell>
                       <img
                         src={user.profile_image || "/default-profile.png"}
-                        className="w-15 h-15 object-cover rounded-2xl"
+                        className="min-w-15 w-15 h-15 object-cover rounded-2xl"
                       />
                     </TableCell>
                     <TableCell className="text-left">{user?.name}</TableCell>
