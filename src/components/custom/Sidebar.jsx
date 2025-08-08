@@ -21,11 +21,9 @@ function Sidebar() {
     { name: "Users", icon: Users, to: "/admin/users" },
     { name: "Sellers", icon: HandCoinsIcon, to: "/admin/sellers" },
     { name: "Total deals", icon: Key, to: "/admin/deal" },
-    { name: "Total amount", icon: MemoryStick, to: "/admin/amount" },
-    { name: "Tops deals", icon: FlameIcon, to: "/admin/top-deals" },
+    // { name: "Total amount", icon: MemoryStick, to: "/admin/amount" },
+    // { name: "Tops deals", icon: FlameIcon, to: "/admin/top-deals" },
     { name: "Categories", icon: ChartBarStacked, to: "/admin/category" },
-    // { name: "Create Deals", icon: Handshake, to: "/admin/create-deal" },
-    // { name: "Create Sellers", icon: GemIcon, to: "/admin/create-seller" },
     { name: "Statistics", icon: ChartPie, to: "/admin/stats" },
   ];
 

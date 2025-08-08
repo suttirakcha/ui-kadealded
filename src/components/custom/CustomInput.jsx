@@ -17,17 +17,17 @@ function CustomInput({
           <Textarea
             {...props}
             placeholder={placeholder}
-            className={cn("text-input peer resize-none", className)}
+            className={cn("text-input peer resize-none !border !py-2 !px-3 h-40", className)}
           />
         ) : (
           <Input
             {...props}
             type={type}
             className={cn("text-input peer", className)}
-            placeholder={placeholder}
+            placeholder={placeholder}ข
           />
         )}
-        <span className="custom-label">{label}</span>
+        <span className={cn({"custom-label": type !== "textarea"}, {"custom-label-textarea": type === "textarea"})}>{label}</span>
       </div>
       {error && <p className="text-sm text-red-500">{error}</p>}
     </label>

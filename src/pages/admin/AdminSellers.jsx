@@ -20,7 +20,7 @@ import useAuthStore from "@/stores/useAuthStore";
 
 function AdminSellers() {
   const { user } = useAuthStore();
-  const { sellers, fetchAllSellers } = useSellerStore();
+  const { sellers, fetchAllSellers, loading } = useSellerStore();
   const [selectedSellerToUpdate, setSelectedSellerToUpdate] = useState(null);
   const [selectedSellerToDelete, setSelectedSellerToDelete] = useState(null);
 
@@ -42,60 +42,63 @@ function AdminSellers() {
           </Button>
         </Link>
       </div>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="text-left">Company</TableHead>
-            <TableHead className="text-left">Email</TableHead>
-            <TableHead className="text-left">Phone</TableHead>
-            <TableHead className="text-left">Created at</TableHead>
-            <TableHead className="text-center">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {sellers.length > 0 ? (
-            <>
-              {sellers?.map((seller) => (
-                <TableRow key={seller?.id}>
-                  <TableCell className="text-left">{seller?.name}</TableCell>
-                  <TableCell className="text-left">{seller?.email}</TableCell>
-                  <TableCell className="text-left">
-                    {seller?.tel_number}
-                  </TableCell>
-                  <TableCell className="text-left">
-                    {seller?.created_at
-                      ? format(new Date(seller?.created_at), "dd MMMM yyyy")
-                      : ""}
-                    {/* {new Date(seller?.created_at).toLocaleDateString("en-GB")} */}
-                  </TableCell>
-                  <TableCell className="text-center">
-                    <button
-                      className="text-white bg-blue-500 hover:bg-blue-700 px-5 py-1 rounded"
-                      onClick={() => setSelectedSellerToUpdate(seller)}
-                    >
-                      Edit
-                    </button>
-                    {user?.role === "SUPERADMIN" && (
-                      <button
-                        className="text-white bg-red-500 hover:bg-red-700 px-5 py-1 rounded ml-5"
-                        onClick={() => setSelectedSellerToDelete(seller)}
-                      >
-                        Delete
-                      </button>
-                    )}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </>
-          ) : (
+      {loading ? (
+        <Loading />
+      ) : (
+        <Table>
+          <TableHeader>
             <TableRow>
-              <TableCell colSpan={6} className="text-center">
-                No Sellers
-              </TableCell>
+              <TableHead className="text-left">Company</TableHead>
+              <TableHead className="text-left">Email</TableHead>
+              <TableHead className="text-left">Phone</TableHead>
+              <TableHead className="text-left">Created at</TableHead>
+              <TableHead className="text-center">Actions</TableHead>
             </TableRow>
-          )}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {sellers.length > 0 ? (
+              <>
+                {sellers?.map((seller) => (
+                  <TableRow key={seller?.id}>
+                    <TableCell className="text-left">{seller?.name}</TableCell>
+                    <TableCell className="text-left">{seller?.email}</TableCell>
+                    <TableCell className="text-left">
+                      {seller?.tel_number}
+                    </TableCell>
+                    <TableCell className="text-left">
+                      {seller?.created_at
+                        ? format(new Date(seller?.created_at), "dd MMMM yyyy")
+                        : ""}
+                    </TableCell>
+                    <TableCell className="text-center flex gap-3 justify-center">
+                      <button
+                        className="text-white bg-blue-500 hover:bg-blue-700 px-5 py-1 rounded"
+                        onClick={() => setSelectedSellerToUpdate(seller)}
+                      >
+                        Edit
+                      </button>
+                      {user?.role === "SUPERADMIN" && (
+                        <button
+                          className="text-white bg-red-500 hover:bg-red-700 px-5 py-1 rounded"
+                          onClick={() => setSelectedSellerToDelete(seller)}
+                        >
+                          Delete
+                        </button>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </>
+            ) : (
+              <TableRow>
+                <TableCell colSpan={6} className="text-center">
+                  No Sellers
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      )}
 
       {selectedSellerToUpdate && (
         <EditSellerDialog

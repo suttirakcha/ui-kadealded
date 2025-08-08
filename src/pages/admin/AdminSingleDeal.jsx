@@ -33,7 +33,7 @@ function AdminSingleDeal() {
 
   return (
     <div className="space-y-8">
-      <h2 className="text-3xl font-bold">Edit Deal</h2>
+      <h2 className="text-3xl font-bold">Edit deal: {deal?.title || ""}</h2>
       <AdminDealForm deal={deal} />
     </div>
   );
