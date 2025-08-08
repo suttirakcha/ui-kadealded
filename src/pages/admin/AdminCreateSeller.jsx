@@ -5,8 +5,10 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { sellerSchema } from "@/schemas/sellerSchema";
 import useSellerStore from "@/stores/useSellerStore";
+import { useNavigate } from "react-router";
 
 function AdminCreateSeller() {
+  const navigate = useNavigate();
   const { createSeller } = useSellerStore();
   const {
     register: seller,
@@ -23,6 +25,7 @@ function AdminCreateSeller() {
       const res = await createSeller(data);
       toast.success(res.data.message);
       reset();
+      navigate("/admin/sellers");
     } catch (error) {
       console.log(error);
       toast.error(error.response?.data.message || error.message);
@@ -30,7 +33,7 @@ function AdminCreateSeller() {
   };
   return (
     <div className="flex flex-col justify-between mb-4">
-      <h2 className="text-3xl font-bold">Create Seller</h2>
+      <h2 className="text-3xl font-bold">Create seller</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="relative">
         <div className="mx-auto">
           <div className="flex flex-col gap-4 mt-10 mb-15">
@@ -45,7 +48,7 @@ function AdminCreateSeller() {
               error={errors.email?.message}
             />
             <CustomInput
-              label="Number"
+              label="Phone number"
               {...seller("tel_number")}
               error={errors.tel_number?.message}
             />

@@ -44,7 +44,7 @@ function AdminDeals() {
             <TableRow>
               <TableHead className="w-[100px]">Image</TableHead>
               <TableHead className="w-[100px] text-left">Title</TableHead>
-              <TableHead className="text-right">Max Participants</TableHead>
+              <TableHead className="text-center">Max Participants</TableHead>
               <TableHead className="text-right">Start at</TableHead>
               <TableHead className="text-right">Deadline</TableHead>
               <TableHead className="text-right">Status</TableHead>
@@ -69,7 +69,7 @@ function AdminDeals() {
                     >
                       {deal.title}
                     </TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="text-center">
                       {deal.max_participants}
                     </TableCell>
                     <TableCell className="text-right">
