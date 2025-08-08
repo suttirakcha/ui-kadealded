@@ -17,9 +17,9 @@ import { cn } from "@/lib/utils";
 
 function SearchDeal() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [dealsPerPage] = useState(4);
+  const [dealsPerPage] = useState(8);
   const location = useLocation();
-  const { deals, getAllDeals } = useDealStore();
+  const { deals, getAllDeals, isLoading } = useDealStore();
   const navigate = useNavigate();
 
   const [inputValue, setInputValue] = useState("");
@@ -95,7 +95,7 @@ function SearchDeal() {
           </button>
         )}
       </div>
-      {deals ? (
+      {!isLoading ? (
         <>
           {filteredItems?.length > 0 ? (
             <div className="mx-auto max-w-[1200px] w-full h-full rounded-2xl py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 relative">
@@ -111,7 +111,9 @@ function SearchDeal() {
           )}
         </>
       ) : (
-        <Loading />
+        <div className="flex justify-center py-10">
+          <Loading />
+        </div>
       )}
       <Pagination className="mb-10">
         <PaginationContent>
