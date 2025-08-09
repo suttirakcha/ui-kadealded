@@ -2,14 +2,14 @@ import MainCarousel from "@/components/custom/MainCarousel";
 import { Input } from "@/components/ui/input";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
-import { HotDeal, items, items2 } from "../data/items";
 import useDealStore from "@/stores/useDealStore";
 import CardDealList from "@/components/custom/CardDealList";
 import SearchForm from "@/components/custom/SearchForm";
 import { ChevronRight } from "lucide-react";
+import imageMock from "../assets/imagemock.png";
+import imageMock2 from "../assets/imagemock2.png";
 
 function Home() {
-  const location = useLocation();
   const navigate = useNavigate();
   const { deals, getAllDeals } = useDealStore();
   const [inputValue, setInputValue] = useState("");
@@ -30,6 +30,18 @@ function Home() {
   const handleClick = (id) => {
     navigate(`/deal/${id}`);
   };
+
+  const imageMocks = [
+    { image_url: imageMock },
+    { image_url: imageMock },
+    { image_url: imageMock },
+  ];
+
+  const imageMocks2 = [
+    { image_url: imageMock2 },
+    { image_url: imageMock2 },
+    { image_url: imageMock2 },
+  ];
 
   return (
     <div>
@@ -53,6 +65,7 @@ function Home() {
             className="w-full max-w-[1200px] mx-auto"
             orientation="horizontal"
             cardClassName="h-[350px] w-full overflow-hidden rounded-md"
+            images={imageMocks}
           />
           <MainCarousel
             className="w-full max-w-[360px] h-[380px] mx-auto"
@@ -60,6 +73,7 @@ function Home() {
             contentClassName="h-[380px]"
             opts={{ align: "start" }}
             cardClassName="h-[350px] w-[350px] overflow-hidden rounded-md"
+            images={imageMocks2}
           />
         </div>
       </section>
@@ -72,7 +86,6 @@ function Home() {
           <CardDealList items={deals.slice(0, 4)} onClick={handleClick} />
         </div>
       </div>
-
 
       <div className="mx-auto max-w-[1200px] w-full h-full rounded-2xl p-10 space-y-4">
         <div className="flex items-center justify-between">

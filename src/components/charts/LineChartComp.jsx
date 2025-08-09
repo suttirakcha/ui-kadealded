@@ -57,8 +57,8 @@ export function LineChartComp({ data }) {
   // console.log(deals.filter(deal => new Date(deal.created_at).getMonth() === 6));
 
   return (
-    <Card>
-      <CardHeader>
+    <Card className="p-4">
+      <CardHeader className="px-0">
         <CardTitle>Line Chart - Linear</CardTitle>
         <CardDescription>{previousYear} - {currentYear}</CardDescription>
       </CardHeader>

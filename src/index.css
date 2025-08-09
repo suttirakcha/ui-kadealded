@@ -130,6 +130,10 @@
   @apply font-medium absolute peer-focus:-top-4 peer-focus:text-black peer-focus:text-sm peer-placeholder-shown:top-1 peer-placeholder-shown:text-base peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-black transition-all duration-200 z-0 left-0;
 }
 
+.custom-label-textarea {
+  @apply font-medium absolute peer-focus:-top-5 peer-focus:left-0 peer-focus:text-black peer-focus:text-sm peer-placeholder-shown:left-3 peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-not-placeholder-shown:-top-5 peer-not-placeholder-shown:left-0 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-black transition-all duration-200 z-0 left-0;
+}
+
 .carousel-content {
   transition: transform 0.5s ease-in-out;
 }
@@ -139,7 +143,6 @@ a.active{
 }
 
 .navbar-link {
-  /* @apply hover:text-[#e59b2b] hover:bg-white p-3.5 cursor-pointer; */
   @apply text-shadow-[1px_1px_0_black] h-full flex items-center hover:text-[#E59B2B] py-3.5 active:text-shadow-none cursor-pointer;
 }
 

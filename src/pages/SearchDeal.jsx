@@ -17,9 +17,9 @@ import { cn } from "@/lib/utils";
 
 function SearchDeal() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [dealsPerPage] = useState(4);
+  const [dealsPerPage] = useState(8);
   const location = useLocation();
-  const { deals, getAllDeals } = useDealStore();
+  const { deals, getAllDeals, isLoading } = useDealStore();
   const navigate = useNavigate();
 
   const [inputValue, setInputValue] = useState("");
@@ -39,15 +39,17 @@ function SearchDeal() {
   const indexOfLastDeals = currentPage * dealsPerPage;
   const indexOfFirstDeals = indexOfLastDeals - dealsPerPage;
 
-  const filteredItems = (
+  const allFilteredItems = (
     searchResult
-      ? deals?.filter(
+      ? deals.filter(
           (item) =>
             item.title.toLowerCase().includes(searchResult.toLowerCase()) ||
             item.description.toLowerCase().includes(searchResult.toLowerCase())
         )
       : deals
-  ).slice(indexOfFirstDeals, indexOfLastDeals);
+  );
+
+  const filteredItems = allFilteredItems.slice(indexOfFirstDeals, indexOfLastDeals)
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -62,29 +64,38 @@ function SearchDeal() {
     setCurrentPage(1);
   };
 
-  const totalPages = Math.ceil((searchResult ? filteredItems?.length : deals?.length) / dealsPerPage);
+  const totalPages = Math.ceil(
+    (searchResult ? allFilteredItems?.length : deals?.length) / dealsPerPage
+  );
 
   return (
-    <div className="p-6">
+    <div className="px-6 py-10">
       <SearchForm
         onSubmit={handleSearch}
         value={inputValue}
-        placeholder="Search deals"
+        placeholder="ค้นหาดีลที่จะส่อง"
         onChange={(e) => setInputValue(e.target.value)}
       />
       <div className="flex items-center gap-4 max-w-[1200px] w-full mx-auto pt-10">
-        <h1 className="text-lg font-bold">
-          Search results for {searchResult} ({filteredItems?.length} result
-          {filteredItems?.length === 1 ? "" : "s"})
-        </h1>
+        {searchResult ? (
+          <h1 className="text-lg font-bold">
+            ค้นหาดีลสำหรับ "{searchResult}" ({allFilteredItems?.length} ดีล)
+            {/* {filteredItems?.length === 1 ? "" : "s"} */}
+          </h1>
+        ) : (
+          <h1 className="text-lg font-bold">
+            ดีลทั้งหมด
+            ({deals?.length} ดีล)
+          </h1>
+        )}
 
         {searchResult && (
           <button className="text-red-500 cursor-pointer" onClick={clearSearch}>
-            Clear
+            ล้าง
           </button>
         )}
       </div>
-      {deals ? (
+      {!isLoading ? (
         <>
           {filteredItems?.length > 0 ? (
             <div className="mx-auto max-w-[1200px] w-full h-full rounded-2xl py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 relative">
@@ -94,13 +105,15 @@ function SearchDeal() {
               />
             </div>
           ) : (
-            <div className="mx-auto w-full max-w-[300px] text-center text-3xl py-50">
-              Result not found
+            <div className="mx-auto w-full text-center text-3xl py-50 font-bold text-red-500">
+              ขอโทษครับ ผมไปส่องแล้วไม่มีดีลที่คุณค้นหาครับ
             </div>
           )}
         </>
       ) : (
-        <Loading />
+        <div className="flex justify-center py-10">
+          <Loading />
+        </div>
       )}
       <Pagination className="mb-10">
         <PaginationContent>
@@ -116,7 +129,9 @@ function SearchDeal() {
             {Array.from({ length: totalPages || 1 }).map((_, index) => (
               <PaginationLink
                 onClick={() => setCurrentPage(index + 1)}
-                className={cn("cursor-pointer", {"bg-gray-100": currentPage === index + 1 })}
+                className={cn("cursor-pointer", {
+                  "bg-gray-100": currentPage === index + 1,
+                })}
               >
                 {index + 1}
               </PaginationLink>
@@ -124,7 +139,11 @@ function SearchDeal() {
           </PaginationItem>
           <PaginationItem>
             <PaginationNext
-              onClick={() => setCurrentPage((prev) => prev + (currentPage === totalPages ? 0 : 1))}
+              onClick={() =>
+                setCurrentPage(
+                  (prev) => prev + (currentPage === totalPages ? 0 : 1)
+                )
+              }
               className="cursor-pointer"
             />
           </PaginationItem>
