@@ -4,7 +4,7 @@ import { Link } from "react-router";
 function Footer() {
   const footerLinksLeft = [
     { text: "Search deal", href: "/searchDeal" },
-    { text: "Documentation", href: "" }
+    { text: "Buy coins", href: "/coin" }
   ];
 
   const footerLinksRight = [
