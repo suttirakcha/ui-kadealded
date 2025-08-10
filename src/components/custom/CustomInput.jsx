@@ -24,7 +24,7 @@ function CustomInput({
             {...props}
             type={type}
             className={cn("text-input peer", className)}
-            placeholder={placeholder}ข
+            placeholder={placeholder}
           />
         )}
         <span className={cn({"custom-label": type !== "textarea"}, {"custom-label-textarea": type === "textarea"})}>{label}</span>
