@@ -53,11 +53,11 @@ function ProfileUser() {
               ข้อมูลส่วนตัว
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-800">
-              <p><span className="font-semibold text-gray-600">Firstname:</span> {user?.name}</p>
-              <p><span className="font-semibold text-gray-600">Lastname:</span> {user?.last_name}</p>
+              <p><span className="font-semibold text-gray-600">First name:</span> {user?.name}</p>
+              <p><span className="font-semibold text-gray-600">Last name:</span> {user?.last_name}</p>
               <p><span className="font-semibold text-gray-600">Phone:</span> {user?.tel_number}</p>
               <p>
-                <span className="font-semibold text-gray-600">Birth Date:</span>{" "}
+                <span className="font-semibold text-gray-600">Birth date:</span>{" "}
                 {user?.birth_date ? format(new Date(user?.birth_date), "dd MMMM yyyy") : "-"}
               </p>
               <p className="md:col-span-2">

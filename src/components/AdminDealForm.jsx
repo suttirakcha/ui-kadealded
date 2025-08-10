@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { DatePicker } from "@/components/custom/DatePicker";
 import { toast } from "sonner";
 import useCategoryStore from "@/stores/useCategoryStore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useSellerStore from "@/stores/useSellerStore";
 import useAuthStore from "@/stores/useAuthStore";
 import { useNavigate } from "react-router";
@@ -21,9 +21,11 @@ import {
 } from "@/components/ui/select";
 import CustomSelectDropdown from "./custom/CustomSelectDropdown";
 import Loading from "./icons/Loading";
+import { Plus, X } from "lucide-react";
 
 function AdminDealForm({ deal }) {
   const navigate = useNavigate();
+  const [dealImages, setDealImages] = useState(deal?.images ?? []);
   const { user } = useAuthStore();
   const { categories, fetchAllCategories } = useCategoryStore();
   const { sellers, fetchAllSellers } = useSellerStore();
@@ -45,7 +47,7 @@ function AdminDealForm({ deal }) {
       seller_id: deal?.seller_id || "",
       category_id: deal?.category_id || "",
       deal_status: deal?.deal_status || "",
-      // images: uploadRes.data.url,
+      images: dealImages,
       max_participants: deal?.max_participants || "",
       creator: deal?.creator || "",
       // creator: user?.name || "Admin",
@@ -73,16 +75,21 @@ function AdminDealForm({ deal }) {
     return () => clearCurrentDeal();
   }, []);
 
+  const uploadImage = (files) => {
+    const previewImage = URL.createObjectURL(files[0]);
+    setDealImages(prev => [...prev, ...previewImage]);
+  }
+
   const onSubmit = async (data) => {
     try {
       const imgForm = new FormData();
-      //   for (let i = 0; i < data.image.length; i++) {
-      //     imgForm.append("image", data.image[i]);
-      //   }
+        for (let i = 0; i < data.image.length; i++) {
+          imgForm.append("image", data.image[i]);
+        }
 
-      //   const uploadRes = await adminApi.post("/deals", imgForm, {
-      //     headers: { "Content-Type": "multipart/form-data" },
-      //   });
+      const uploadRes = await adminApi.post("/deals", imgForm, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
       const payload = {
         title: data.title,
@@ -90,7 +97,7 @@ function AdminDealForm({ deal }) {
         start_at: data.start_at,
         deadline: data.deadline,
         deal_status: data.deal_status,
-        // images: uploadRes.data.url,
+        images: uploadRes.data.url,
         max_participants: data.max_participants,
         seller_id: data.seller_id,
         category_id: data.category_id,
@@ -108,6 +115,8 @@ function AdminDealForm({ deal }) {
       toast.error(error.response?.data.message || error.message);
     }
   };
+
+  console.log(dealImages);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="relative">
@@ -159,11 +168,11 @@ function AdminDealForm({ deal }) {
             error={errors.seller_id?.message}
             options={
               <>
-              {sellers.map((seller) => (
-              <option key={seller.id} value={seller.id}>
-                {seller.name}
-              </option>
-            ))}
+                {sellers.map((seller) => (
+                  <option key={seller.id} value={seller.id}>
+                    {seller.name}
+                  </option>
+                ))}
               </>
             }
             {...setDeal("seller_id")}
@@ -176,12 +185,49 @@ function AdminDealForm({ deal }) {
             error={errors.max_participants?.message}
           />
 
-          <CustomInput
+          {/* <CustomInput
             label="Images"
             {...setDeal("images")}
             type="file"
             multiple
-          />
+          /> */}
+
+          <div className="flex flex-col gap-1">
+            <span className="text-sm font-medium">Images</span>
+            <div className="flex items-center gap-4">
+              {dealImages?.map((image) => (
+                <div className="group relative overflow-hidden">
+                  <img
+                    key={image.id}
+                    src={image.image_url}
+                    className="w-20 h-20 rounded-md object-cover"
+                  />
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setDealImages((prev) =>
+                        prev.filter((img) => img.id !== image.id)
+                      );
+                    }}
+                    className="cursor-pointer opacity-0 group-hover:opacity-100 flex items-center justify-center bg-white/80 absolute top-0 left-0 w-full h-full transition-opacity duration-300"
+                  >
+                    <X className="h-8 w-8" />
+                  </button>
+                </div>
+              ))}
+
+              <label className="border rounded-md h-20 w-20 relative group cursor-pointer">
+                <input onChange={(e) => {
+                  e.preventDefault();
+                  uploadImage(e.target.files)
+                }} type="file" className="hidden" {...setDeal("images")} />
+                <span className="absolute top-0 left-0 h-full w-full flex items-center justify-center group-hover:bg-gray-200 transition-background duration-300">
+                  <Plus className="w-8 h-8" />
+                </span>
+              </label>
+            </div>
+          </div>
+
           {errors.images && (
             <p className="text-sm text-red-500">{errors.images?.message}</p>
           )}

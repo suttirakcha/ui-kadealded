@@ -15,6 +15,7 @@ import useUserStore from "@/stores/useUserStore";
 import { DatePicker } from "../custom/DatePicker";
 import CustomInput from "../custom/CustomInput";
 import useAuthStore from "@/stores/useAuthStore";
+import FileUploadInput from "../custom/FileUploadInput";
 
 function EditUserDialog({ open, onOpenChange, user }) {
   const { updateUserById, fetchAllUsers } = useUserStore();
@@ -33,6 +34,7 @@ function EditUserDialog({ open, onOpenChange, user }) {
       email: user?.email || "",
       tel_number: user?.tel_number || "",
       birth_date: user?.birth_date || "",
+      profile_image: user?.profile_image || "",
     },
   });
 
@@ -44,6 +46,7 @@ function EditUserDialog({ open, onOpenChange, user }) {
         email: user?.email || "",
         tel_number: user?.tel_number || "",
         birth_date: user?.birth_date || "",
+        profile_image: user?.profile_image || "",
       });
     }
   }, [user, reset]);
@@ -74,6 +77,8 @@ function EditUserDialog({ open, onOpenChange, user }) {
           <CustomInput label="Email" {...register("email")} />
           <CustomInput label="Phone number" {...register("tel_number")} />
           <DatePicker label="Birth Date" name="birth_date" control={control} />
+          {/* <CustomInput label="Profile image" {...register("profile_image")} type="file" /> */}
+          <FileUploadInput label="Profile image" {...register("profile_image")} imgLink={user?.profile_image} />
           <DialogFooter className="pt-4">
             <Button type="submit" disabled={isSubmitting}>
               {isSubmitting ? "Saving..." : "Save"}
