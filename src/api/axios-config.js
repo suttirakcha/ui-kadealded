@@ -24,7 +24,7 @@ instance.interceptors.response.use(
   async (err) => {
     const originalRequest = err.config;
     if (
-      err.response.status === 401 &&
+      err.response.statusCode === 401 &&
       !originalRequest._retry &&
       !originalRequest.url.includes("/refresh")
     ) {
@@ -49,5 +49,6 @@ instance.interceptors.response.use(
         return Promise.reject(error);
       }
     }
+    return Promise.reject(err);
   }
 );
