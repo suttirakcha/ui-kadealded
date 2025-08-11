@@ -3,7 +3,7 @@ import React from 'react'
 function CoinTransacTion() {
 
   return (
-    <div className="flex-1 flex flex-col ml-30 justify-center items-center text-center md:text-left md:items-start">
+    <div className="flex-1 flex flex-col justify-center items-center text-center md:text-left md:items-start">
       <h2 className="text-2xl mb-4">Coupon</h2>
 
       <div className="p-4 w-full">

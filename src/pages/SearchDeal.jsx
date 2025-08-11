@@ -39,17 +39,18 @@ function SearchDeal() {
   const indexOfLastDeals = currentPage * dealsPerPage;
   const indexOfFirstDeals = indexOfLastDeals - dealsPerPage;
 
-  const allFilteredItems = (
-    searchResult
-      ? deals.filter(
-          (item) =>
-            item.title.toLowerCase().includes(searchResult.toLowerCase()) ||
-            item.description.toLowerCase().includes(searchResult.toLowerCase())
-        )
-      : deals
-  );
+  const allFilteredItems = searchResult
+    ? deals.filter(
+        (item) =>
+          item.title.toLowerCase().includes(searchResult.toLowerCase()) ||
+          item.description.toLowerCase().includes(searchResult.toLowerCase())
+      )
+    : deals;
 
-  const filteredItems = allFilteredItems.slice(indexOfFirstDeals, indexOfLastDeals)
+  const filteredItems = allFilteredItems.slice(
+    indexOfFirstDeals,
+    indexOfLastDeals
+  );
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -84,8 +85,7 @@ function SearchDeal() {
           </h1>
         ) : (
           <h1 className="text-lg font-bold">
-            ดีลทั้งหมด
-            ({deals?.length} ดีล)
+            ดีลทั้งหมด ({deals?.length} ดีล)
           </h1>
         )}
 
@@ -128,6 +128,7 @@ function SearchDeal() {
           <PaginationItem className="space-x-2">
             {Array.from({ length: totalPages || 1 }).map((_, index) => (
               <PaginationLink
+                key={index}
                 onClick={() => setCurrentPage(index + 1)}
                 className={cn("cursor-pointer", {
                   "bg-gray-100": currentPage === index + 1,

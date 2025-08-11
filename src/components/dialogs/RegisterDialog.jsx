@@ -44,12 +44,12 @@ function RegisterDialog({ open, setOpen, onSwitchRegister }) {
         otp_type: "VERIFY_EMAIL",
       });
 
-      toast.success(response.data.messsage || "OTP sent to your email.");
+      toast.success(response.data?.messsage || "OTP sent to your email.");
 
       setRegisteredData(data);
     } catch (error) {
       console.log(error);
-      toast.error(error.response?.data.message || error.message);
+      toast.error(error.response?.data?.message || error?.message || "Something went wrong, please try again");
     }
   };
 

@@ -8,6 +8,7 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import useAuthStore from "@/stores/useAuthStore";
+import { toast } from "sonner";
 
 function DealPage() {
   const { id } = useParams();
@@ -89,7 +90,9 @@ function DealPage() {
                 "bg-red-500 hover:bg-red-700 text-white px-6 py-2 rounded-xl shadow-md text-lg",
                 { "!bg-red-400": isDealFull }
               )}
-              onClick={() => alert("📦 Deal Complete!")}
+              onClick={() => {
+                toast.success("เข้าร่วมดีลแล้ว")
+              }}
               disabled={isDealFull}
             >
               {isDealFull ? "จำนวนผู้เข้าร่วมเต็มแล้ว" : "เข้าร่วมดีล"}
