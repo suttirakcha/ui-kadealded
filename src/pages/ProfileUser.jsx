@@ -16,48 +16,35 @@ function ProfileUser() {
     run();
   }, []);
 
-  const totalPurchase = 200;
-  const nextLevelThreshold = 1000;
-  const dealPurchased = 5;
-  const coupons = [
-    { name: "ส่วนลด 10%", code: "DISCOUNT10", expiry: "31/12/2025" },
-    { name: "ลดค่าส่ง", code: "SHIPFREE", expiry: "15/09/2025" },
-  ];
-
-  const progressPercent = Math.min(
-    (totalPurchase / nextLevelThreshold) * 100,
-    100
-  );
-
   return (
     <>
       <div className="flex-1 w-full">
         <h2 className="text-2xl font-semibold text-[#083b63] mb-6 border-b pb-2">
           ข้อมูลส่วนตัว
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-800">
-          <p>
-            <span className="font-semibold text-gray-600">First name:</span>{" "}
-            {user?.name}
-          </p>
-          <p>
-            <span className="font-semibold text-gray-600">Last name:</span>{" "}
-            {user?.last_name}
-          </p>
-          <p>
-            <span className="font-semibold text-gray-600">Phone:</span>{" "}
-            {user?.tel_number}
-          </p>
-          <p>
-            <span className="font-semibold text-gray-600">Birth date:</span>{" "}
-            {user?.birth_date
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-800">
+          <div className="space-y-1">
+            <span className="font-medium text-gray-600 text-lg">First name:</span>{" "}
+            <p className="text-2xl font-bold">{user?.name}</p>
+          </div>
+          <div className="space-y-1">
+            <span className="font-medium text-gray-600 text-lg">Last name:</span>{" "}
+            <p className="text-2xl font-bold">{user?.last_name}</p>
+          </div>
+          <div className="space-y-1">
+            <span className="font-medium text-gray-600 text-lg">Phone:</span>{" "}
+            <p className="text-2xl font-bold">{user?.tel_number}</p>
+          </div>
+          <div className="space-y-1">
+            <span className="font-medium text-gray-600 text-lg">Birth date:</span>{" "}
+            <p className="text-2xl font-bold">{user?.birth_date
               ? format(new Date(user?.birth_date), "dd MMMM yyyy")
-              : "-"}
-          </p>
-          <p className="md:col-span-2">
-            <span className="font-semibold text-gray-600">Email:</span>{" "}
-            {user?.email}
-          </p>
+              : "-"}</p>
+          </div>
+          <div className="md:col-span-2 space-y-1">
+            <span className="font-medium text-gray-600 text-lg">Email:</span>{" "}
+            <p className="text-2xl font-bold">{user?.email}</p>
+          </div>
         </div>
         <button
           onClick={() => setSelectedUser(user)}

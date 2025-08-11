@@ -1,16 +1,12 @@
 import useAuthStore from "@/stores/useAuthStore";
+import { Coins } from "lucide-react";
 import { Link } from "react-router";
 
 function ProfileUserSidebar() {
   const { user } = useAuthStore();
-  const dealPurchased = 5;
-  const coupons = [
-    { name: "ส่วนลด 10%", code: "DISCOUNT10", expiry: "31/12/2025" },
-    { name: "ลดค่าส่ง", code: "SHIPFREE", expiry: "15/09/2025" },
-  ];
 
   return (
-    <div className="flex flex-col items-center text-center">
+    <div className="flex flex-col items-center text-center min-w-50 w-50">
       <div className="w-36 h-36 rounded-full border-4 border-[#083b63] overflow-hidden shadow-md">
         <img
           src={user?.profile_image || "/default-profile.png"}
@@ -18,16 +14,22 @@ function ProfileUserSidebar() {
           className="w-full h-full object-cover"
         />
       </div>
-      <p className="mt-4 text-lg font-bold text-[#083b63]">{user?.name}</p>
-      <hr className="my-2 w-24 border-[#083b63]" />
-      <p className="text-sm text-gray-600">
-        คูปอง / ส่วนลด: {coupons.length} รายการ
+      <p className="text-3xl font-bold my-6 flex items-center gap-2 text-orange-500">
+        <Coins className="w-10 h-10" />
+        {user?.coin || 0}
       </p>
-      <p className="text-sm text-gray-600">
-        ดีลที่ซื้อแล้ว: {dealPurchased} ดีล
-      </p>
-      <p className="text-sm text-gray-600">Loyalty program</p>
-      <Link to="/profile/coin-transaction">Coin transaction</Link>
+      <div className="flex flex-col gap-1">
+        <Link to="/profile" className="text-xl font-bold text-[#083b63]">
+          {user?.name}
+        </Link>
+        <p className="text-gray-600">{user?.email}</p>
+      </div>
+      <hr className="my-6 w-full border-[#083b63]" />
+      <div className="flex flex-col gap-2 font-bold text-[#003f66] text-lg">
+        <Link to="/profile">Profile</Link>
+        <Link to="/profile/coin-transaction">Coin transaction</Link>
+      </div>
+      {/* <p className="text-sm text-gray-600">Loyalty program</p> */}
     </div>
   );
 }
