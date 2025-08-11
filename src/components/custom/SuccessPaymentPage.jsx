@@ -1,11 +1,15 @@
-import React from 'react';
-import { useNavigate } from 'react-router';
+import useTransactionStore from "@/stores/useTransactionStore";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 const SuccessPaymentPage = () => {
   const navigate = useNavigate();
+  const { topupCoins } = useTransactionStore();
 
-  const handleGoHome = () => {
-    navigate('/');
+  const handleGoHome = async() => {
+    await topupCoins(200);
+    // window.location.href = "/"
+    navigate("/");
   };
 
   return (
@@ -19,12 +23,17 @@ const SuccessPaymentPage = () => {
             strokeWidth={2}
             viewBox="0 0 24 24"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M5 13l4 4L19 7"
+            />
           </svg>
         </div>
         <h2 className="text-2xl font-semibold mb-2">Payment Successful!</h2>
         <p className="text-gray-600 mb-6">
-          Thank you for your purchase. We have received your payment successfully.
+          Thank you for your purchase. We have received your payment
+          successfully.
         </p>
         <button
           onClick={handleGoHome}

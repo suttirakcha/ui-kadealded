@@ -19,7 +19,7 @@ import FileUploadInput from "../custom/FileUploadInput";
 
 function EditUserDialog({ open, onOpenChange, user }) {
   const { updateUserById, fetchAllUsers } = useUserStore();
-  const { updateAuthUser } = useAuthStore();
+  const { updateAuthUser, getMe } = useAuthStore();
 
   const {
     control,
@@ -53,10 +53,10 @@ function EditUserDialog({ open, onOpenChange, user }) {
 
   const onSubmit = async (data) => {
     try {
-      const res = await updateUserById(user?.id, data);
+      const res = await (user?.role === "CUSTOMER" ? updateAuthUser(data) : updateUserById(user?.id, data));
       toast.success(res.data.message);
       await fetchAllUsers();
-      updateAuthUser(data);
+      await getMe();
       onOpenChange(false);
     } catch (error) {
       console.error("Failed to update user:", error);

@@ -125,9 +125,9 @@ function DealPage() {
         </div>
       </div> */}
 
-      <div className="mx-auto max-w-[1200px] w-full h-full rounded-2xl px-20 py-10 flex gap-3 relative">
+      <div className="mx-auto max-w-[1200px] w-full h-full rounded-2xl py-10 flex gap-3 relative">
         <button className="bg-[#F42B2B] absolute -left-3 -top-8 text-white p-2 mx-2 rounded-3xl px-8 text-2xl font-bold hover:bg-red-700">
-          OTHER OFFER{" "}
+          OTHER OFFERS{" "}
         </button>
         <div className="grid grid-cols-4 gap-3">
           <CardDealList items={filteredDealsByCategory} onClick={handleClick} />

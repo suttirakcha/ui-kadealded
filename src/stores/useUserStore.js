@@ -17,7 +17,7 @@ const useUserStore = create((set) => ({
       const res = await adminApi.get("/users", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      set({ users: res.data.Users, loading: false });
+      set({ users: res.data.users, loading: false });
       return res;
     } catch (error) {
       console.error("Error fetching users:", error);
