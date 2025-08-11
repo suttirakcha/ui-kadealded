@@ -27,6 +27,7 @@ function ProfileUserSidebar() {
       <hr className="my-6 w-full border-[#083b63]" />
       <div className="flex flex-col gap-2 font-bold text-[#003f66] text-lg">
         <Link to="/profile">Profile</Link>
+        <Link to="/profile/deal-history">Deal history</Link>
         <Link to="/profile/coin-transaction">Coin transaction</Link>
       </div>
       {/* <p className="text-sm text-gray-600">Loyalty program</p> */}

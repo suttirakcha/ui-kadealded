@@ -26,6 +26,7 @@ const AdminStats = lazy(() => import("@/pages/admin/AdminStats"));
 const CallbackPage = lazy(() => import("../pages/CallbackPage"));
 const ProfileUser = lazy(() => import("../pages/ProfileUser"));
 const CoinTransaction = lazy(() => import("../pages/CoinTransaction"));
+const DealHistoryPage = lazy(() => import("../pages/DealHistoryPage"));
 const Coin = lazy(() => import("../pages/Coin"));
 
 function AppRouter() {
@@ -56,6 +57,7 @@ function AppRouter() {
                     children:[
                         { index: true, element: <ProfileUser /> },
                         { path: "coin-transaction", element: <CoinTransaction /> },
+                        { path: "deal-history", element: <DealHistoryPage /> },
                     ]
                 }
             ],
