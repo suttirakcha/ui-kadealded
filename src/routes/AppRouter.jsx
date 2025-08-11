@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router";
 import { lazy, useEffect } from "react";
 import useAuthStore from "@/stores/useAuthStore";
+import SuccessPaymentPage from "@/components/custom/SuccessPaymentPage";
 
 const MainLayout = lazy(() => import("../layouts/MainLayout"));
 const AdminLayout = lazy(() => import("../layouts/AdminLayout"));
@@ -63,7 +64,10 @@ function AppRouter() {
             ],
         },
         { 
-            path: "callback", element: <CallbackPage /> 
+            path: "/callback", element: <CallbackPage /> 
+        },
+        {
+            path: "/checkout/success", element: <SuccessPaymentPage />
         },
         {
             path: "/admin",
