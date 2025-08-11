@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router";
 import { lazy, useEffect } from "react";
 import useAuthStore from "@/stores/useAuthStore";
+import SuccessPaymentPage from "@/components/custom/SuccessPaymentPage";
 
 const MainLayout = lazy(() => import("../layouts/MainLayout"));
 const AdminLayout = lazy(() => import("../layouts/AdminLayout"));
@@ -26,6 +27,7 @@ const AdminStats = lazy(() => import("@/pages/admin/AdminStats"));
 const CallbackPage = lazy(() => import("../pages/CallbackPage"));
 const ProfileUser = lazy(() => import("../pages/ProfileUser"));
 const CoinTransaction = lazy(() => import("../pages/CoinTransaction"));
+const DealHistoryPage = lazy(() => import("../pages/DealHistoryPage"));
 const Coin = lazy(() => import("../pages/Coin"));
 
 function AppRouter() {
@@ -56,12 +58,16 @@ function AppRouter() {
                     children:[
                         { index: true, element: <ProfileUser /> },
                         { path: "coin-transaction", element: <CoinTransaction /> },
+                        { path: "deal-history", element: <DealHistoryPage /> },
                     ]
                 }
             ],
         },
         { 
-            path: "callback", element: <CallbackPage /> 
+            path: "/callback", element: <CallbackPage /> 
+        },
+        {
+            path: "/checkout/success", element: <SuccessPaymentPage />
         },
         {
             path: "/admin",

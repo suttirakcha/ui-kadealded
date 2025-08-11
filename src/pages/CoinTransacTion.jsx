@@ -13,7 +13,8 @@ import {
 import Loading from "@/components/icons/Loading";
 import { format } from "date-fns";
 import useAuthStore from "@/stores/useAuthStore";
-import { ArrowDownRight, ArrowUpRight } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, Clock } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 function CoinTransaction() {
   const { user } = useAuthStore();
@@ -43,15 +44,29 @@ function CoinTransaction() {
               <TableHeader>
                 <TableRow>
                   <TableHead className="w-[160px] font-medium">Type</TableHead>
-                  <TableHead className="font-medium">Date</TableHead>
-                  <TableHead className="text-right font-medium">Amount</TableHead>
+                  <TableHead className="font-medium">Transaction date</TableHead>
+                  <TableHead className="text-right font-medium">
+                    Amount
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {history.map((item) => (
                   <TableRow key={history.id}>
-                    <TableCell className="font-medium">
-                      {item.type === "TOPUP" ? <ArrowUpRight className="text-green-500"/> : <ArrowDownRight className="text-red-500"/>}
+                    <TableCell
+                      className={cn(
+                        "font-medium flex items-center gap-2 h-16",
+                        { "text-red-600": item.type === "JOIN_USE" },
+                        { "text-green-600": item.type === "TOPUP" }
+                      )}
+                    >
+                      {item.type === "TOPUP" ? (
+                        <ArrowUpRight className="text-green-600" />
+                      ) : item.type === "JOIN_USE" ? (
+                        <ArrowDownRight className="text-red-600" />
+                      ) : (
+                        <Clock />
+                      )}
                       {item.type}
                     </TableCell>
                     <TableCell>
@@ -59,14 +74,23 @@ function CoinTransaction() {
                         ? format(new Date(item.created_at), "dd MMMM yyyy")
                         : ""}
                     </TableCell>
-                    <TableCell className="text-right">{item.type === "JOIN_USE" ? "-" : ""}{item.amount}</TableCell>
+                    <TableCell
+                      className={cn(
+                        "text-right font-medium text-2xl",
+                        { "text-red-600": item.type === "JOIN_USE" },
+                        { "text-green-600": item.type === "TOPUP" }
+                      )}
+                    >
+                      {item.type === "JOIN_USE" ? "-" : ""}
+                      {item.amount}
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
               <TableFooter>
                 <TableRow>
-                  <TableCell colSpan={2}>Total Coins</TableCell>
-                  <TableCell className="text-right">{user?.coin}</TableCell>
+                  <TableCell colSpan={2}>Current coins</TableCell>
+                  <TableCell className="text-right text-2xl font-medium">{user?.coin}</TableCell>
                 </TableRow>
               </TableFooter>
             </Table>
