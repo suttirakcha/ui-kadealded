@@ -10,17 +10,17 @@ function FileUploadInput({ label, imgLink, ...props }) {
     setImage("");
   };
 
-  const uploadImage = (files) => {
+  const uploadImage = async (files) => {
     const formData = new FormData();
 
     const previewImage = URL.createObjectURL(files[0]);
 
     formData.append("file", previewImage);
-    // formData.append("upload_preset", "<your upload preset>");
+    formData.append("upload_preset", "<your upload preset>");
 
     setImage(previewImage);
 
-    // const uploaded = await axios.post("https://api.cloudinary.com/v1_1/kadealded/image/upload", formData);
+    const uploaded = await axios.post("https://api.cloudinary.com/v1_1/kadealded/image/upload", formData);
     // console.log(uploaded)
     // fetch(
     //   "https://api.cloudinary.com/v1_1/kadealded/image/upload",
