@@ -12,10 +12,12 @@ import { toast } from "sonner";
 import { JoinDealDialog } from "@/components/dialogs/JoinDealDialog.jsx";
 import axios from "axios";
 import { authApi } from "@/api/routesApi";
+import { Coins } from "lucide-react";
 
 function DealPage() {
   const { id } = useParams();
-  const { user } = useAuthStore();
+  const { user, getMe } = useAuthStore();
+
   const navigate = useNavigate();
   const {
     deals,
@@ -50,7 +52,7 @@ function DealPage() {
 
   const category = deal?.category.name;
 
-  if (isLoading || !deal) {
+  if (isLoading) {
     // return <div className="text-center text-xl mt-10">ไม่พบข้อมูลดีลนี้</div>
     return (
       <div className="flex justify-center py-10">
@@ -65,15 +67,14 @@ function DealPage() {
   };
 
   const filteredDealsByCategory = deals?.filter(
-    (deal) => deal.category.name === category
+    (deal) => deal?.category.name === category
+  );
+
+  const isDealAlreadyJoined = user?.joinDeals?.find(
+    (joindeal) => joindeal?.deal_id === deal?.id
   );
 
   const handleConfirmJoin = async (dealId) => {
-    if (!user) {
-      toast.error("กรุณาเข้าสู่ระบบเพื่อเข้าร่วมดีล");
-      // navigate("/login");
-      return;
-    }
     try {
       const token = localStorage.getItem("accessToken");
       if (!token) {
@@ -83,8 +84,8 @@ function DealPage() {
       const response = await authApi.post(`/auth/deal/${dealId}/join`, null, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      await getJoinedDeals(id);
-      setQrCodeToken(response.data.qrCode.token)
+      setQrCodeToken(response.data.qrCode.token);
+      await getMe();
       // return response.data.qrCode.token;
     } catch (error) {
       console.error("Error joining deal:", error);
@@ -95,20 +96,28 @@ function DealPage() {
     }
   };
 
+  const handleRefresh = async () => {
+    await getJoinedDeals(id);
+  }
+
   return (
     <div className="max-w-[1200px] mx-auto mt-10 p-10 bg-white shadow-lg rounded-2xl">
-      <h1 className="text-4xl font-bold text-center mb-10">{deal.title}</h1>
+      <h1 className="text-4xl font-bold text-center mb-10">{deal?.title}</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 rounded-xl mb-15">
-        <MainCarousel images={deal.images} />
+        <MainCarousel images={deal?.images} />
         <div className="space-y-6">
           <div className="space-y-2">
-            <p className="font-medium text-lg">ประเภท: {deal.category.name}</p>
+            <p className="font-medium text-lg">ประเภท: {deal?.category.name}</p>
             {/* <h2 className="text-2xl font-semibold text-gray-800">
               Description
             </h2> */}
-            <p className="text-gray-600 text-base">{deal.description}</p>
+            <p className="text-gray-600 text-base">{deal?.description}</p>
           </div>
           <div className="flex flex-col gap-4">
+            <span className="flex items-center gap-2 text-2xl font-bold text-orange-600">
+              <Coins />
+              50
+            </span>
             <div className="text-center flex gap-2 items-center">
               <h2 className="text-xl font-medium">จำนวนผู้เข้าร่วม</h2>
               <Badge className="bg-gray-200 text-[#003f66] text-xl px-4 py-1 rounded-full">
@@ -123,12 +132,16 @@ function DealPage() {
             <button
               className={cn(
                 "bg-red-500 hover:bg-red-700 text-white px-6 py-2 rounded-xl shadow-md text-lg",
-                { "!bg-red-400": isDealFull }
+                { "!bg-red-400": isDealFull || isDealAlreadyJoined }
               )}
               onClick={() => setIsModalOpen(true)}
-              disabled={isDealFull}
+              disabled={isDealFull || isDealAlreadyJoined}
             >
-              {isDealFull ? "จำนวนผู้เข้าร่วมเต็มแล้ว" : "เข้าร่วมดีล"}
+              {isDealFull
+                ? "จำนวนผู้เข้าร่วมเต็มแล้ว"
+                : isDealAlreadyJoined
+                ? "เข้าร่วมดีลแล้ว"
+                : "เข้าร่วมดีล"}
             </button>
             <button
               className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-2 rounded-xl text-lg"
@@ -171,6 +184,8 @@ function DealPage() {
         setOpen={setIsModalOpen}
         deal={deal}
         onConfirmJoin={handleConfirmJoin}
+        coupon={qrCodeToken}
+        onRefresh={handleRefresh}
       />
     </div>
   );
