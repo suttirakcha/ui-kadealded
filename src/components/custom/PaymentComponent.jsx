@@ -2,9 +2,9 @@ import { usePayment } from '@/stores/usePayment';
 import React from 'react';
 
 const PaymentComponent = ({ coinName, amount, onSelect,id }) => {
-  const hdlPayment = async() => {
+  const hdlPayment = async () => {
     console.log('pay')
-    const data = {amount, priceId:id}
+    const data = {amount, priceId: id}
     await usePayment(data)
   }
   return (

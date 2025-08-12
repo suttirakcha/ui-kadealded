@@ -11,13 +11,13 @@ import imageMock2 from "../assets/imagemock2.png";
 
 function Home() {
   const navigate = useNavigate();
-  const { deals, getAllDeals } = useDealStore();
+  const { deals, getAllDeals, isLoading } = useDealStore();
   const [inputValue, setInputValue] = useState("");
-  
+
   const handleSearch = (e) => {
     e.preventDefault();
-    navigate('/searchDeal', { state: { result: inputValue } });
-  }
+    navigate("/searchDeal", { state: { result: inputValue } });
+  };
 
   useEffect(() => {
     const run = async () => {
@@ -50,7 +50,7 @@ function Home() {
           <h1 className="text-5xl leading-15 font-bold text-white">
             Let's explore our promotions here!
           </h1>
-          <SearchForm 
+          <SearchForm
             value={inputValue}
             placeholder="Search our promotions"
             onChange={(e) => setInputValue(e.target.value)}
@@ -83,20 +83,31 @@ function Home() {
           Hot deal
         </button>
         <div className="grid grid-cols-4 gap-3">
-          <CardDealList items={deals.slice(0, 4)} onClick={handleClick} />
+          <CardDealList
+            items={deals.slice(0, 4)}
+            onClick={handleClick}
+            isLoading={isLoading}
+          />
         </div>
       </div>
 
       <div className="mx-auto max-w-[1200px] w-full h-full rounded-2xl p-10 space-y-4">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold">Recommended Deals</h1>
-          <Link to="/searchDeal" className="text-[#003F66] flex items-center gap-1 font-medium">
+          <Link
+            to="/searchDeal"
+            className="text-[#003F66] flex items-center gap-1 font-medium"
+          >
             See more
-            <ChevronRight className="h-5 w-5"/>
+            <ChevronRight className="h-5 w-5" />
           </Link>
         </div>
         <div className="grid grid-cols-4 gap-3">
-          <CardDealList items={deals?.slice(0, 4)} onClick={handleClick} />
+          <CardDealList
+            items={deals?.slice(0, 4)}
+            onClick={handleClick}
+            isLoading={isLoading}
+          />
         </div>
       </div>
     </div>

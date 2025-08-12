@@ -55,16 +55,22 @@ function Contacts() {
               error={errors.email?.message}
             />
             <CustomInput
-              label="Company Number"
+              label="Company Phone Number"
               {...contact("tel_number")}
               error={errors.tel_number?.message}
             />
+            <CustomInput
+              label="Message"
+              type="textarea"
+              {...contact("message")}
+              error={errors.message?.message}
+            />
           </div>
-          <textarea
+          {/* <textarea
             {...contact("message")}
             placeholder="Message"
             className="p-3 w-full h-50 border border-gray-200 rounded-sm resize-none"
-          ></textarea>
+          ></textarea> */}
           {errors.message && (
             <p className="text-sm text-red-500 mb-10">
               {errors.message?.message}

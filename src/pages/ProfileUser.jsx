@@ -6,15 +6,7 @@ import React, { useEffect, useState } from "react";
 
 function ProfileUser() {
   const { user } = useAuthStore();
-  const { users, fetchAllUsers } = useUserStore();
   const [selectedUser, setSelectedUser] = useState(null);
-
-  useEffect(() => {
-    const run = async () => {
-      await fetchAllUsers();
-    };
-    run();
-  }, []);
 
   return (
     <>

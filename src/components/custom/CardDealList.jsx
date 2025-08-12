@@ -3,10 +3,10 @@ import Loading from "../icons/Loading";
 import logoImg from "../../assets/kaDEALded_logo-removebg-preview.png";
 import { cn } from "@/lib/utils";
 
-function CardDealList({ items, onClick }) {
+function CardDealList({ isLoading, items, onClick }) {
   return (
     <>
-      {items ? (
+      {!isLoading ? (
         items.length > 0 ? (
           <>
             {items.map((item) => (

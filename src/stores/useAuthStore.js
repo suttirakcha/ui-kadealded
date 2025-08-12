@@ -7,6 +7,13 @@ const useAuthStore = create(
   persist(
     (set) => ({
       user: null,
+      getMe: async () => {
+        const token = localStorage.getItem("accessToken");
+        const res = await authApi.get("/me", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        set({ user: res.data.user });
+      },
       login: async (data) => {
         const res = await authApi.post("/login", data, {
           withCredentials: true,
@@ -34,13 +41,13 @@ const useAuthStore = create(
         await authApi.post("/logout");
         set({ user: null });
       },
-      updateAuthUser: (updatedUser) =>
-        set((state) => ({
-          user: {
-            ...state.user,
-            ...updatedUser,
-          },
-        })),
+      updateAuthUser: async (updatedUser) => {
+        const token = localStorage.getItem("accessToken");
+        const res = await authApi.put("/auth/update/profile", updatedUser, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        return res;
+      },
     }),
     {
       name: "authStore",
