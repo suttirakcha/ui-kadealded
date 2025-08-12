@@ -55,7 +55,7 @@ function EditUserDialog({ open, onOpenChange, user }) {
     try {
       const res = await (user?.role === "CUSTOMER" ? updateAuthUser(data) : updateUserById(user?.id, data));
       toast.success(res.data.message);
-      await fetchAllUsers();
+      (user?.role !== "CUSTOMER" && await fetchAllUsers());
       await getMe();
       onOpenChange(false);
     } catch (error) {
