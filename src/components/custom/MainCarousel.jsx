@@ -56,7 +56,7 @@ function MainCarousel({
                       <img
                         src={image.image_url}
                         alt={`img-${index}`}
-                        className="w-full h-full object-cover rounded-md"
+                        className="w-full h-full object-cover rounded-md aspect-square"
                       />
                     </Card>
                   </div>
