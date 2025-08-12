@@ -9,6 +9,8 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import useAuthStore from "@/stores/useAuthStore";
 import { toast } from "sonner";
+import { JoinDealDialog } from "@/components/dialogs/JoinDealDialog.jsx";
+import axios from "axios";
 
 function DealPage() {
   const { id } = useParams();
@@ -25,16 +27,20 @@ function DealPage() {
     getJoinedDeals,
   } = useDealStore();
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   useEffect(() => {
     const run = async () => {
-      await getAllDeals();
-      await getDealById(id);
-      await getJoinedDeals(id);
+      if (id) {
+        await getAllDeals();
+        await getDealById(id);
+        await getJoinedDeals(id);
+      }
     };
 
     run();
     return () => clearCurrentDeal();
-  }, [id]);
+  }, [id, getAllDeals, getDealById, getJoinedDeals, clearCurrentDeal]);
 
   const joinedDealsProgress =
     (joinedDeals?.length / deal?.max_participants) * 100;
@@ -42,7 +48,7 @@ function DealPage() {
 
   const category = deal?.category.name;
 
-  if (!deal) {
+  if (isLoading || !deal) {
     // return <div className="text-center text-xl mt-10">ไม่พบข้อมูลดีลนี้</div>
     return (
       <div className="flex justify-center py-10">
@@ -59,6 +65,32 @@ function DealPage() {
   const filteredDealsByCategory = deals?.filter(
     (deal) => deal.category.name === category
   );
+
+  const handleConfirmJoin = async (dealId) => {
+    if (!user) {
+      toast.error("กรุณาเข้าสู่ระบบเพื่อเข้าร่วมดีล");
+      // navigate("/login");
+      return;
+    }
+    try {
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        toast.error("โทเค็นไม่ถูกต้อง, กรุณาเข้าสู่ระบบอีกครั้ง");
+        return;
+      }
+      const response = await axios.post(`/api/auth/deal/${dealId}/join`, null, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      await getJoinedDeals(id);
+      return response.data.qrCode.token;
+    } catch (error) {
+      console.error("Error joining deal:", error);
+      const errorMessage =
+        error.response?.data?.message || "Failed to join deal";
+      toast.error(errorMessage);
+      throw error;
+    }
+  };
 
   return (
     <div className="max-w-[1200px] mx-auto mt-10 p-10 bg-white shadow-lg rounded-2xl">
@@ -90,9 +122,7 @@ function DealPage() {
                 "bg-red-500 hover:bg-red-700 text-white px-6 py-2 rounded-xl shadow-md text-lg",
                 { "!bg-red-400": isDealFull }
               )}
-              onClick={() => {
-                toast.success("เข้าร่วมดีลแล้ว")
-              }}
+              onClick={() => setIsModalOpen(true)}
               disabled={isDealFull}
             >
               {isDealFull ? "จำนวนผู้เข้าร่วมเต็มแล้ว" : "เข้าร่วมดีล"}
@@ -133,6 +163,12 @@ function DealPage() {
           <CardDealList items={filteredDealsByCategory} onClick={handleClick} />
         </div>
       </div>
+      <JoinDealDialog
+        open={isModalOpen}
+        setOpen={setIsModalOpen}
+        deal={deal}
+        onConfirmJoin={handleConfirmJoin}
+      />
     </div>
   );
 }
