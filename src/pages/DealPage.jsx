@@ -11,6 +11,7 @@ import useAuthStore from "@/stores/useAuthStore";
 import { toast } from "sonner";
 import { JoinDealDialog } from "@/components/dialogs/JoinDealDialog.jsx";
 import axios from "axios";
+import { authApi } from "@/api/routesApi";
 
 function DealPage() {
   const { id } = useParams();
@@ -28,6 +29,7 @@ function DealPage() {
   } = useDealStore();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [qrCodeToken, setQrCodeToken] = useState(null);
 
   useEffect(() => {
     const run = async () => {
@@ -78,11 +80,12 @@ function DealPage() {
         toast.error("โทเค็นไม่ถูกต้อง, กรุณาเข้าสู่ระบบอีกครั้ง");
         return;
       }
-      const response = await axios.post(`/api/auth/deal/${dealId}/join`, null, {
+      const response = await authApi.post(`/auth/deal/${dealId}/join`, null, {
         headers: { Authorization: `Bearer ${token}` },
       });
       await getJoinedDeals(id);
-      return response.data.qrCode.token;
+      setQrCodeToken(response.data.qrCode.token)
+      // return response.data.qrCode.token;
     } catch (error) {
       console.error("Error joining deal:", error);
       const errorMessage =
